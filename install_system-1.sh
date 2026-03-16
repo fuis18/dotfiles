@@ -18,15 +18,15 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 RESET='\033[0m'
 
-NEW_CMD='XferCommand = /usr/bin/curl -L -C - --retry 10 --retry-delay 5 --connect-timeout 30 --max-time 0 -o %o %u'
+# NEW_CMD='XferCommand = /usr/bin/curl -L -C - --retry 10 --retry-delay 5 --connect-timeout 30 --max-time 0 -o %o %u'
 
 # Reemplazar si existe (comentado o no)
-if grep -qE '^[# ]*XferCommand\s*=' "$PACMAN_CONF"; then
-    sudo sed -i "s|^[# ]*XferCommand\s*=.*|$NEW_CMD|" "$PACMAN_CONF"
-else
-    # Agregar bajo [options]
-    sudo sed -i "/^\[options\]/a $NEW_CMD" "$PACMAN_CONF"
-fi
+# if grep -qE '^[# ]*XferCommand\s*=' "$PACMAN_CONF"; then
+#     sudo sed -i "s|^[# ]*XferCommand\s*=.*|$NEW_CMD|" "$PACMAN_CONF"
+# else
+#     # Agregar bajo [options]
+#     sudo sed -i "/^\[options\]/a $NEW_CMD" "$PACMAN_CONF"
+# fi
 
 
 echo ""
@@ -35,7 +35,7 @@ echo -e "${GREEN} ====== Updating the System ======="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -Syu --noconfirm
+# pacman -Syu --noconfirm
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -93,14 +93,6 @@ echo -e "${RESET}"
 
 pacman -S --noconfirm xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 pacman -S --noconfirm papirus-icon-theme
-
-sudo -u fuis18 bash -c 'paru -S papirus-folders-catppuccin-git catppuccin-gtk-theme-mocha'
-
-papirus-folders -C cat-mocha-blue --theme Papirus-Dark
-
-gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-gsettings set org.gnome.desktop.interface gtk-theme 'Catppuccin-Mocha-Standard-Blue-Dark'
-gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
 
 sudo -u fuis18 bash -c 'paru -S wlogout yofi-bin'
 sudo -u fuis18 bash -c 'paru -S ironbar-bin scrub'
