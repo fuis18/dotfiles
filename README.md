@@ -6,14 +6,23 @@
 # localectl list-keymaps
 loadkeys la-latin1
 
+# ip link
 iwctl
 
 station list scan
 station wlan0 connect "Your_wifi"
 exit
 
-ping archlinux.org
+ping www.archlinux.org
+```
 
+### Keyring
+
+```sh
+pacman-key --init
+pacman-key --populate archlinux
+
+pacman -Sy archlinux-keyring
 sudo pacman -Sy
 ```
 
@@ -23,11 +32,16 @@ sudo pacman -Sy
 cfdisk
 ```
 
-| Device    | Size  | Type             |
-| --------- | ----- | ---------------- |
-| /dev/sda1 | 1G    | EFI System       |
-| /dev/sda2 | 50G   | Linux filesystem |
-| /dev/sda3 | resto | Linux Home       |
+| Device    | Size  | Type             | Label |
+| --------- | ----- | ---------------- | ----- |
+| /dev/sda1 | 1G    | EFI System       | boot  |
+| /dev/sda2 | 100G  | Linux filesystem | root  |
+| /dev/sda3 | resto | Linux filesystem | home  |
+
+| Device    | Size  | Type             | Label |
+| --------- | ----- | ---------------- | ----- |
+| /dev/sda1 | 100G  | Linux filesystem | root  |
+| /dev/sda2 | resto | Linux filesystem | home  |
 
 write
 quit
@@ -47,26 +61,45 @@ mkfs.ext4 /dev/sda3
 
 ### Mounts (El orden importa)
 
+#### UEFI
+
 ```sh
 # Montar root
 mount /dev/sda2 /mnt
 
-# Montar EFI
-mkdir -p /mnt/boot
-mount /dev/sda1 /mnt/boot
+# Montar UEFI
+mkdir -p /mnt/boot/efi
+mount /dev/sda1 /mnt/boot/efi
+
+# Montar MRB
+mkdir -p /mnt/
+mount /dev/sda1 /mnt/
 
 # Montar home
 mkdir -p /mnt/home
 mount /dev/sda3 /mnt/home
+```
 
+#### GRUB
+
+```sh
+mount /dev/sda1 /mnt/
+
+mkdir -p /mnt/home
+mount /dev/sda2 /mnt/home
+```
+
+```sh
 lsblk -f
+
+mount | grep mnt
 ```
 
 ### Pacstrap
 
 ```sh
-pacstrap -K /mnt base linux linux-firmware
-pacstrap /mnt networkmanager sudo nvim
+pacstrap -K /mnt base base-devel linux linux-firmware
+pacstrap /mnt networkmanager sudo nvim git
 
 nvim /mnt/etc/vconsole.conf
 KEYMAP=la-latin1
@@ -94,8 +127,6 @@ genfstab -U /mnt >> /mnt/etc/fstab
 ### arch-chroot
 
 ```sh
-mount | grep mnt
-
 arch-chroot /mnt
 
 mount | grep boot
@@ -128,24 +159,29 @@ nvim /etc/fstab
 Editar fstab:
 
 ```sh
-# /dev/sda1
-UUID=XXXX-XXXX  /boot  vfat  rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro  0  2
-
 /swapfile none swap defaults 0 0
 ```
 
-#### bootloader
+### bootloader
+
+#### GRUB
 
 ```sh
-rm /boot/loader/entries/*.conf
+pacman -S grub
+grub-install --target=i386-pc /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+#### UEFI
+
+```sh
+# rm /boot/loader/entries/*.conf
+
+mount -o remount,rw /boot
 
 bootctl install
 
-bootctl --path=/boot install
-
 bootctl
-
-bootctl update
 
 # /boot/EFI/systemd/systemd-bootx64.efi
 # /boot/loader/loader.conf
@@ -197,10 +233,20 @@ options root=UUID=TU_UUID rw
 EOF
 ```
 
-```sh
-pacman -S linux
+Editar fstab:
 
+```sh
+nvim /etc/fstab
+
+# /dev/sda1
+UUID=XXXX-XXXX  /boot  vfat  ro,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro  0  2
+```
+
+```sh
 mkinitcpio -P
+
+bootctl update
+mount -o remount,ro /boot
 ```
 
 ### final
@@ -230,19 +276,10 @@ ln -sf /usr/share/zoneinfo/America/Lima /etc/localtime
 hwclock --systohc
 date
 
-nvim /etc/locale.gen
+systemctl enable NetworkManager
 ```
 
 ```sh
-de_DE
-en_US
-es_ES
-ja_JP
-```
-
-```sh
-locale-gen
-
 bootctl list
 
 exit
@@ -268,20 +305,15 @@ nmcli device wifi connect "SSID" password "tu_contraseña"
 ```sh
 sudo su
 pacman -S git
-mkdir Downloads
-cd Downloads
-mkdir repos
-cd repos
-mkdir fuis18
-cd fuis18
+mkdir -p Downloads/repos/fuis18
+cd Downloads/repos/fuis18/
 git clone https://github.com/fuis18/dotfiles.git
-cd dotfiles
 
-sudo bash install_system-1.sh
-sudo bash install_system-2.sh
-sudo bash install_system-3.sh
-sudo bash install_personal-1.sh
-sudo bash install_personal-2.sh
+sudo bash dotfiles/install_system.sh 
+sudo bash dotfiles/install_personal-1.sh
+sudo bash dotfiles/install_personal-2.sh
+sudo bash dotfiles/install_personal-3.sh
+bash dotfiles/install_normal.sh
 ```
 
 ## PACKAGES
