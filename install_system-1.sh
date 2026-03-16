@@ -8,7 +8,7 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-USER_NAME="fuis18"
+USER_NAME=${SUDO_USER:-$(whoami)}
 USER_HOME="/home/${USER_NAME}"
 USER_REPOS="${USER_HOME}/Downloads/repos"
 FUIS_REPO="${USER_REPOS}/fuis18/dotfiles"
@@ -43,7 +43,7 @@ echo -e "${GREEN} ===== Installing Base System ====="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm base base-devel wayland hyprland hyprlock hypridle
+pacman -S --noconfirm wayland hyprland hyprlock hypridle
 pacman -S --noconfirm qt6-base qt6-declarative qt6-quick3d qt6-graphs
 
 echo ""
