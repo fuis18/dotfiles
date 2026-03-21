@@ -8,7 +8,7 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-USER_NAME="fuis18"
+USER_NAME=${SUDO_USER:-$(whoami)}
 USER_HOME="/home/${USER_NAME}"
 
 GREEN='\033[0;32m'
@@ -22,20 +22,6 @@ echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
 pacman -Syu
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ==== Multimedia applications ===="
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-pacman -S --noconfirm gst-libav gst-plugins-good gst-plugins-bad gst-plugins-ugly
-pacman -S --noconfirm pipewire pipewire-pulse wireplumber
-pacman -S --noconfirm pipewire-alsa alsa-utils
-pacman -S --noconfirm mpd mpc mpv ncmpcpp fftw lsp-plugins-lv2
-pacman -S --noconfirm pulsemixer cava easyeffects rubberband
-
-sudo -u "$USER_NAME" mkdir -p "$USER_HOME/.config/mpd/playlists"
 
 echo ""
 echo -e "${BLUE} ================================="
@@ -53,6 +39,9 @@ echo -e "       /_.-'         '-._\\"
 echo -e "${RESET}"
 
 pacman -S --noconfirm fastfetch
+pacman -S --noconfirm cbonsai
+
+sudo -u "$USER_NAME" bash -c 'paru -S cmatrix-git'
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -69,10 +58,29 @@ echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
 # browsers
-sudo -u fuis18 bash -c 'yay -S librewolf-bin brave-bin'
+sudo -u "$USER_NAME" bash -c 'yay -S brave-bin'
+sudo -u "$USER_NAME" bash -c 'paru -S google-chrome'
+sudo -u "$USER_NAME" bash -c 'yay -S librewolf-bin'
 
-sudo pacman -S --noconfirm syncthing
-sudo pacman -S --noconfirm rclone
+# notas
+sudo -u "$USER_NAME" bash -c 'paru -S obsidian-bin'
+
+# ofimatica
+sudo -u "$USER_NAME" bash -c 'paru -S onlyoffice-bin'
+pacman -S --noconfirm libreoffice-fresh
+
+# Redes
+sudo -u "$USER_NAME" bash -c 'paru -S zoom'
+pacman -S --noconfirm discord
+
+# Edition
+sudo -u "$USER_NAME" bash -c 'paru -S oculante'
+pacman -S --noconfirm kdenlive
+pacman -S --noconfirm inkscape
+
+# conexions
+pacman -S --noconfirm kdeconnect
+pacman -S --noconfirm syncthing
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -80,8 +88,8 @@ echo -e "${GREEN} ============ Keyboard ==========="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-sudo pacman -S --noconfirm fcitx5 fcitx5-mozc fcitx5-configtool
-sudo pacman -S --noconfirm fcitx5-gtk fcitx5-qt
+pacman -S --noconfirm fcitx5 fcitx5-mozc fcitx5-configtool
+pacman -S --noconfirm fcitx5-gtk fcitx5-qt
 
 echo ""
 echo -e "${BLUE} =================================="

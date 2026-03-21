@@ -32,21 +32,14 @@ sudo pacman -Sy
 cfdisk
 ```
 
+#### UEFI
+
 | Device    | Size  | Type             | Label |
 | --------- | ----- | ---------------- | ----- |
 | /dev/sda1 | 1G    | EFI System       | boot  |
 | /dev/sda2 | 100G  | Linux filesystem | root  |
 | /dev/sda3 | resto | Linux filesystem | home  |
-
-| Device    | Size  | Type             | Label |
-| --------- | ----- | ---------------- | ----- |
-| /dev/sda1 | 100G  | Linux filesystem | root  |
-| /dev/sda2 | resto | Linux filesystem | home  |
-
-write
-quit
-
-### Formating
+| /dev/sda3 | 5GB   | Linux swap       | swap  |
 
 ```sh
 lsblk
@@ -57,37 +50,57 @@ mkfs.fat -F 32 /dev/sda1
 mkfs.ext4 /dev/sda2
 # Home
 mkfs.ext4 /dev/sda3
+# swap
+mkswap /dev/sda4
 ```
-
-### Mounts (El orden importa)
-
-#### UEFI
 
 ```sh
 # Montar root
+mkdir -p /mnt
 mount /dev/sda2 /mnt
 
 # Montar UEFI
 mkdir -p /mnt/boot/efi
 mount /dev/sda1 /mnt/boot/efi
 
-# Montar MRB
-mkdir -p /mnt/
-mount /dev/sda1 /mnt/
-
 # Montar home
 mkdir -p /mnt/home
 mount /dev/sda3 /mnt/home
+# swap
+swapon /dev/sda4
 ```
 
 #### GRUB
 
+| Device    | Size  | Type             | Label |
+| --------- | ----- | ---------------- | ----- |
+| /dev/sda1 | 2M    | BIOS boot        | boot  |
+| /dev/sda2 | 100G  | Linux filesystem | root  |
+| /dev/sda3 | resto | Linux filesystem | home  |
+| /dev/sda4 | 4G    | Linux swap       | swap  |
+
 ```sh
-mount /dev/sda1 /mnt/
+lsblk
+
+# root
+mkfs.ext4 /dev/sda2
+# home
+mkfs.ext4 /dev/sda3
+# swap
+mkswap /dev/sda4
+```
+
+```sh
+mkdir -p /mnt
+mount /dev/sda2 /mnt
 
 mkdir -p /mnt/home
-mount /dev/sda2 /mnt/home
+mount /dev/sda3 /mnt/home
+# swap
+swapon /dev/sda4
 ```
+
+### Pacstrap
 
 ```sh
 lsblk -f
@@ -95,16 +108,19 @@ lsblk -f
 mount | grep mnt
 ```
 
-### Pacstrap
-
 ```sh
-pacstrap -K /mnt base base-devel linux linux-firmware
+pacstrap -K /mnt base linux linux-firmware
 pacstrap /mnt networkmanager sudo nvim git
 
 nvim /mnt/etc/vconsole.conf
+```
+
+```conf
 KEYMAP=la-latin1
 XKBLAYOUT=latam
+```
 
+```sh
 ls /mnt/boot
 ls /mnt/lib/modules
 
@@ -144,22 +160,35 @@ umount /mnt/home
 ### Swap
 
 ```sh
-# Crear el archivo con 10G
-fallocate -l 10G swapfile
-
-chmod 700 swapfile
-mkswap swapfile
-swapon swapfile
-
 swapon --show
 
 nvim /etc/fstab
 ```
-
 Editar fstab:
 
 ```sh
-/swapfile none swap defaults 0 0
+/dev/sda4 none swap defaults,pri=20 0 0
+```
+
+```sh
+pacman -S zram-generator
+
+nvim /etc/systemd/zram-generator.conf
+```
+
+```conf
+[zram0]
+zram-size = ram * 0.75
+compression-algorithm = zstd
+swap-priority = 100
+```
+
+```sh
+nvim /etc/sysctl.d/99-swappiness.conf
+```
+
+```sh
+vm.swappiness=20
 ```
 
 ### bootloader
@@ -267,7 +296,7 @@ EDITOR=nvim visudo       # habilitar sudo para grupo wheel
 
 # %wheel ALL=(ALL:ALL) ALL
 
-nvim /etc/host
+nvim /etc/hosts
 127.0.0.1  localhost
 ::1        localhost
 127.0.0.1  hacker.localhost hacker
@@ -283,7 +312,6 @@ systemctl enable NetworkManager
 bootctl list
 
 exit
-
 reboot
 ```
 
@@ -300,6 +328,13 @@ nmcli device
 nmcli device wifi connect "SSID" password "tu_contraseña"
 ```
 
+### drives
+
+```sh
+lspci -k
+ethtool -i wlan0
+```
+
 ### My files
 
 ```sh
@@ -312,7 +347,6 @@ git clone https://github.com/fuis18/dotfiles.git
 sudo bash dotfiles/install_system.sh 
 sudo bash dotfiles/install_personal-1.sh
 sudo bash dotfiles/install_personal-2.sh
-sudo bash dotfiles/install_personal-3.sh
 bash dotfiles/install_normal.sh
 ```
 
@@ -330,9 +364,9 @@ bash dotfiles/install_normal.sh
 | Shell               | zsh                    |
 | customizable prompt | starship               |
 | Editor              | nvim                   |
-| File Manager        | yazi                   |
-| Launcher            | yofi                   |
-| Status bar          | waybar -> ironbar      |
+| File Manager        | yazi && spacedrive     |
+| Launcher            | anyrun                 |
+| Status bar          | ironbar                |
 | Widgets             | eww-wayland            |
 | bluetooth           | bluetui                |
 | bluetooth back      | bluez bluez-utils      |
@@ -344,36 +378,3 @@ bash dotfiles/install_normal.sh
 | Screenshot          | grim slurp swappy      |
 | Brillo              | brightnessctl          |
 | System monitor      | btop                   |
-
-### Adicionales
-
-| Label          | Package             |
-| -------------- | ------------------- |
-| Logo           | fastfetch           |
-| Documentación  | man                 |
-| Buscador       | locate              |
-| Browser        | librewolf           |
-| Descomprimidor | unzip               |
-| Remover        | scrub shred         |
-| matrix         | cmatrix             |
-| plugin cat     | bat                 |
-| plugin ls      | lsd                 |
-| Buscador       | fzf                 |
-| Fonts          | FiraCode Nerd Fonts |
-| Imagenes       | swayimg             |
-
-### Other
-
-Editar imagenes:
-
-- Gimp
-- Inkscape
-
-Redes:
-
-- Discord
-
-Programación:
-
-- Bun
-- docker
