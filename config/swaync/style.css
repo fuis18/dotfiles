@@ -1,0 +1,150 @@
+/* ── Variables ──────────────────────────────────────────────────────────────── */
+* {
+	font-family: "FiraCode Nerd Font", monospace;
+	font-size: 13px;
+
+	--bg: #1a1a1a;
+	--bg-alt: #242424;
+	--bg-hover: #2e2e2e;
+	--border: #333333;
+	--text: #e0e0e0;
+	--text-muted: #888888;
+	--accent: #7aa2f7;
+	--urgent: #f7768e;
+	--success: #9ece6a;
+	--radius: 4px;
+}
+
+/* ── Control Center (panel) ─────────────────────────────────────────────────── */
+.control-center {
+	background: var(--bg);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	padding: 8px;
+}
+
+/* ── Widget DND ─────────────────────────────────────────────────────────────── */
+.widget-dnd {
+	background: var(--bg-alt);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	padding: 8px 12px;
+	margin-bottom: 6px;
+}
+
+.widget-dnd > switch {
+	border-radius: var(--radius);
+	background: var(--bg-hover);
+	border: 1px solid var(--border);
+}
+
+.widget-dnd > switch:checked {
+	background: var(--accent);
+}
+
+.widget-dnd > switch slider {
+	background: var(--text);
+	border-radius: var(--radius);
+	min-width: 16px;
+	min-height: 16px;
+}
+
+/* ── Notificaciones ─────────────────────────────────────────────────────────── */
+.notification-row {
+	margin: 3px 0;
+}
+
+.notification-row:hover .notification {
+	background: var(--bg-hover);
+}
+
+.notification {
+	background: var(--bg-alt);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	padding: 10px 12px;
+	margin: 0;
+}
+
+.notification.critical {
+	border-color: var(--urgent);
+}
+
+/* ── Contenido ──────────────────────────────────────────────────────────────── */
+.notification-content {
+	padding: 0;
+}
+
+.summary {
+	color: var(--text);
+	font-weight: bold;
+	font-size: 13px;
+}
+
+.time {
+	color: var(--text-muted);
+	font-size: 11px;
+}
+
+.body {
+	color: var(--text-muted);
+	font-size: 12px;
+	margin-top: 2px;
+}
+
+/* ── Botones de acción ──────────────────────────────────────────────────────── */
+.notification-action {
+	background: var(--bg-hover);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	color: var(--text);
+	padding: 4px 10px;
+	margin-top: 6px;
+}
+
+.notification-action:hover {
+	background: var(--accent);
+	color: var(--bg);
+}
+
+/* ── Botón cerrar ───────────────────────────────────────────────────────────── */
+.close-button {
+	background: transparent;
+	border: none;
+	color: var(--text-muted);
+	border-radius: var(--radius);
+	padding: 2px 6px;
+}
+
+.close-button:hover {
+	background: var(--urgent);
+	color: var(--bg);
+}
+
+/* ── Botón limpiar todo ─────────────────────────────────────────────────────── */
+.control-center-clear-all {
+	background: var(--bg-alt);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	color: var(--text-muted);
+	margin-top: 6px;
+	padding: 6px;
+}
+
+.control-center-clear-all:hover {
+	background: var(--bg-hover);
+	color: var(--text);
+}
+
+/* ── Popup (notificación flotante) ──────────────────────────────────────────── */
+.notification-popup {
+	background: var(--bg-alt);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	margin: 4px;
+	padding: 0;
+}
+
+.notification-popup.critical {
+	border-color: var(--urgent);
+}

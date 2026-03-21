@@ -1,0 +1,290 @@
+let {
+// https://github.com/JakeStanger/ironbar/wiki/
+// https://github.com/bluebyt/Wayfire-dots/blob/main/.config/ironbar/config.corn
+
+  $icon_l = {
+    type = "label"
+    class = "icon"
+    label = ""
+  }
+
+  $icon_r = {
+    type = "label"
+    class = "icon"
+    label = ""
+  }
+
+  $upper_l = {
+    type = "custom"
+    class = "l-edge"
+    bar = [ $icon_l ]
+  }
+
+  $upper_r = {
+    type = "custom"
+    class = "r-edge"
+    bar = [ $icon_r ]
+  }
+
+  $upper_l_second = {
+    type = "custom"
+    class = "l-edge-second"
+    bar = [ $icon_l ]
+  }
+
+  $upper_r_second = {
+    type = "custom"
+    class = "r-edge-second"
+    bar = [ $icon_r ]
+  }
+
+  $upper_l_transp = {
+    type = "custom"
+    class = "l-edge-transp"
+    bar = [ $icon_l ]
+  }
+
+  $upper_r_transp = {
+    type = "custom"
+    class = "r-edge-transp"
+    bar = [ $icon_r ]
+  }
+
+  $upper_l_second_transp = {
+    type = "custom"
+    class = "l-edge-second-transp"
+    bar = [ $icon_l ]
+  }
+
+  $upper_r_second_transp = {
+    type = "custom"
+    class = "r-edge-second-transp"
+    bar = [ $icon_r ]
+  }
+
+  // l
+
+  $launcher = {
+    type = "custom"
+    bar = [{
+      type = "button"
+      class = "launcher"
+      label = "APPS"
+      on_click = "!spacedrive"
+    }]
+  }
+
+  $workspaces = {
+    type = "workspaces"
+    name_map.1 = ""
+    name_map.2 = ""
+    name_map.3 = ""
+    name_map.4 = ":D"
+    
+    // favorites = [ "1" "2" "3" ]
+
+    on_scroll_up = "hyprctl dispatch workspace -1"
+    on_scroll_down = "hyprctl dispatch workspace +1"
+  }
+
+  $performance = {
+    type = "custom"
+    bar = [{
+      type = "button"
+      on_click = "!kitty -e btop"
+      widgets = [{
+        type = "sys_info"
+        class = "performance"
+
+        interval.cpu = 2
+        interval.temps = 5
+
+        format = [
+          "  {cpu_percent}%"
+          "󰈸 {temp_c:coretemp-Package-id-0}°C"
+        ]
+      }] 
+    }]
+  }
+
+  $window = {
+    type = "focused"
+    class = "window"
+    show_icon = true
+    show_title = true
+    truncate	= "end"
+  }
+
+  // center
+
+  $oclock = {
+    type = "clock"
+    format = "%d/%m/%Y %H:%M"
+  }
+
+  // right
+  
+  $network = {
+    type = "custom"
+    bar = [{
+      type = "button"
+      on_click = "!kitty -e nmtui"
+      widgets = [{
+        type = "sys_info"
+        class = "network"
+
+        interval.networks = 3
+
+        format = [
+          // "󰓢 {net_down:enp2s0} / {net_up:enp2s0} Mbps"
+          "󰓢 {net_down:wlp3s0} / {net_up:wlp3s0} Mbps"
+        ]
+      }]
+    }]
+  }
+
+  $cava = {
+    type = "custom"
+    class = "cava-menu"
+
+    bar = [
+      {
+        type = "button"
+        class = "cava-button"
+        on_click = "popup:toggle"
+        widgets = [{
+          type = "script"
+          class = "cava"
+          mode = "watch"
+          transition_type = "slide_end"
+          transition_duration = 750
+          cmd = "~/.config/hypr/scripts/cava.sh"
+        }]
+      }
+    ]
+
+    popup = [
+      {
+        type = "box"
+        orientation = "vertical"
+        widgets = [
+          {
+            type = "music"
+            player_type = "mpris"
+            format = "{title} - {artist}"
+            show_status_icon = false
+          }
+        ]
+      }
+    ]
+  }
+
+  $music = {
+    type = "music"
+    player_type = "mpris"
+    format = "{title} - {artist}"
+    icons.play = ""
+    icons.pause = ""
+    icons.prev = "󰒮"
+    icons.next = "󰒭"
+    show_status_icon = false
+  }
+
+  $volume = {
+    type = "custom"
+    bar = [{
+      type = "button"
+      on_click = "!kitty -e pulsemixer"
+      widgets = [{
+        type = "volume"
+        format = "{icon} {percentage}%"
+        max_volume = 100
+        truncate = "end"
+        icons.volume_high = "󰕾"
+        icons.volume_medium = "󰖀"
+        icons.volume_low = "󰕿"
+        icons.muted = "󰝟"
+      }]
+    }]
+  }
+
+  $bluetooth = {
+    type = "custom"
+    bar = [{
+      type = "button"
+      on_click = "!~/.config/hypr/scripts/bluetooth.sh menu"
+      widgets = [{
+        class = "bluetooth"
+        type = "script"
+        mode = "watch"
+        interval = 2000
+        cmd = "~/.config/hypr/scripts/bluetooth.sh"
+        label = "{text}"
+      }]
+    }]
+  }
+
+  $memory = {
+    type = "custom"
+    bar = [{
+      type = "button"
+      on_click = "!kitty -e btop"
+      widgets = [{
+        type = "sys_info"
+        class = "memory"
+
+        interval.memory = 30
+        interval.disks = 300
+
+        format = [
+          "  {memory_percent}%"
+          "󰋊 {disk_percent@/}%"
+        ]
+      }] 
+    }]
+  }
+
+  $battery = {
+    type = "battery"
+    format = "{percentage}%"
+    thresholds.warning = 20
+    thresholds.critical = 5
+  }
+
+  $wlogout = {
+    type = "custom"
+    bar = [
+      {
+        type = "button"
+        class = "wlogout"
+        label = ""
+        on_click = "!~/.config/hypr/scripts/wlogout.sh"
+      }
+    ]
+  }
+
+} in {
+  position = "top"
+  height = 32
+  start = [
+    $launcher
+    $upper_l
+    $workspaces
+    $upper_l_second
+    $performance
+    $upper_l_transp
+    $window
+  ]
+  center = [ $upper_r_second_transp $oclock $upper_l_second_transp ]
+  end = [
+    $network
+    $upper_r_transp
+    $cava
+    $upper_r_second
+    $volume
+    $bluetooth
+    $upper_r
+    $memory
+    $wlogout
+  ]
+}
