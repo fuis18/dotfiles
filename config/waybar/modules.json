@@ -1,0 +1,213 @@
+{
+	"custom/upper-left": {
+		"format": "<span></span>",
+		"tooltip": false
+	},
+	"custom/upper-right": {
+		"format": "<span></span>",
+		"tooltip": false
+	},
+	"custom/upper-left-secondary": {
+		"format": "<span></span>",
+		"tooltip": false
+	},
+	"custom/upper-right-secondary": {
+		"format": "<span></span>",
+		"tooltip": false
+	},
+	"custom/upper-left-transparent": {
+		"format": "<span></span>",
+		"tooltip": false
+	},
+	"custom/upper-right-transparent": {
+		"format": "<span></span>",
+		"tooltip": false
+	},
+	"custom/upper-left-secondary-transparent": {
+		"format": "<span></span>",
+		"tooltip": false
+	},
+	"custom/upper-right-secondary-transparent": {
+		"format": "<span></span>",
+		"tooltip": false
+	},
+	"custom/appmenu": {
+		"format": "APPS",
+		"tooltip": false,
+		"on-click": "yofi"
+	},
+	"hyprland/workspaces": {
+		"active-only": false,
+		"all-outputs": true,
+		"format": "<span>{icon}</span>",
+		"format-icons": {
+			"1": "",
+			"2": "",
+			"3": "",
+			"4": "",
+			"5": "",
+			"empty": "",
+			"default": ""
+		},
+		"on-click": "activate",
+		"on-scroll-up": "hyprctl dispatch workspace -1",
+		"on-scroll-down": "hyprctl dispatch workspace +1",
+		"persistent-workspaces": {
+			"*": 5
+		}
+	},
+	"group/performance": {
+		"orientation": "horizontal",
+		"modules": ["cpu", "temperature"]
+	},
+	"cpu": {
+		"interval": 10,
+		"format": "{usage}% <span>{icon}</span>",
+		"format-icons": ["󰍛"],
+		"on-click": "kitty -e btop"
+	},
+	"temperature": {
+		"interval": 10,
+		"tooltip": true,
+		"hwmon-path": [
+			"/sys/class/hwmon/hwmon1/temp1_input",
+			"/sys/class/thermal/thermal_zone0/temp"
+		],
+		"critical-threshold": 60,
+		"format-critical": "{temperatureC}°C <span> {icon}</span>",
+		"format": "{temperatureC}°C <span> {icon}</span>",
+		"format-icons": ["󰈸"],
+		"on-click": "kitty -e btop"
+	},
+	"hyprland/window": {
+		"format": "<span>  </span> {}",
+		"separate-outputs": true,
+		"max-length": 1000
+	},
+	"custom/arch": {
+		"format": "<span> </span>",
+		"tooltip": false
+	},
+	"clock": {
+		"interval": 1,
+		"format": "<span>  </span>{:%H:%M}",
+		"format-alt": "<span>  </span>{:%H:%M   %Y, %d %B, %A}",
+		"tooltip-format": "<tt><small>{calendar}</small></tt>",
+		"calendar": {
+			"mode": "year",
+			"mode-mon-col": 3,
+			"weeks-pos": "right",
+			"on-scroll": 1,
+			"format": {
+				"months": "<span color='#ffead3'><b>{}</b></span>",
+				"days": "<span color='#ecc6d9'><b>{}</b></span>",
+				"weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+				"weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+				"today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+			}
+		}
+	},
+	"custom/dot-wallpaper": {
+		"format": "<span> </span>",
+		"tooltip": false
+	},
+	"network#speed": {
+		"interval": 1,
+		"format": "{ifname}",
+		"format-wifi": "<span>{icon}</span><span>   </span>{bandwidthUpBytes}<span>   </span>{bandwidthDownBytes}",
+		"format-ethernet": "<span>󰌘    </span>{bandwidthUpBytes}<span>   </span>{bandwidthDownBytes}",
+		"format-disconnected": "<span> 󰌙 </span>",
+		"tooltip-format": "{ipaddr}",
+		"format-linked": "<span>󰈁 </span>{ifname} (No IP)",
+		"tooltip-format-wifi": "{essid} {icon} {signalStrength}%",
+		"tooltip-format-ethernet": "{ifname} 󰌘",
+		"tooltip-format-disconnected": "󰌙 Disconnected",
+		"min-length": 24,
+		"max-length": 24,
+		"format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
+	},
+	"custom/cava": {
+		"exec": "$HOME/.config/hypr/scripts/WaybarCava.sh",
+		"format": "{}"
+	},
+	"group/status": {
+		"orientation": "horizontal",
+		"modules": ["pulseaudio", "pulseaudio#microphone", "custom/bluetooth"],
+		"tooltip": false
+	},
+	"pulseaudio": {
+		"format": "<span>{icon} </span> {volume}%",
+		"format-muted": "<span> </span>",
+		"format-icons": {
+			"headphone": ["", "", ""],
+			"hands-free": "",
+			"headset": "",
+			"phone": "",
+			"portable": "",
+			"car": "",
+			"default": ["", "", ""]
+		},
+		"scroll-step": 5.0,
+		"on-click": "$HOME/.config/hypr/scripts/Volume.sh --toggle",
+		"on-scroll-up": "$HOME/.config/hypr/scripts/Volume.sh --inc",
+		"on-scroll-down": "$HOME/.config/hypr/scripts/Volume.sh --dec",
+		"tooltip-format": "<span>{icon}</span> {desc} {volume}%",
+		"smooth-scrolling-threshold": 1
+	},
+	"pulseaudio#microphone": {
+		"format": "<span>{format_source}</span>",
+		"format-source": "",
+		"format-source-muted": "",
+		"tooltip-format": "<span>{format_source} </span> {source_desc} {source_volume}%",
+		"on-click": "$HOME/.config/hypr/scripts/Volume.sh --toggle-mic",
+		"on-click-right": "pavucontrol -t 4",
+		"on-scroll-up": "$HOME/.config/hypr/scripts/Volume.sh --mic-inc",
+		"on-scroll-down": "$HOME/.config/hypr/scripts/Volume.sh --mic-dec",
+		"scroll-step": 5
+	},
+	"custom/bluetooth": {
+		"exec": "$HOME/.config/hypr/scripts/Bluetooth.sh status",
+		"interval": 10,
+		"return-type": "json",
+		"format": "{}",
+		"on-click": "$HOME/.config/hypr/scripts/Bluetooth.sh openctl",
+		"on-click-right": "$HOME/.config/hypr/scripts/Bluetooth.sh toggle",
+		"on-click-middle": "$HOME/.config/hypr/scripts/Bluetooth.sh power_on"
+	},
+	"group/system": {
+		"orientation": "horizontal",
+		"modules": ["backlight", "battery", "custom/power"]
+	},
+	"backlight": {
+		"format": "{percent}% <span>{icon}</span>",
+		"format-icons": [" ", " ", " ", "󰃝 ", "󰃞 ", "󰃟 ", "󰃠 "],
+		"tooltip-format": "backlight {percent}%",
+		"smooth-scrolling-threshold": 1
+	},
+	"battery": {
+		"full-at": 100,
+		"bat": "BAT1",
+		"design-capacity": false,
+		"states": {
+			"good": 95,
+			"warning": 30,
+			"critical": 15
+		},
+		"format": "{capacity}% <span>{icon}</span>",
+		"format-charging": "{capacity}% <span></span>",
+		"format-plugged": "{capacity}% <span>󱘖 </span>",
+		"format-alt-click": "click",
+		"format-full": "<span>{icon}</span> Full",
+		"format-alt": "<span>{icon}</span> {time}",
+		"format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+		"format-time": "{H}h {M}min",
+		"tooltip": true,
+		"tooltip-format": "{timeTo} {power}w"
+	},
+	"custom/power": {
+		"format": "<span> </span>",
+		"on-click": "$HOME/.config/hypr/scripts/Wlogout.sh",
+		"on-click-right": "$HOME/.config/hypr/scripts/ChangeBlur.sh",
+		"tooltip": true
+	}
+}
