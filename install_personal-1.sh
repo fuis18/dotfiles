@@ -74,7 +74,6 @@ sudo -u "$USER_NAME" bash -c 'paru -S zoom'
 pacman -S --noconfirm discord
 
 # Edition
-sudo -u "$USER_NAME" bash -c 'paru -S oculante'
 pacman -S --noconfirm kdenlive
 pacman -S --noconfirm inkscape
 

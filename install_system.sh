@@ -25,6 +25,9 @@ echo -e "${RESET}"
 
 pacman -S --noconfirm base-devel wayland hyprland hyprlock hypridle
 
+pacman -S --noconfirm xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
+pacman -S --noconfirm qt6-base qt6-declarative
+
 echo ""
 echo -e "${BLUE} =================================="
 echo -e "${GREEN} =========== AUR Helper ==========="
@@ -65,26 +68,6 @@ if [[ -d "$YAY_DIR" ]]; then
 fi
 
 echo ""
-echo -e "${BLUE} ==============================="
-echo -e "${GREEN} ====== System Defatuls ======"
-echo -e "${BLUE} ==============================="
-echo -e "${RESET}"
-
-sudo -u "${USER_NAME}" bash -c 'paru -S hyprpolkitagent hyprshutdown'
-# launcher
-sudo -u "${USER_NAME}" bash -c 'paru -S anyrun-git'
-# taskbar
-sudo -u "${USER_NAME}" bash -c 'paru -S ironbar-bin'
-# window switcher
-sudo -u "${USER_NAME}" bash -c 'paru -S hyprswitch'
-# file explorer
-sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive-bin'
-pacman -S --noconfirm yazi
-sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag-git'
-# logout
-sudo -u "${USER_NAME}" bash -c 'paru -S wlogout'
-
-echo ""
 echo -e "${BLUE} ================================="
 echo -e "${GREEN} ====== Installing Terminal ======"
 echo -e "${BLUE} ================================="
@@ -102,6 +85,7 @@ echo -e "${BLUE} ================================"
 echo -e "${RESET}"
 
 PLUGIN_DIR="/usr/share/zsh-sudo"
+
 mkdir -p "${PLUGIN_DIR}"
 chown -R "${USER_NAME}:${USER_NAME}" "${PLUGIN_DIR}"
 sudo -u "${USER_NAME}" wget -qO "${PLUGIN_DIR}/sudo.plugin.zsh" \
@@ -113,8 +97,10 @@ echo -e "${GREEN} ======== Essential tools ========"
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm brightnessctl wl-clipboard btop swaync libnotify
+pacman -S --noconfirm brightnessctl wl-clipboard btop
 pacman -S --noconfirm curl unzip wget lm_sensors
+# notify
+pacman -S --noconfirm libnotify swaync
 
 echo ""
 echo -e "${BLUE} ================================="
@@ -166,18 +152,6 @@ cp -r "${FUIS_REPO}/etc/greetd/." /etc/greetd/
 chmod 644 /etc/greetd/config.toml
 systemctl enable greetd
 
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ====== Copiying Root Files ======"
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-cp -r "${FUIS_REPO}/root/config/." /root/.config/
-
-cp -r "${FUIS_REPO}/root/zshrc" /root/
-# Renombrar
-mv /root/zshrc /root/.zshrc
-
 echo -e "${BLUE} ================================="
 echo -e "${GREEN} ============= Fonts ============="
 echo -e "${BLUE} ================================="
@@ -201,16 +175,6 @@ usermod --shell "$ZSH_PATH" "$USER_NAME"
 
 echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
 chmod 440 /etc/sudoers.d/wheel
-
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ======= Configuring Theme ======="
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-pacman -S --noconfirm xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
-pacman -S --noconfirm qt6-base qt6-declarative
 
 echo ""
 echo -e "${BLUE} ================================="
@@ -239,12 +203,32 @@ pacman -S --noconfirm fftw ncmpcpp cava
 # controls
 pacman -S --noconfirm pulsemixer
 
+pacman -S cliphist
+
 echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ====== Captura de Pantalla ======"
-echo -e "${BLUE} ================================="
+echo -e "${BLUE} =============================="
+echo -e "${GREEN} === APPS System Defatuls ==="
+echo -e "${BLUE} =============================="
 echo -e "${RESET}"
 
+sudo -u "${USER_NAME}" bash -c 'paru -S hyprpolkitagent hyprshutdown'
+# launcher
+sudo -u "${USER_NAME}" bash -c 'paru -S anyrun-git'
+# taskbar
+sudo -u "${USER_NAME}" bash -c 'paru -S ironbar-bin'
+# window switcher
+sudo -u "${USER_NAME}" bash -c 'paru -S hyprswitch'
+# file explorer
+sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive-bin'
+pacman -S --noconfirm yazi
+sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag-git'
+# logout
+sudo -u "${USER_NAME}" bash -c 'paru -S wlogout'
+# copy history
+pacman -S cliphist
+# galeria
+sudo -u "$USER_NAME" bash -c 'paru -S oculante'
+# screeshot
 pacman -S --noconfirm grim slurp swappy
 sudo -u "${USER_NAME}" bash -c 'paru -S grimblast-git'
 
@@ -256,7 +240,7 @@ echo -e "${RESET}"
 
 sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Documents/Organizer"
 sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Music"
-sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Pictures"
+sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Pictures/Wallpaper"
 sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Videos"
 
 echo ""
@@ -265,6 +249,12 @@ echo -e "${GREEN} ======= Copiying My Files ======="
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
+# root
+cp -r "${FUIS_REPO}/root/config/." /root/.config/
+cp -r "${FUIS_REPO}/root/zshrc" /root/
+mv /root/zshrc /root/.zshrc
+
+# .config
 sudo -u "$USER_NAME" cp -r "${FUIS_REPO}/config/." "${USER_HOME}/.config/"
 
 sudo -u "$USER_NAME" cp -r "${FUIS_REPO}/zshrc" "${USER_HOME}/"

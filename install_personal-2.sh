@@ -16,23 +16,16 @@ BLUE='\033[0;34m'
 RESET='\033[0m'
 
 echo ""
-echo -e "${BLUE} =================================="
-echo -e "${GREEN} ========== Development =========="
-echo -e "${BLUE} =================================="
+echo -e "${BLUE} ================================="
+echo -e "${GREEN} ========== Programaing =========="
+echo -e "${BLUE} ================================="
 echo -e "${RESET}"
+
+sudo -u "$USER_NAME" bash -c 'paru -S fnm-bin'
 
 pacman -S --noconfirm github-cli
 pacman -S --noconfirm lazygit
 
-pacman -S --noconfirm rclone
-
-echo ""
-echo -e "${BLUE} =================================="
-echo -e "${GREEN} ========== Operations =========="
-echo -e "${BLUE} =================================="
-echo -e "${RESET}"
-
-# programación
 pacman -S --noconfirm docker docker-compose docker-buildx
 
 sudo -u "$USER_NAME" bash -c 'paru -S oxker-bin'
@@ -43,9 +36,9 @@ systemctl start docker.socket
 sudo usermod -aG docker $USER_NAME
 
 echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ============ Edition ============"
-echo -e "${BLUE} ================================="
+echo -e "${BLUE} =================================="
+echo -e "${GREEN} ============= APPS ============="
+echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
 pacman -S --noconfirm muse # musescore
@@ -55,6 +48,8 @@ pacman -S --noconfirm gimp krita
 pacman -S --noconfirm obs-studio
 
 pacman -S --noconfirm texlive-full pandoc
+
+pacman -S --noconfirm rclone
 
 echo ""
 echo -e "${BLUE} =================================="
