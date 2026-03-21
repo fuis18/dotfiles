@@ -1,6 +1,0 @@
-# ~/.config/yofi/config.toml
-
-font = "FiraCode Nerd Font"
-font_size = 24
-
-prompt = "❯ "
