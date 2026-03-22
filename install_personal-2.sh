@@ -22,6 +22,7 @@ echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
 sudo -u "$USER_NAME" bash -c 'paru -S fnm-bin'
+pacman -S --noconfirm bun
 
 pacman -S --noconfirm github-cli
 pacman -S --noconfirm lazygit
