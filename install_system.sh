@@ -23,7 +23,7 @@ echo -e "${GREEN} ===== Installing Base System ====="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm base-devel wayland hyprland hyprlock hypridle
+pacman -S --noconfirm base-devel wayland hyprland hyprlock hypridle wget
 
 pacman -S --noconfirm xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 pacman -S --noconfirm qt6-base qt6-declarative
