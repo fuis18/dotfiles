@@ -8,7 +8,7 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-USER_NAME=${SUDO_USER:-$(whoami)}
+USER_NAME=$(logname)
 USER_HOME="/home/${USER_NAME}"
 USER_REPOS="${USER_HOME}/Downloads/repos"
 FUIS_REPO="${USER_REPOS}/fuis18/dotfiles"
