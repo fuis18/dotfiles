@@ -220,7 +220,7 @@ sudo -u "${USER_NAME}" bash -c 'paru -S hyprswitch'
 # file explorer
 sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive-bin'
 pacman -S --noconfirm yazi
-sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag-bin'
+sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag'
 # logout
 sudo -u "${USER_NAME}" bash -c 'paru -S wlogout'
 # copy history
