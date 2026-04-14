@@ -47,7 +47,7 @@ PARU_DIR="${USER_REPOS}/paru"
 if [[ -d "$PARU_DIR" ]]; then
   echo -e "${GREEN}[!] Directorio '$PARU_DIR' ya existe.${RESET}"
   else
-  git clone https://aur.archlinux.org/paru-bin.git "$PARU_DIR"
+  git clone https://aur.archlinux.org/paru.git "$PARU_DIR"
   chown -R "${USER_NAME}:${USER_NAME}" "$PARU_DIR"
   sudo -u "${USER_NAME}" bash -c "cd '$PARU_DIR' && makepkg -si --noconfirm"
 fi
@@ -209,11 +209,12 @@ echo -e "${GREEN} === APPS System Defatuls ==="
 echo -e "${BLUE} =============================="
 echo -e "${RESET}"
 
-sudo -u "${USER_NAME}" bash -c 'paru -S hyprpolkitagent hyprshutdown'
+pacman -S hyprpolkitagent
+sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown'
 # launcher
 sudo -u "${USER_NAME}" bash -c 'paru -S anyrun-git'
 # taskbar
-sudo -u "${USER_NAME}" bash -c 'paru -S ironbar-bin'
+pacman -S ironbar
 # window switcher
 sudo -u "${USER_NAME}" bash -c 'paru -S hyprswitch'
 # file explorer
