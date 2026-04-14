@@ -76,8 +76,6 @@ echo -e "${RESET}"
 pacman -S --noconfirm kitty zsh starship zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
 pacman -S --noconfirm bat lsd fzf
 
-sudo -u "${USER_NAME}" bash -c 'paru -S scrub'
-
 echo ""
 echo -e "${BLUE} ================================"
 echo -e "${GREEN} === Configurando el terminal ==="
