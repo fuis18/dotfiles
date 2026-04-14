@@ -109,7 +109,7 @@ echo -e "${RESET}"
 LOCALES=("de_DE.UTF-8" "en_US.UTF-8" "es_ES.UTF-8" "ja_JP.UTF-8")
 
 for locale in "${LOCALES[@]}"; do
-    sed -i "s/^# ${locale} UTF-8/${locale} UTF-8/" /etc/locale.gen
+    sed -i "s/^#\s*${locale} UTF-8/${locale} UTF-8/" /etc/locale.gen
 done
 
 locale-gen
