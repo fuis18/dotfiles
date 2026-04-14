@@ -212,7 +212,7 @@ echo -e "${RESET}"
 pacman -S hyprpolkitagent
 sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown'
 # launcher
-sudo -u "${USER_NAME}" bash -c 'paru -S anyrun-git'
+sudo -u "${USER_NAME}" bash -c 'paru -S anyrun'
 # taskbar
 pacman -S ironbar
 # window switcher
