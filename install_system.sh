@@ -129,7 +129,7 @@ systemctl start wpa_supplicant
 systemctl enable bluetooth
 systemctl start bluetooth
 
-sudo -u "${USER_NAME}" bash -c 'paru -S bluetui'
+pacman -S bluetui
 
 echo ""
 echo -e "${BLUE} =================================="
