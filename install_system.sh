@@ -219,6 +219,7 @@ pacman -S ironbar
 sudo -u "${USER_NAME}" bash -c 'paru -S hyprswitch'
 # file explorer
 sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive-bin'
+pacman -S --noconfirm ffmpeg
 pacman -S --noconfirm yazi
 sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag'
 # logout
