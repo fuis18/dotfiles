@@ -109,7 +109,7 @@ mount | grep mnt
 ```
 
 ```sh
-pacstrap -K /mnt base linux linux-firmware
+pacstrap -K /mnt base linux-zen linux-zen-headers linux-firmware
 pacstrap /mnt networkmanager sudo nvim git
 
 nvim /mnt/etc/vconsole.conf
