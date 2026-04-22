@@ -161,14 +161,6 @@ umount /mnt/home
 
 ```sh
 swapon --show
-
-nvim /etc/fstab
-```
-
-Editar fstab:
-
-```sh
-/dev/sda4 none swap defaults,pri=20 0 0
 ```
 
 ```sh
@@ -189,7 +181,7 @@ nvim /etc/sysctl.d/99-swappiness.conf
 ```
 
 ```sh
-vm.swappiness=20
+vm.swappiness=100
 ```
 
 ### Bootloader
