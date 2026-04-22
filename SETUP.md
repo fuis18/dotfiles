@@ -199,7 +199,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ```sh
 # rm /boot/loader/entries/*.conf
 
-mount -o remount,rw /boot
+mount -o remount,rw /boot/efi
+daemon-reload
 
 bootctl install
 
