@@ -270,7 +270,7 @@ Editar fstab:
 nvim /etc/fstab
 
 # /dev/sda1
-UUID=XXXX-XXXX  /boot  vfat  defaults,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro  0  2
+UUID=XXXX-XXXX  /boot  vfat  rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro  0  2
 ```
 
 ```sh
