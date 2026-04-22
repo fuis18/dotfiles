@@ -60,8 +60,8 @@ mkdir -p /mnt
 mount /dev/sda2 /mnt
 
 # Montar UEFI
-mkdir -p /mnt/boot/efi
-mount /dev/sda1 /mnt/boot/efi
+mkdir -p /mnt/boot
+mount /dev/sda1 /mnt/boot
 
 # Montar home
 mkdir -p /mnt/home
@@ -199,7 +199,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ```sh
 # rm /boot/loader/entries/*.conf
 
-mount -o remount,rw /boot/efi
+mount -o remount,rw /boot
 daemon-reload
 
 bootctl install
