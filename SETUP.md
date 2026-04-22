@@ -34,6 +34,8 @@ cfdisk
 
 #### UEFI
 
+// arqiotectura XBOOTLDR
+
 | Device    | Size  | Type             | Label |
 | --------- | ----- | ---------------- | ----- |
 | /dev/sda1 | 1G    | EFI System       | boot  |
