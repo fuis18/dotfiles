@@ -95,7 +95,7 @@ echo -e "${GREEN} ======== Essential tools ========"
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm brightnessctl wl-clipboard btop
+pacman -S --noconfirm brightnessctl wl-clipboard bottom
 pacman -S --noconfirm curl unzip wget lm_sensors
 # notify
 pacman -S --noconfirm libnotify swaync
@@ -230,6 +230,7 @@ pacman -S cliphist
 sudo -u "$USER_NAME" bash -c 'paru -S oculante'
 # wallpaper
 sudo -u "$USER_NAME" bash -c 'paru -S wallust'
+sudo -u "$USER_NAME" bash -c 'paru -S swww'
 # screeshot
 pacman -S --noconfirm grim slurp swappy
 sudo -u "${USER_NAME}" bash -c 'paru -S grimblast-git'
