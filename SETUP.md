@@ -208,22 +208,28 @@ bootctl install
 
 bootctl
 
-# /boot/EFI/systemd/systemd-bootx64.efi
-# /boot/loader/loader.conf
-# /boot/loader/entries/
+# /boot//EFI/systemd/systemd-bootx64.efi
+# /boot//EFI/BOOT/BOOTX64.EFI
+# /boot//loader/loader.conf
 
 ls -R /boot
 
 # /boot:
-#   EFI initramfs-linux.img intel-ucode.img loader vmlinuz-linux
+#   EFI initramfs-linux-zen.img intel-ucode.img loader vmlinuz-linux-zen
 # /boot/EFI:
 #   BOOT Linux systemd
 # /boot/EFI/BOOT:
 #   BOOTX64.EFI
+# /boot/EFI/Linux:
+#
+# /boot/EFI/systemd:
+# systemd-bootx64.efi
 # /boot/loader:
 #   entries entries.srel keys loader.conf random-seed
 # /boot/loader/entries:
-#   arch.conf
+#
+# /boot/loeader/keys:
+#
 
 cat > /boot/loader/loader.conf <<EOF
 default  arch.conf
