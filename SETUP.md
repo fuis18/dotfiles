@@ -39,7 +39,7 @@ cfdisk
 | /dev/sda1 | 1G    | EFI System       | boot  |
 | /dev/sda2 | 100G  | Linux filesystem | root  |
 | /dev/sda3 | resto | Linux filesystem | home  |
-| /dev/sda3 | 5GB   | Linux swap       | swap  |
+| /dev/sda4 | 5GB   | Linux swap       | swap  |
 
 ```sh
 lsblk
