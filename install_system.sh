@@ -212,7 +212,7 @@ echo -e "${RESET}"
 pacman -S hyprpolkitagent
 sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown'
 # launcher
-sudo -u "${USER_NAME}" bash -c 'paru -S anyrun'
+sudo -u "${USER_NAME}" bash -c 'paru -S walker'
 # taskbar
 pacman -S ironbar
 # window switcher
@@ -228,6 +228,8 @@ sudo -u "${USER_NAME}" bash -c 'paru -S wlogout'
 pacman -S cliphist
 # galeria
 sudo -u "$USER_NAME" bash -c 'paru -S oculante'
+# wallpaper
+sudo -u "$USER_NAME" bash -c 'paru -S wallust'
 # screeshot
 pacman -S --noconfirm grim slurp swappy
 sudo -u "${USER_NAME}" bash -c 'paru -S grimblast-git'
