@@ -211,7 +211,7 @@ echo -e "${RESET}"
 
 sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown'
 # launcher
-sudo -u "${USER_NAME}" bash -c 'paru -S walker'
+sudo -u "${USER_NAME}" bash -c 'paru -S walker-bin'
 # taskbar
 pacman -S ironbar
 # window switcher
