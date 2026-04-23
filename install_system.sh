@@ -258,14 +258,6 @@ cp -r "${FUIS_REPO}/root/config/." /root/.config/
 cp -r "${FUIS_REPO}/root/zshrc" /root/
 mv /root/zshrc /root/.zshrc
 
-# .config
-sudo -u "$USER_NAME" cp -r "${FUIS_REPO}/config/." "${USER_HOME}/.config/"
-
-sudo -u "$USER_NAME" cp -r "${FUIS_REPO}/zshrc" "${USER_HOME}/"
-mv "${USER_HOME}/zshrc" "${USER_HOME}/.zshrc"
-
-find "${USER_HOME}/.config/hypr/scripts/" -type f -name "*.sh" -exec chmod +x {} \;
-
 sudo -u "$USER_NAME" mkdir -p "$USER_HOME/.config/mpd/playlists"
 
 echo ""
@@ -277,4 +269,4 @@ echo ""
 echo ""
 echo ""
 echo ""
-reboot
+sudo bash ./update_system.sh
