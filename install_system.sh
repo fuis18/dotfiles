@@ -240,6 +240,8 @@ sudo -u "$USER_NAME" bash -c 'paru -S swww'
 # screeshot
 pacman -S --noconfirm grim slurp swappy
 sudo -u "${USER_NAME}" bash -c 'paru -S grimblast-git'
+# fnm
+sudo -u "$USER_NAME" bash -c 'paru -S fnm-bin'
 
 pacman -S sccache
 
