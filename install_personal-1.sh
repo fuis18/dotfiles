@@ -39,7 +39,7 @@ echo -e "       /_.-'         '-._\\"
 echo -e "${RESET}"
 
 pacman -S --noconfirm fastfetch
-sudo -u "$USER_NAME" bash -c 'paru -S cbonsai-bin'
+sudo -u "$USER_NAME" bash -c 'paru -S cbonsai'
 
 sudo -u "$USER_NAME" bash -c 'paru -S cmatrix-git'
 
