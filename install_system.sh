@@ -230,7 +230,7 @@ echo -e "${RESET}"
 
 sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown'
 # launcher
-sudo -u "${USER_NAME}" bash -c 'paru -S walker'
+sudo -u "${USER_NAME}" bash -c 'paru -S walker-bin'
 # taskbar
 pacman -S ironbar
 # window switcher
@@ -253,8 +253,6 @@ pacman -S --noconfirm grim slurp swappy
 sudo -u "${USER_NAME}" bash -c 'paru -S grimblast-git'
 # fnm
 sudo -u "$USER_NAME" bash -c 'paru -S fnm-bin'
-
-pacman -S sccache
 
 echo ""
 echo -e "${BLUE} ================================="
