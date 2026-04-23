@@ -24,26 +24,6 @@ echo -e "${RESET}"
 pacman -Syu
 
 echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ======== Logo Arch Linux ========"
-echo -e "${BLUE}         .         "
-echo -e "               / \\       "
-echo -e "              /   \\      "
-echo -e "             /\    \\     "
-echo -e "            /  \    \\    "
-echo -e "           /         \\   "
-echo -e "          /    .-.    \\  "
-echo -e "         /    |   |   _\\ "
-echo -e "        /   _.'   '._   \\"
-echo -e "       /_.-'         '-._\\"
-echo -e "${RESET}"
-
-pacman -S --noconfirm fastfetch
-sudo -u "$USER_NAME" bash -c 'paru -S cbonsai'
-
-sudo -u "$USER_NAME" bash -c 'paru -S cmatrix-git'
-
-echo ""
 echo -e "${BLUE} =================================="
 echo -e "${GREEN} ====== Instalando el Editor ======"
 echo -e "${BLUE} =================================="
