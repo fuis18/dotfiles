@@ -6,13 +6,13 @@
 }
 {
     "label" : "reboot",
-    "action" : "systemctl reboot",
+    "action" : "~/.config/hypr/scripts/shutdown_graceful.sh reboot",
     "text" : "Reboot",
     "keybind" : "r"
 }
 {
     "label" : "shutdown",
-    "action" : "systemctl poweroff",
+    "action" : "~/.config/hypr/scripts/shutdown_graceful.sh shutdown",
     "text" : "Shutdown",
     "keybind" : "s"
 }
