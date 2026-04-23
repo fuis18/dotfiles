@@ -39,7 +39,7 @@ echo -e "       /_.-'         '-._\\"
 echo -e "${RESET}"
 
 pacman -S --noconfirm fastfetch
-pacman -S --noconfirm cbonsai
+sudo -u "$USER_NAME" bash -c 'paru -S cbonsai-bin'
 
 sudo -u "$USER_NAME" bash -c 'paru -S cmatrix-git'
 
@@ -58,9 +58,9 @@ echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
 # browsers
-sudo -u "$USER_NAME" bash -c 'yay -S brave-bin'
+sudo -u "$USER_NAME" bash -c 'paru -S brave-bin'
 sudo -u "$USER_NAME" bash -c 'paru -S google-chrome'
-sudo -u "$USER_NAME" bash -c 'yay -S librewolf-bin'
+sudo -u "$USER_NAME" bash -c 'paru -S librewolf-bin'
 
 # notas
 sudo -u "$USER_NAME" bash -c 'paru -S obsidian-bin'
