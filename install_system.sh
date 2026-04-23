@@ -234,6 +234,8 @@ sudo -u "$USER_NAME" bash -c 'paru -S swww'
 pacman -S --noconfirm grim slurp swappy
 sudo -u "${USER_NAME}" bash -c 'paru -S grimblast-git'
 
+pacman -S sccache
+
 echo ""
 echo -e "${BLUE} =================================="
 echo -e "${GREEN} ==== Creating the directories ===="
