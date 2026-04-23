@@ -27,6 +27,18 @@ pacman -S --noconfirm base-devel wayland hyprland hyprlock hypridle wget hyprpol
 
 pacman -S --noconfirm xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 pacman -S --noconfirm qt6-base qt6-declarative
+pacman -S --noconfirm upower gnome-keyring
+
+echo ""
+echo -e "${BLUE} ================================="
+echo -e "${GREEN} ============ Drivers ============"
+echo -e "${BLUE} ================================="
+echo -e "${RESET}"
+echo ""
+
+pacmam -S --noconfirm libva
+pacmam -S --noconfirm libva-intel-driver  # O mesa-vdpau para AMD;
+pacmam -S --noconfirm intel-media-driver  # O mesa libva-mesa-driver
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -126,7 +138,7 @@ systemctl enable NetworkManager
 systemctl enable bluetooth
 systemctl start bluetooth
 
-pacman -S bluetui
+pacman -S --noconfirm bluetui
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -200,8 +212,7 @@ sudo pacman -S --noconfirm \
     gst-libav \
     gst-plugins-good \
     gst-plugins-bad \
-    gst-plugins-ugly \
-    libva-intel-driver  # O mesa-vdpau para AMD;
+    gst-plugins-ugly
 
 # 3. Reproducción: Máxima potencia, mínima RAM
 pacman -S --noconfirm \
