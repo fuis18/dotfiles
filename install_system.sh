@@ -96,7 +96,7 @@ echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
 pacman -S --noconfirm brightnessctl wl-clipboard bottom
-pacman -S --noconfirm curl unzip wget lm_sensors
+pacman -S --noconfirm curl unzip wget lm_sensors ffmpeg
 # notify
 pacman -S --noconfirm libnotify swaync
 
