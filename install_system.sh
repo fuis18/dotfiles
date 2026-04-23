@@ -96,7 +96,7 @@ echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
 pacman -S --noconfirm brightnessctl wl-clipboard bottom
-pacman -S --noconfirm curl unzip wget lm_sensors ffmpeg pkg-config
+pacman -S --noconfirm curl unzip wget lm_sensors pkg-config
 # notify
 pacman -S --noconfirm libnotify swaync
 
@@ -120,12 +120,9 @@ echo -e "${GREEN} ===== Network Configuration ====="
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm wpa_supplicant bluez bluez-utils dbus
-pacman -S --noconfirm ufw
+pacman -S --noconfirm wpa_supplicant bluez bluez-utils ufw dbus
 
 systemctl enable NetworkManager
-systemctl enable wpa_supplicant
-systemctl start wpa_supplicant
 systemctl enable bluetooth
 systemctl start bluetooth
 
@@ -188,20 +185,31 @@ echo -e "${GREEN} ==== Multimedia applications ===="
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-# audio
-pacman -S --noconfirm pipewire pipewire-pulse wireplumber
-pacman -S --noconfirm pipewire-alsa alsa-utils
-# codecs
-pacman -S --noconfirm gst-libav gst-plugins-good gst-plugins-bad gst-plugins-ugly
-# video
-pacman -S --noconfirm mpv
-# musica
-pacman -S --noconfirm mpd mpc
-pacman -S --noconfirm fftw ncmpcpp cava
-# controls
-pacman -S --noconfirm pulsemixer
+# 1. PipeWire: El motor de audio y video unificado
+pacman -S --noconfirm pipewire \
+pipewire-pulse \
+pipewire-alsa \
+pipewire-jack \
+wireplumber \
+pavucontrol \
+pulsemixer
 
-pacman -S cliphist
+# 2. Codecs: Los motores esenciales para video/audio
+sudo pacman -S --noconfirm \
+    ffmpeg \
+    gst-libav \
+    gst-plugins-good \
+    gst-plugins-bad \
+    gst-plugins-ugly \
+    libva-intel-driver  # O mesa-vdpau para AMD;
+
+# 3. Reproducción: Máxima potencia, mínima RAM
+pacman -S --noconfirm \
+    mpv \
+    cava \
+    yt-dlp
+
+sudo -u "$USER_NAME" bash -c 'paru -S musikcube'
 
 echo ""
 echo -e "${BLUE} =============================="
