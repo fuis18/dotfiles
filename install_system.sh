@@ -27,8 +27,7 @@ pacman -S --noconfirm base-devel wayland hyprland hyprlock hypridle wget hyprpol
 
 pacman -S --noconfirm xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 pacman -S --noconfirm qt6-base qt6-declarative
-pacman -S --noconfirm upower gnome-keyring
-
+pacman -S --noconfirm upower gnome-keyring xsettingsd
 echo ""
 echo -e "${BLUE} ================================="
 echo -e "${GREEN} ============ Drivers ============"
