@@ -47,7 +47,7 @@ pacman -S --noconfirm blender
 pacman -S --noconfirm gimp krita
 pacman -S --noconfirm obs-studio
 
-pacman -S --noconfirm texlive-most pandoc
+pacman -S --noconfirm texlive-basic texlive-latex texlive-latexextra texlive-fontsextra texlive-bibtexextra texlive-pictures pandoc
 
 pacman -S --noconfirm rclone
 
