@@ -255,6 +255,15 @@ sudo -u "${USER_NAME}" bash -c 'paru -S grimblast-git'
 sudo -u "$USER_NAME" bash -c 'paru -S fnm-bin'
 
 echo ""
+echo -e "${BLUE} =================================="
+echo -e "${GREEN} ========== Theme System =========="
+echo -e "${BLUE} =================================="
+echo -e "${RESET}"
+
+pacman -S --noconfirm papirus-icon-theme
+sudo -u "${USER_NAME}" bash -c 'paru -S papirus-folders-catppuccin-git catppuccin-gtk-theme-mocha'
+
+echo ""
 echo -e "${BLUE} ================================="
 echo -e "${GREEN} ======== Logo Arch Linux ========"
 echo -e "${BLUE}         .         "
