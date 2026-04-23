@@ -298,8 +298,6 @@ cp -r "${FUIS_REPO}/root/config/." /root/.config/
 cp -r "${FUIS_REPO}/root/zshrc" /root/
 mv /root/zshrc /root/.zshrc
 
-sudo -u "$USER_NAME" mkdir -p "$USER_HOME/.config/mpd/playlists"
-
 echo ""
 echo -e "${BLUE}=================================="
 echo -e "${GREEN}============= READY! ============="
