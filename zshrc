@@ -4,6 +4,7 @@
 export _JAVA_AWT_WM_NONREPARENTING=1
 export SYSTEMD_PAGER=cat
 export CARGO_BUILD_JOBS=2
+export RUSTC_WRAPPER=sccache
 
 # Enable history
 setopt histignorealldups sharehistory
