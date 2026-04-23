@@ -12,14 +12,15 @@ if systemctl --user status >/dev/null 2>&1; then
   systemctl --user start syncthing.service
 fi
 
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+RESET='\033[0m'
+
 echo ""
 echo -e "${BLUE} =================================="
 echo -e "${GREEN} ========== Theme System =========="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
-
-pacman -S --noconfirm papirus-icon-theme
-paru -S papirus-folders-catppuccin-git catppuccin-gtk-theme-mocha
 
 papirus-folders -C cat-mocha-blue --theme Papirus-Dark
 
