@@ -43,6 +43,8 @@ cfdisk
 | /dev/sda3 | resto | Linux filesystem | home  |
 | /dev/sda4 | 5GB   | Linux swap       | swap  |
 
+Nuevo sistema de archivos Btrfs
+
 ```sh
 lsblk
 
