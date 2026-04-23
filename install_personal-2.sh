@@ -27,6 +27,7 @@ pacman -S --noconfirm github-cli
 pacman -S --noconfirm lazygit
 
 pacman -S --noconfirm docker docker-compose docker-buildx
+pacman -S --noconfirm sccache
 
 sudo -u "$USER_NAME" bash -c 'paru -S oxker-bin'
 
