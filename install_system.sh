@@ -23,7 +23,7 @@ echo -e "${GREEN} ===== Installing Base System ====="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm base-devel wayland hyprland hyprlock hypridle wget
+pacman -S --noconfirm base-devel wayland hyprland hyprlock hypridle wget hyprpolkitagent
 
 pacman -S --noconfirm xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 pacman -S --noconfirm qt6-base qt6-declarative
@@ -209,7 +209,6 @@ echo -e "${GREEN} === APPS System Defatuls ==="
 echo -e "${BLUE} =============================="
 echo -e "${RESET}"
 
-pacman -S hyprpolkitagent
 sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown'
 # launcher
 sudo -u "${USER_NAME}" bash -c 'paru -S walker'
