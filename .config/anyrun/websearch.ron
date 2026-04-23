@@ -3,37 +3,26 @@ Config(
     engines: [
         Custom(
             name: "Brave",
-            prefix: "b",
             url: "https://search.brave.com/search?q={}",
         ),
         Custom(
             name: "DuckDuckGo",
-            prefix: "d",
             url: "https://duckduckgo.com/?q={}",
         ),
         Custom(
-            name: "Google",
-            prefix: "g",
-            url: "https://google.com/search?q={}",
-        ),
-        Custom(
             name: "YouTube",
-            prefix: "yt",
             url: "https://www.youtube.com/results?search_query={}",
         ),
         Custom(
             name: "GitHub",
-            prefix: "gh",
             url: "https://github.com/search?q={}",
         ),
         Custom(
             name: "Arch Wiki",
-            prefix: "aw",
             url: "https://wiki.archlinux.org/index.php?search={}",
         ),
         Custom(
             name: "AUR",
-            prefix: "aur",
             url: "https://aur.archlinux.org/packages?K={}",
         ),
     ],
