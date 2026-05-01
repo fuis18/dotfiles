@@ -85,7 +85,7 @@ echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
 pacman -S --noconfirm kitty zsh starship zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
-pacman -S --noconfirm bat lsd fzf
+pacman -S --noconfirm bat lsd fzf tree
 
 echo ""
 echo -e "${BLUE} ================================"
