@@ -109,9 +109,11 @@ button,
 .network {
 	background: @bg_transparent;
 }
+
 .cava {
 	background: @bg_primary;
 }
+
 .bluetooth,
 .volume {
 	background: @bg_secondary;

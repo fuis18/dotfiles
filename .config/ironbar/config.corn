@@ -62,8 +62,6 @@ let {
     bar = [ $icon_r ]
   }
 
-  // l
-
   $launcher = {
     type = "custom"
     bar = [{
@@ -112,8 +110,10 @@ let {
     class = "window"
     show_icon = true
     show_title = true
-    truncate	= "end"
-		truncate.max_length = 30
+    truncate	= {
+			mode = "end"
+			max_lenght = 30
+		}
   }
 
   // center
