@@ -3,27 +3,27 @@ Config(
     engines: [
         Custom(
             name: "Brave",
-            url: "https://search.brave.com/search?q={}",
+            url: "search.brave.com/search?q={}",
         ),
         Custom(
             name: "DuckDuckGo",
-            url: "https://duckduckgo.com/?q={}",
+            url: "duckduckgo.com/?q={}",
         ),
         Custom(
             name: "YouTube",
-            url: "https://www.youtube.com/results?search_query={}",
+            url: "youtube.com/results?search_query={}",
         ),
         Custom(
             name: "GitHub",
-            url: "https://github.com/search?q={}",
+            url: "github.com/search?q={}",
         ),
         Custom(
             name: "Arch Wiki",
-            url: "https://wiki.archlinux.org/index.php?search={}",
+            url: "wiki.archlinux.org/index.php?search={}",
         ),
         Custom(
             name: "AUR",
-            url: "https://aur.archlinux.org/packages?K={}",
+            url: "aur.archlinux.org/packages?K={}",
         ),
     ],
 )
