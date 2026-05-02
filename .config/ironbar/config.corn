@@ -195,7 +195,7 @@ let {
     type = "custom"
     bar = [{
       type = "button"
-      on_click = "!kitty -e pulsemixer"
+      on_click = "!pavucontrol"
       widgets = [{
         type = "volume"
         format = "{icon} {percentage}%"
