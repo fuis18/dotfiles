@@ -46,7 +46,7 @@ pacman -S --noconfirm muse # musescore
 
 pacman -S --noconfirm blender
 pacman -S --noconfirm gimp krita
-pacman -S --noconfirm obs-studio
+
 sudo -u "$USER_NAME" bash -c 'paru -S tlauncher-installer'
 
 pacman -S --noconfirm texlive-basic texlive-latex texlive-latexextra texlive-fontsextra texlive-bibtexextra texlive-pictures pandoc

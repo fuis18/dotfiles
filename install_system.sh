@@ -84,7 +84,8 @@ echo -e "${GREEN} ====== Installing Terminal ======"
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm kitty zsh starship zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
+pacman -S --noconfirm kitty zsh starship
+pacman -S --noconfirm zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
 pacman -S --noconfirm bat lsd fzf tree
 
 echo ""
@@ -220,7 +221,14 @@ pacman -S --noconfirm \
     cava \
     yt-dlp
 
-sudo -u "$USER_NAME" bash -c 'paru -S musikcube'
+echo ""
+echo -e "${BLUE} =================================="
+echo -e "${GREEN} ====== Instalando el Editor ======"
+echo -e "${BLUE} =================================="
+echo -e "${RESET}"
+
+pacman -S --noconfirm vim neovim
+pacman -S --noconfirm wl-clipboard
 
 echo ""
 echo -e "${BLUE} =============================="
@@ -230,7 +238,7 @@ echo -e "${RESET}"
 
 sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown'
 # launcher
-sudo -u "${USER_NAME}" bash -c 'paru -S anyrun walker-bin'
+sudo -u "${USER_NAME}" bash -c 'paru -S anyrun'
 # taskbar
 pacman -S ironbar
 # window switcher
@@ -248,11 +256,13 @@ sudo -u "$USER_NAME" bash -c 'paru -S oculante'
 # wallpaper
 sudo -u "$USER_NAME" bash -c 'paru -S wallust'
 sudo -u "$USER_NAME" bash -c 'paru -S swww'
-# screeshot
+# screenshot
 pacman -S --noconfirm grim slurp swappy
-sudo -u "${USER_NAME}" bash -c 'paru -S grimblast-git'
+sudo -u "${USER_NAME}" bash -c 'paru -S grimblast'
 # fnm
 sudo -u "$USER_NAME" bash -c 'paru -S fnm-bin'
+# music
+sudo -u "$USER_NAME" bash -c 'paru -S musikcube'
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -280,7 +290,6 @@ echo -e "${RESET}"
 
 pacman -S --noconfirm fastfetch
 sudo -u "$USER_NAME" bash -c 'paru -S cbonsai'
-
 sudo -u "$USER_NAME" bash -c 'paru -S cmatrix-git'
 
 echo ""

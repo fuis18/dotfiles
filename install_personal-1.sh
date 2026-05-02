@@ -25,14 +25,6 @@ pacman -Syu
 
 echo ""
 echo -e "${BLUE} =================================="
-echo -e "${GREEN} ====== Instalando el Editor ======"
-echo -e "${BLUE} =================================="
-echo -e "${RESET}"
-
-pacman -S --noconfirm vim neovim
-
-echo ""
-echo -e "${BLUE} =================================="
 echo -e "${GREEN} ========== Applications =========="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
@@ -56,6 +48,7 @@ pacman -S --noconfirm discord
 # Edition
 pacman -S --noconfirm kdenlive
 pacman -S --noconfirm inkscape
+pacman -S --noconfirm obs-studio
 
 # conexions
 pacman -S --noconfirm kdeconnect
