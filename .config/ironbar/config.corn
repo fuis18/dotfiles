@@ -70,7 +70,7 @@ let {
       type = "button"
       class = "launcher"
       label = "APPS"
-      on_click = "!spacedrive"
+      on_click = "!anyrun"
     }]
   }
 
@@ -91,7 +91,7 @@ let {
     type = "custom"
     bar = [{
       type = "button"
-      on_click = "!kitty -e btop"
+      on_click = "!kitty -e btm"
       widgets = [{
         type = "sys_info"
         class = "performance"
@@ -113,6 +113,7 @@ let {
     show_icon = true
     show_title = true
     truncate	= "end"
+		truncate.max_length = 30
   }
 
   // center
@@ -128,7 +129,7 @@ let {
     type = "custom"
     bar = [{
       type = "button"
-      on_click = "!kitty -e nmtui"
+      on_click = "!kitty -e impala"
       widgets = [{
         type = "sys_info"
         class = "network"
@@ -224,26 +225,6 @@ let {
     }]
   }
 
-  $memory = {
-    type = "custom"
-    bar = [{
-      type = "button"
-      on_click = "!kitty -e btop"
-      widgets = [{
-        type = "sys_info"
-        class = "memory"
-
-        interval.memory = 30
-        interval.disks = 300
-
-        format = [
-          "  {memory_percent}%"
-          "󰋊 {disk_percent@/}%"
-        ]
-      }] 
-    }]
-  }
-
   $battery = {
     type = "battery"
     format = "{percentage}%"
@@ -284,7 +265,7 @@ let {
     $volume
     $bluetooth
     $upper_r
-    $memory
+    $battery
     $wlogout
   ]
 }

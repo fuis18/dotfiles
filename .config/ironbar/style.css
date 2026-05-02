@@ -64,7 +64,7 @@ button,
 .cava,
 .volume,
 .bluetooth,
-.memory,
+.battery,
 .wlogout {
 	padding: 0 10px;
 }
@@ -117,7 +117,7 @@ button,
 	background: @bg_secondary;
 }
 
-.memory,
+.battery,
 .wlogout {
 	background: @bg_primary;
 }

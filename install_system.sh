@@ -139,7 +139,7 @@ systemctl enable NetworkManager
 systemctl enable bluetooth
 systemctl start bluetooth
 
-pacman -S --noconfirm bluetui
+pacman -S --noconfirm impala bluetui
 
 echo ""
 echo -e "${BLUE} =================================="
