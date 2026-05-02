@@ -1,15 +1,14 @@
 * {
 	margin: 0;
 	padding: 0;
-	box-sizing: border-box;
 	font-family: "FiraCode Nerd Font", "Noto Sans", monospace;
 }
 
-#window {
+window {
 	background: transparent;
 }
 
-#main {
+box.main {
 	background: transparent;
 }
 
@@ -44,7 +43,7 @@
 
 row {
 	background: transparent;
-	border-radius: 8px;
+	border-radius: 5px;
 	padding: 4px 6px;
 	color: #cdd6f4;
 	font-size: 13px;
