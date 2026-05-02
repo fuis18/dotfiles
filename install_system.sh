@@ -110,7 +110,7 @@ pacman -S --noconfirm brightnessctl wl-clipboard bottom
 pacman -S --noconfirm curl unzip wget lm_sensors pkg-config
 # notify
 pacman -S --noconfirm libnotify swaync
-pacman -S --noconfirm debtap
+pacman -S --noconfirm debtap openssh
 
 echo ""
 echo -e "${BLUE} ================================="
