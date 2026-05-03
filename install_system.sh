@@ -204,9 +204,9 @@ pulsemixer
 # 2. Codecs: Los motores esenciales para video/audio
 sudo pacman -S --noconfirm \
     ffmpeg \
-		ffmpegthumbs \
-		taglib \
-	  gst-libav \
+	ffmpegthumbs \
+	taglib \
+	gst-libav \
     gst-plugins-good \
     gst-plugins-bad \
     gst-plugins-ugly
@@ -240,7 +240,7 @@ pacman -S ironbar
 # window switcher
 sudo -u "${USER_NAME}" bash -c 'paru -S hyprswitch'
 # file explorer
-sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive'
+sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive-clean'
 pacman -S --noconfirm yazi
 sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag'
 # logout
