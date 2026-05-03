@@ -152,39 +152,6 @@ mount | grep /mnt
 lsblk -f
 ```
 
-#### Snapper
-
-```sh
-pacman -S snapper snap-pac
-
-snapper -c root create-config /
-
-btrfs subvolume list /mnt | grep snapshots
-
-mkdir -p /etc/snapper/configs
-nvim /etc/snapper/configs/root
-```
-
-```ini
-TIMELINE_CREATE="yes"
-TIMELINE_CLEANUP="yes"
-
-NUMBER_LIMIT="10"
-NUMBER_LIMIT_IMPORTANT="5"
-
-TIMELINE_LIMIT_HOURLY="5"
-TIMELINE_LIMIT_DAILY="7"
-TIMELINE_LIMIT_WEEKLY="2"
-TIMELINE_LIMIT_MONTHLY="1"
-TIMELINE_LIMIT_YEARLY="0"
-```
-
-```sh
-# Activar timers
-systemctl enable snapper-timeline.timer
-systemctl enable snapper-cleanup.timer
-```
-
 ---
 
 ### GRUB
@@ -266,6 +233,48 @@ arch-chroot /mnt
 mount | grep boot
 ```
 
+#### Snapper (Only Btrfs)
+
+Snapper no puede crear la config si `@snapshots` ya está montado en `/.snapshots`. El truco es desmontarlo desde el **USB live** (con prefijo `/mnt`), dejar que snapper cree su propio subvolumen, borrarlo, y volver a montar `@snapshots`.
+
+Instalar dentro del chroot:
+
+```sh
+pacman -S snapper snap-pac
+```
+
+Salir del chroot y hacer el intercambio desde el USB live:
+
+```sh
+exit
+
+# 1. Desmontar @snapshots
+umount /mnt/.snapshots
+rm -rf /mnt/.snapshots
+
+# 2. Volver al chroot y crear la config
+arch-chroot /mnt
+snapper -c root create-config /
+
+# 3. Salir y borrar el subvolumen que creó snapper
+exit
+btrfs subvolume delete /mnt/.snapshots
+
+# 4. Remontar @snapshots
+mkdir -p /mnt/.snapshots
+chmod 750 /mnt/.snapshots
+mount -o noatime,compress=zstd,space_cache=v2,subvol=@snapshots /dev/sda2 /mnt/.snapshots
+
+# 5. Volver al chroot para continuar
+arch-chroot /mnt
+```
+
+```sh
+# Activar timers
+systemctl enable snapper-timeline.timer
+systemctl enable snapper-cleanup.timer
+```
+
 #### Desactivar y desmontar
 
 ```sh
@@ -317,7 +326,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ```sh
 # rm /boot/loader/entries/*.conf
 
-mount -o remount,rw /boot
 daemon-reload
 
 bootctl install
@@ -396,8 +404,7 @@ UUID=XXXX-XXXX  /boot  vfat  rw,relatime,fmask=0077,dmask=0077,codepage=437,ioch
 ```sh
 mkinitcpio -P
 
-bootctl update
-mount -o remount,ro /boot
+bootctl list
 ```
 
 ## End
@@ -431,7 +438,6 @@ systemctl enable NetworkManager
 ```
 
 ```sh
-bootctl list
 
 exit
 reboot
