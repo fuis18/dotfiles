@@ -1,5 +1,8 @@
 # ~/.zshrc
 
+export QT_QPA_PLATFORM="wayland;xcb"
+export XDG_SESSION_TYPE=wayland
+
 # Fix the Java Problem
 export _JAVA_AWT_WM_NONREPARENTING=1
 export SYSTEMD_PAGER=cat

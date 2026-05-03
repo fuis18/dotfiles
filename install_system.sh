@@ -23,11 +23,20 @@ echo -e "${GREEN} ===== Installing Base System ====="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm base-devel wayland hyprland hyprlock hypridle wget hyprpolkitagent
-
+pacman -S --noconfirm base-devel wayland hyprland hyprlock hypridle hyprpolkitagent
 pacman -S --noconfirm xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
-pacman -S --noconfirm qt6-base qt6-declarative
+
+echo ""
+echo -e "${BLUE} =================================="
+echo -e "${GREEN} ============== Core =============="
+echo -e "${BLUE} =================================="
+echo -e "${RESET}"
+
+pacman -S --noconfirm gtk4 gtk4-layer-shell pkg-config
+pacman -S --noconfim wget openssh openssl
+pacman -S --noconfirm qt6-base qt6-declarative qt6-wayland qt5-wayland
 pacman -S --noconfirm upower gnome-keyring xsettingsd
+
 echo ""
 echo -e "${BLUE} ================================="
 echo -e "${GREEN} ============ Drivers ============"
@@ -87,6 +96,7 @@ echo -e "${RESET}"
 pacman -S --noconfirm kitty zsh starship
 pacman -S --noconfirm zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
 pacman -S --noconfirm bat lsd fzf tree
+pacman -S --noconfirm sccache
 
 echo ""
 echo -e "${BLUE} ================================"
@@ -111,7 +121,6 @@ pacman -S --noconfirm brightnessctl wl-clipboard bottom
 pacman -S --noconfirm curl unzip wget lm_sensors pkg-config
 # notify
 pacman -S --noconfirm libnotify swaync
-pacman -S --noconfirm debtap openssh
 
 echo ""
 echo -e "${BLUE} ================================="
@@ -210,7 +219,9 @@ pulsemixer
 # 2. Codecs: Los motores esenciales para video/audio
 sudo pacman -S --noconfirm \
     ffmpeg \
-    gst-libav \
+		ffmpegthumbs \
+		taglib \
+	  gst-libav \
     gst-plugins-good \
     gst-plugins-bad \
     gst-plugins-ugly
@@ -250,12 +261,15 @@ sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag'
 # logout
 sudo -u "${USER_NAME}" bash -c 'paru -S wlogout'
 # copy history
-pacman -S cliphist
+pacman -S --noconfirm cliphist
+# texteditor
+pacman -S --noconfirm gnome-text-editor
+pacman -S --noconfirm aspell-es aspell-en nuspell
 # galeria
 sudo -u "$USER_NAME" bash -c 'paru -S oculante'
 # wallpaper
-sudo -u "$USER_NAME" bash -c 'paru -S wallust'
 sudo -u "$USER_NAME" bash -c 'paru -S swww'
+sudo -u "$USER_NAME" bash -c 'paru -S wallust'
 # screenshot
 pacman -S --noconfirm grim slurp swappy
 sudo -u "${USER_NAME}" bash -c 'paru -S grimblast'

@@ -16,7 +16,7 @@ exit
 ping www.archlinux.org
 ```
 
-### Keyring
+## Keyring
 
 ```sh
 pacman-key --init
@@ -26,22 +26,22 @@ pacman -Sy archlinux-keyring
 sudo pacman -Sy
 ```
 
-### Partition
+## Partition
 
 ```sh
 cfdisk
 ```
 
-#### UEFI
+---
 
-// arqiotectura XBOOTLDR
+### UEFI - ext4
 
 | Device    | Size  | Type             | Label |
 | --------- | ----- | ---------------- | ----- |
 | /dev/sda1 | 1G    | EFI System       | boot  |
 | /dev/sda2 | 100G  | Linux filesystem | root  |
 | /dev/sda3 | resto | Linux filesystem | home  |
-| /dev/sda4 | 5GB   | Linux swap       | swap  |
+| /dev/sda4 | 4GB   | Linux swap       | swap  |
 
 Nuevo sistema de archivos Btrfs
 
@@ -74,7 +74,120 @@ mount /dev/sda3 /mnt/home
 swapon /dev/sda4
 ```
 
-#### GRUB
+---
+
+### UEFI - Btrfs
+
+| Device    | Size  | Type             | Label |
+| --------- | ----- | ---------------- | ----- |
+| /dev/sda1 | 1G    | EFI System       | boot  |
+| /dev/sda2 | resto | Linux filesystem | root  |
+| /dev/sda3 | 4GB   | Linux swap       | swap  |
+
+
+```sh
+lsblk
+
+# EFI
+mkfs.fat -F 32 /dev/sda1
+# Root (Btrfs)
+mkfs.btrfs -L root /dev/sda2
+# Swap
+mkswap /dev/sda3
+```
+
+#### Crear subvolúmenes
+
+```sh
+# Montar root temporalmente para crear subvolúmenes
+mount /dev/sda2 /mnt
+
+btrfs subvolume create /mnt/@
+btrfs subvolume create /mnt/@home
+btrfs subvolume create /mnt/@snapshots
+btrfs subvolume create /mnt/@log
+btrfs subvolume create /mnt/@cache
+
+umount /mnt
+```
+
+#### Montar subvolúmenes
+
+
+```sh
+# Opciones recomendadas para Btrfs
+OPTS="noatime,compress=zstd,space_cache=v2,commit=120"
+
+# Root (@)
+mount -o ${OPTS},subvol=@ /dev/sda2 /mnt
+
+# Home (@home)
+mkdir -p /mnt/home
+mount -o ${OPTS},subvol=@home /dev/sda2 /mnt/home
+
+# Snapshots
+mkdir -p /mnt/.snapshots
+mount -o ${OPTS},subvol=@snapshots /dev/sda2 /mnt/.snapshots
+
+# Logs
+mkdir -p /mnt/var/log
+mount -o ${OPTS},subvol=@log /dev/sda2 /mnt/var/log
+
+# Cache
+mkdir -p /mnt/var/cache
+mount -o ${OPTS},subvol=@cache /dev/sda2 /mnt/var/cache
+
+# EFI
+mkdir -p /mnt/boot
+mount /dev/sda1 /mnt/boot
+
+# Swap
+swapon /dev/sda3
+```
+
+#### Verificar montaje
+
+```sh
+mount | grep /mnt
+lsblk -f
+```
+
+#### Snapper
+
+```sh
+pacman -S snapper snap-pac
+
+snapper -c root create-config /
+
+btrfs subvolume list /mnt | grep snapshots
+
+mkdir -p /etc/snapper/configs
+nvim /etc/snapper/configs/root
+```
+
+```ini
+TIMELINE_CREATE="yes"
+TIMELINE_CLEANUP="yes"
+
+NUMBER_LIMIT="10"
+NUMBER_LIMIT_IMPORTANT="5"
+
+TIMELINE_LIMIT_HOURLY="5"
+TIMELINE_LIMIT_DAILY="7"
+TIMELINE_LIMIT_WEEKLY="2"
+TIMELINE_LIMIT_MONTHLY="1"
+TIMELINE_LIMIT_YEARLY="0"
+```
+
+```sh
+# Activar timers
+systemctl enable snapper-timeline.timer
+systemctl enable snapper-cleanup.timer
+```
+
+---
+
+### GRUB
 
 | Device    | Size  | Type             | Label |
 | --------- | ----- | ---------------- | ----- |
@@ -86,11 +199,11 @@ swapon /dev/sda4
 ```sh
 lsblk
 
-# root
+# Root
 mkfs.ext4 /dev/sda2
-# home
+# Home
 mkfs.ext4 /dev/sda3
-# swap
+# Swap
 mkswap /dev/sda4
 ```
 
@@ -104,11 +217,10 @@ mount /dev/sda3 /mnt/home
 swapon /dev/sda4
 ```
 
-### Pacstrap
+## Pacstrap
 
 ```sh
 lsblk -f
-
 mount | grep mnt
 ```
 
@@ -136,7 +248,9 @@ lscpu
 | --------------------------- | ------------------------- |
 | `pacstrap /mnt intel-ucode` | `pacstrap /mnt amd-ucode` |
 
-### Genfstab
+> Para Btrfs, instalar también: `pacstrap /mnt btrfs-progs`
+
+#### Genfstab
 
 ```sh
 rm /mnt/etc/fstab
@@ -152,7 +266,7 @@ arch-chroot /mnt
 mount | grep boot
 ```
 
-#### Desactivar
+#### Desactivar y desmontar
 
 ```sh
 swapoff /mnt/swapfile
@@ -161,7 +275,7 @@ umount -l /mnt
 umount /mnt/home
 ```
 
-### Swap
+### Swap (zram)
 
 ```sh
 swapon --show
@@ -188,9 +302,9 @@ nvim /etc/sysctl.d/99-swappiness.conf
 vm.swappiness=100
 ```
 
-### Bootloader
+## Bootloader
 
-#### GRUB
+### GRUB (BIOS)
 
 ```sh
 pacman -S grub
@@ -198,7 +312,7 @@ grub-install --target=i386-pc /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-#### UEFI
+### systemd-boot (UEFI)
 
 ```sh
 # rm /boot/loader/entries/*.conf
@@ -242,8 +356,7 @@ EOF
 
 # UUID
 blkid /dev/sda2
-
-# blkid -s PARTUUID -o value /dev/sda2
+# blkid -s UUID -o value /dev/sda2
 ```
 
 ```sh
@@ -266,6 +379,11 @@ options root=UUID=TU_UUID rw
 EOF
 ```
 
+> Para Btrfs, agregar al final de `options`:
+> ```
+> options root=UUID=TU_UUID rootflags=subvol=@ rw
+> ```
+
 Editar fstab:
 
 ```sh
@@ -282,7 +400,7 @@ bootctl update
 mount -o remount,ro /boot
 ```
 
-### Final
+## End
 
 ```sh
 passwd

@@ -21,13 +21,12 @@ echo -e "${GREEN} ========== Programaing =========="
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm bun
+pacman -S --noconfirm bun bacon
 
 pacman -S --noconfirm github-cli
 pacman -S --noconfirm lazygit
 
 pacman -S --noconfirm docker docker-compose docker-buildx
-pacman -S --noconfirm sccache
 
 sudo -u "$USER_NAME" bash -c 'paru -S oxker-bin'
 
@@ -44,6 +43,7 @@ echo -e "${RESET}"
 
 pacman -S --noconfirm muse # musescore
 
+pacman -S --noconfirm kseexpr
 pacman -S --noconfirm blender
 pacman -S --noconfirm gimp krita
 
