@@ -1,62 +1,78 @@
+@define-color accent #89b4fa;
+@define-color bg-color #161616E0;
+@define-color fg-color #eeeeee;
+@define-color desc-color #cccccc;
+
 * {
-	margin: 0;
-	padding: 0;
-	font-family: "FiraCode Nerd Font", "Noto Sans", monospace;
+  font-family: "FiraCode Nerd Font", "Noto Sans", monospace;
 }
 
 window {
-	background: transparent;
+  background: transparent;
 }
 
 box.main {
-	background: transparent;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 10px;
+  border: 1px solid @accent;
+  background-color: @bg-color;
 }
 
-#outer-box {
-	background: rgba(18, 18, 28, 0.92);
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	border-radius: 12px;
-	padding: 10px;
+text {
+  min-height: 30px;
+  padding: 5px;
+  border-radius: 5px;
+  color: @fg-color;
 }
 
-#entry {
-	background: rgba(30, 30, 46, 0.95);
-	border: none;
-	border-radius: 8px;
-	color: #a6adc8;
-	font-size: 14px;
-	padding: 10px 14px;
-	margin-bottom: 6px;
+.matches {
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 10px;
 }
 
-#plugin {
-	background: transparent;
-	border: none;
-	padding: 0;
-	margin: 0;
+box.plugin:first-child {
+  margin-top: 5px;
 }
 
-#plugin > label {
-	color: transparent;
-	font-size: 0;
+box.plugin.info {
+  min-width: 200px;
 }
 
-row {
-	background: transparent;
-	border-radius: 5px;
-	padding: 4px 6px;
-	color: #cdd6f4;
-	font-size: 13px;
+list.plugin { 
+  background-color: rgba(0, 0, 0, 0);
 }
 
-row:selected {
-	background: #89b4fa;
-	border-radius: 8px;
-	color: #1e1e2e;
-	font-weight: bold;
+label.match {
+  color: @fg-color;
 }
 
-row label {
-	color: inherit;
-	font-size: 13px;
+label.match.description {
+  font-size: 10px;
+  color: @desc-color;
+}
+
+label.plugin.info {
+  font-size: 14px;
+  color: @fg-color;
+}
+
+.match {
+  background: transparent;
+}
+
+.match:selected {
+  border-left: 4px solid @accent;
+  background: transparent;
+  animation: fade 0.1s linear;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
