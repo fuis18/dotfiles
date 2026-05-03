@@ -33,7 +33,7 @@ echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
 pacman -S --noconfirm gtk4 gtk4-layer-shell pkg-config
-pacman -S --noconfim wget openssh openssl
+pacman -S --noconfirm wget openssh openssl
 pacman -S --noconfirm qt6-base qt6-declarative qt6-wayland qt5-wayland
 pacman -S --noconfirm upower gnome-keyring xsettingsd
 
@@ -44,9 +44,9 @@ echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 echo ""
 
-pacmam -S --noconfirm libva
-pacmam -S --noconfirm libva-intel-driver  # O mesa-vdpau para AMD;
-pacmam -S --noconfirm intel-media-driver  # O mesa libva-mesa-driver
+pacman -S --noconfirm libva
+pacman -S --noconfirm libva-intel-driver  # O mesa-vdpau para AMD;
+pacman -S --noconfirm intel-media-driver  # O mesa libva-mesa-driver
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -70,21 +70,6 @@ if [[ -d "$PARU_DIR" ]]; then
   git clone https://aur.archlinux.org/paru.git "$PARU_DIR"
   chown -R "${USER_NAME}:${USER_NAME}" "$PARU_DIR"
   sudo -u "${USER_NAME}" bash -c "cd '$PARU_DIR' && makepkg -si --noconfirm"
-fi
-
-echo ""
-echo -e "${BLUE} =================================="
-echo -e "${GREEN} =========== Aur => yay ==========="
-echo -e "${BLUE} =================================="
-echo -e "${RESET}"
-
-YAY_DIR="${USER_REPOS}/yay"
-if [[ -d "$YAY_DIR" ]]; then
-  echo -e "${GREEN}[!] Directorio '$YAY_DIR' ya existe.${RESET}"
-  else
-  git clone https://aur.archlinux.org/yay-bin.git "$YAY_DIR"
-  chown -R "${USER_NAME}:${USER_NAME}" "$YAY_DIR"
-  sudo -u "${USER_NAME}" bash -c "cd '$YAY_DIR' && makepkg -si --noconfirm"
 fi
 
 echo ""
@@ -255,7 +240,7 @@ pacman -S ironbar
 # window switcher
 sudo -u "${USER_NAME}" bash -c 'paru -S hyprswitch'
 # file explorer
-sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive-bin'
+sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive'
 pacman -S --noconfirm yazi
 sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag'
 # logout
@@ -276,7 +261,7 @@ sudo -u "${USER_NAME}" bash -c 'paru -S grimblast'
 # fnm
 sudo -u "$USER_NAME" bash -c 'paru -S fnm-bin'
 # music
-sudo -u "$USER_NAME" bash -c 'paru -S musikcube'
+sudo -u "$USER_NAME" bash -c 'paru -S musikcube-bin'
 
 echo ""
 echo -e "${BLUE} =================================="
