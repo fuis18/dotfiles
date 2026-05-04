@@ -17,8 +17,9 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 RESET='\033[0m'
 
-pacman -Rs rust
-pacman -S rustup
+pacman -Rs --noconfirm rust
+pacman -S --noconfirm rustup
+
 sudo -u "${USER_NAME}" bash -c 'rustup default stable'
 sudo -u "${USER_NAME}" bash -c 'rustup target list --installed'
 
@@ -29,7 +30,7 @@ echo -e "${BLUE} =============================="
 echo -e "${RESET}"
 
 # file explorer
-sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive'
+sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive-bin'
 pacman -S --noconfirm yazi
 sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag'
 # copy history
@@ -96,5 +97,3 @@ echo ""
 echo ""
 echo ""
 echo ""
-
-sudo bash install_normal.sh

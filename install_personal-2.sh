@@ -26,6 +26,10 @@ pacman -S --noconfirm bun bacon
 pacman -S --noconfirm github-cli
 pacman -S --noconfirm lazygit
 
+# editors
+pacman -S --noconfirm zed
+pacman -S --noconfirm helix
+
 pacman -S --noconfirm docker docker-compose docker-buildx
 
 sudo -u "$USER_NAME" bash -c 'paru -S oxker-bin'

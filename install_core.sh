@@ -79,7 +79,7 @@ echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
 sudo -u "$USER_NAME" bash -c 'paru -S fnm-bin'
-fnm i --latest
+sudo -u "$USER_NAME" bash -c 'fnm install --latest'
 
 echo ""
 echo -e "${BLUE} ================================="
@@ -273,4 +273,4 @@ echo ""
 echo ""
 echo ""
 
-sudo bash update_system.sh
+sudo bash "${FUIS_REPO}/update_system.sh"

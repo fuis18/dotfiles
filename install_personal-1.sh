@@ -46,6 +46,10 @@ pacman -S --noconfirm kdeconnect
 pacman -S --noconfirm syncthing
 pacman -S --noconfirm rclone
 
+if systemctl --user status >/dev/null 2>&1; then
+  systemctl --user enable syncthing.service
+fi
+
 # Redes
 sudo -u "$USER_NAME" bash -c 'paru -S zoom'
 pacman -S --noconfirm discord

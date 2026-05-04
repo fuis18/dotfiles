@@ -32,7 +32,7 @@ same problem, one gets cut.
 | Window Manager | hyprland               |
 | Terminal       | kitty                  |
 | Shell          | zsh + starship         |
-| Editor         | neovim                 |
+| Editor         | nvim, helix, zed       |
 | File Manager   | yazi / spacedrive      |
 | Launcher       | anyrun                 |
 | Status bar     | ironbar                |
@@ -60,15 +60,12 @@ nmcli device wifi connect "SSID" password "password"
 ### Clone and run
 
 ```sh
-sudo su
-pacman -S git
+sudo pacman -S git
 mkdir -p Downloads/repos/fuis18 && cd Downloads/repos/fuis18
 git clone https://github.com/fuis18/dotfiles.git
 
-sudo bash dotfiles/install_system.sh
-sudo bash dotfiles/install_personal-1.sh
-sudo bash dotfiles/install_personal-2.sh
-bash dotfiles/install_normal.sh
+sudo bash dotfiles/setup.sh
+sudo bash dotfiles/setup_post_reboot.sh
 ```
 
 > For full disk partitioning and bootloader setup, see [SETUP.md](./SETUP.md).

@@ -94,8 +94,8 @@ let {
         type = "sys_info"
         class = "performance"
 
-        interval.cpu = 2
-        interval.temps = 5
+        interval.cpu = 5
+        interval.temps = 7
 
         format = [
           "  {cpu_percent}%"
@@ -218,7 +218,7 @@ let {
         class = "bluetooth"
         type = "script"
         mode = "watch"
-        interval = 2000
+        interval = 5000
         cmd = "~/.config/hypr/scripts/bluetooth.sh"
         label = "{text}"
       }]
