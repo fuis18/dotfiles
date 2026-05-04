@@ -39,10 +39,10 @@ same problem, one gets cut.
 | Notifications  | swaync                 |
 | Audio          | pipewire + cava        |
 | Bluetooth      | bluez + bluetui        |
-| Network        | networkmanager + nmcli |
+| Network        | impala                 |
 | Screenshot     | grim + slurp + swappy  |
 | Brightness     | brightnessctl          |
-| System monitor | btop                   |
+| System monitor | btm                    |
 | Login Manager  | greetd + tuigreet      |
 | Power menu     | wlogout                |
 
