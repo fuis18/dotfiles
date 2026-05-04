@@ -51,8 +51,6 @@ sudo -u "$USER_NAME" bash -c 'paru -S tlauncher-installer'
 
 pacman -S --noconfirm texlive-basic texlive-latex texlive-latexextra texlive-fontsextra texlive-bibtexextra texlive-pictures pandoc
 
-pacman -S --noconfirm rclone
-
 echo ""
 echo -e "${BLUE} =================================="
 echo -e "${GREEN} ======== READY Personal 2 ========"

@@ -53,6 +53,7 @@ pacman -S --noconfirm obs-studio
 # conexions
 pacman -S --noconfirm kdeconnect
 pacman -S --noconfirm syncthing
+pacman -S --noconfirm rclone
 
 echo ""
 echo -e "${BLUE} =================================="

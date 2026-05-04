@@ -3,12 +3,8 @@
 # Manejo de errores
 set -euo pipefail
 
-USER_NAME=${SUDO_USER:-$(whoami)}
-USER_HOME="/home/${USER_NAME}"
-
 if systemctl --user status >/dev/null 2>&1; then
   systemctl --user enable syncthing.service
-  systemctl --user start syncthing.service
 fi
 
 GREEN='\033[0;32m'
