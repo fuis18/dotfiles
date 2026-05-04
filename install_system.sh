@@ -48,6 +48,7 @@ pacman -S --noconfirm grim slurp swappy
 sudo -u "${USER_NAME}" bash -c 'paru -S grimblast'
 # music
 sudo -u "$USER_NAME" bash -c 'paru -S musikcube-bin'
+pacman -S --noconfirm vlc
 
 echo ""
 echo -e "${BLUE} =================================="
