@@ -41,6 +41,11 @@ sudo -u "$USER_NAME" bash -c 'paru -S obsidian-bin'
 sudo -u "$USER_NAME" bash -c 'paru -S onlyoffice-bin'
 pacman -S --noconfirm libreoffice-fresh
 
+# conexions
+pacman -S --noconfirm kdeconnect
+pacman -S --noconfirm syncthing
+pacman -S --noconfirm rclone
+
 # Redes
 sudo -u "$USER_NAME" bash -c 'paru -S zoom'
 pacman -S --noconfirm discord
@@ -49,11 +54,6 @@ pacman -S --noconfirm discord
 pacman -S --noconfirm kdenlive
 pacman -S --noconfirm inkscape
 pacman -S --noconfirm obs-studio
-
-# conexions
-pacman -S --noconfirm kdeconnect
-pacman -S --noconfirm syncthing
-pacman -S --noconfirm rclone
 
 echo ""
 echo -e "${BLUE} =================================="

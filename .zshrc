@@ -1,13 +1,32 @@
 # ~/.zshrc
 
+# --- Entorno y Variables de Sistema ---
 export QT_QPA_PLATFORM="wayland;xcb"
 export XDG_SESSION_TYPE=wayland
-
-# Fix the Java Problem
 export _JAVA_AWT_WM_NONREPARENTING=1
 export SYSTEMD_PAGER=cat
+
+# --- Configuración de Rust / Cargo ---
 export CARGO_BUILD_JOBS=2
 export RUSTC_WRAPPER=sccache
+export CARGO_NET_GIT_FETCH_WITH_CLI=true
+
+# --- Gestión de Node (fnm) ---
+export PATH="$HOME/.local/share/fnm:$PATH"
+eval "$(fnm env --use-on-cd)"
+
+# --- PATH (Forma segura de añadir directorios sin borrar los anteriores) ---
+typeset -U path # Evita duplicados en el PATH
+path=(
+    $HOME/.local/bin
+    $HOME/.cargo/bin    # Importante para que rustup/cargo funcionen siempre
+    /usr/local/bin
+    /usr/bin
+    /bin
+    /usr/local/sbin
+    $path               # Mantiene lo que ya estaba (como fnm)
+)
+export PATH
 
 # Enable history
 setopt histignorealldups sharehistory
