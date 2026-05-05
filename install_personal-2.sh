@@ -25,6 +25,7 @@ pacman -S --noconfirm bun bacon
 
 pacman -S --noconfirm github-cli
 pacman -S --noconfirm lazygit
+pacman -S --noconfirm zellij
 
 # editors
 pacman -S --noconfirm zed
@@ -38,6 +39,9 @@ systemctl enable docker.socket
 systemctl start docker.socket
 
 sudo usermod -aG docker $USER_NAME
+
+# android tool
+pacman -S --noconfirm android-tools scrcpy
 
 echo ""
 echo -e "${BLUE} =================================="

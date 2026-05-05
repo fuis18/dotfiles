@@ -45,8 +45,14 @@ echo -e "${RESET}"
 echo ""
 
 pacman -S --noconfirm libva
-pacman -S --noconfirm libva-intel-driver  # O mesa-vdpau para AMD;
-pacman -S --noconfirm intel-media-driver  # O mesa libva-mesa-driver
+pacman -S --noconfirm v4l2loopback-dkms
+
+# Intel
+pacman -S --noconfirm libva-intel-driver intel-media-driver
+# AMD
+pacman -S --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils vulkan-radeon lib32-vulkan-radeon
+# NVidia
+pacman -S --noconfirm nvidia-utils libva-vdpau-driver
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -136,13 +142,17 @@ echo -e "${GREEN} ===== Network Configuration ====="
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm wpa_supplicant bluez bluez-utils ufw dbus
+pacman -S --noconfirm wpa_supplicant bluez bluez-utils dbus
 
 systemctl enable NetworkManager
 systemctl enable bluetooth
 systemctl start bluetooth
 
 pacman -S --noconfirm impala bluetui
+
+# Segurity
+
+pacman -S --noconfirm ufw
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -168,8 +178,16 @@ echo -e "${GREEN} ============= Fonts ============="
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm noto-fonts noto-fonts-cjk noto-fonts-emoji gnu-free-fonts
-pacman -S --noconfirm ttf-firacode-nerd ttf-dejavu ttf-liberation
+pacman -S --noconfirm noto-fonts \
+	noto-fonts-cjk \
+	noto-fonts-emoji \
+	gnu-free-fonts \
+	ttf-firacode-nerd \
+	ttf-dejavu \
+	ttf-liberation
+
+sudo -u "${USER_NAME}" bash -c 'paru -S ttf-sarasa-gothic-nerd-fonts'
+
 fc-cache -fv
 
 echo ""
@@ -251,6 +269,8 @@ sudo -u "${USER_NAME}" bash -c 'paru -S anyrun'
 sudo -u "${USER_NAME}" bash -c 'paru -S hyprswitch'
 # logout
 sudo -u "${USER_NAME}" bash -c 'paru -S wlogout'
+# monitores
+pacman -S --noconfirm wdisplays
 
 echo ""
 echo -e "${BLUE} ================================="

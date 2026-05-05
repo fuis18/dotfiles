@@ -41,8 +41,12 @@ sudo -u "$USER_NAME" bash -c 'paru -S obsidian-bin'
 sudo -u "$USER_NAME" bash -c 'paru -S onlyoffice-bin'
 pacman -S --noconfirm libreoffice-fresh
 
+# calculadora
+pacman -S qalculate-gtk
+
 # conexions
-pacman -S --noconfirm kdeconnect
+# pacman -S --noconfirm kdeconnect
+sudo -u "$USER_NAME" bash -c 'paru -S localsend-bin'
 pacman -S --noconfirm syncthing
 pacman -S --noconfirm rclone
 

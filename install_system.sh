@@ -38,17 +38,18 @@ pacman -S --noconfirm cliphist
 # texteditor
 pacman -S --noconfirm gnome-text-editor
 pacman -S --noconfirm aspell-es aspell-en nuspell
-# galeria
-sudo -u "$USER_NAME" bash -c 'paru -S oculante'
 # wallpaper
 sudo -u "$USER_NAME" bash -c 'paru -S swww'
 sudo -u "$USER_NAME" bash -c 'paru -S wallust'
 # screenshot
 pacman -S --noconfirm grim slurp swappy
 sudo -u "${USER_NAME}" bash -c 'paru -S grimblast'
-# music
+# media
+pacman -S --noconfirm vlc vlc-plugin-ffmpeg
+sudo -u "$USER_NAME" bash -c 'paru -S oculante'
 sudo -u "$USER_NAME" bash -c 'paru -S musikcube-bin'
-pacman -S --noconfirm vlc
+# tools media
+pacman -S --noconfirm handbrak
 
 echo ""
 echo -e "${BLUE} =================================="
