@@ -42,6 +42,7 @@ pacman -S --noconfirm aspell-es aspell-en nuspell
 sudo -u "$USER_NAME" bash -c 'paru -S swww'
 sudo -u "$USER_NAME" bash -c 'paru -S wallust'
 # screenshot
+pacman -S --noconfirm hyprpicker
 pacman -S --noconfirm grim slurp swappy
 sudo -u "${USER_NAME}" bash -c 'paru -S grimblast'
 # media

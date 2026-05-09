@@ -32,8 +32,9 @@ echo -e "${GREEN} ============== Core =============="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm gtk4 gtk4-layer-shell pkg-config
+
 pacman -S --noconfirm wget openssh openssl
+pacman -S --noconfirm gtk4 gtk4-layer-shell pkg-config
 pacman -S --noconfirm qt6-base qt6-declarative qt6-wayland qt5-wayland
 pacman -S --noconfirm upower gnome-keyring xsettingsd
 
@@ -259,7 +260,9 @@ echo -e "${GREEN} === APPS System Defatuls ==="
 echo -e "${BLUE} =============================="
 echo -e "${RESET}"
 
-# taskbar
+# interfaces
+sudo -u "${USER_NAME}" bash -c 'paru -S libastal-meta'
+# bar
 pacman -S ironbar
 # Sistema de apagado
 sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown'

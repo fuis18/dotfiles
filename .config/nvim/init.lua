@@ -1,1 +1,2 @@
-require("base")
+-- Load the main configuration
+require("configs.init")
