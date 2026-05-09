@@ -53,7 +53,7 @@ pacman -S --noconfirm libva-intel-driver intel-media-driver
 # AMD
 pacman -S --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils vulkan-radeon lib32-vulkan-radeon
 # NVidia
-pacman -S --noconfirm nvidia-utils libva-vdpau-driver
+# pacman -S --noconfirm nvidia-utils libva-vdpau-driver
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -80,37 +80,20 @@ if [[ -d "$PARU_DIR" ]]; then
 fi
 
 echo ""
-echo -e "${BLUE} =================================="
-echo -e "${GREEN} ========= Main Dev Tools ========="
-echo -e "${BLUE} =================================="
-echo -e "${RESET}"
-
-sudo -u "$USER_NAME" bash -c 'paru -S fnm-bin'
-sudo -u "$USER_NAME" bash -c 'fnm install --latest'
-
-echo ""
 echo -e "${BLUE} ================================="
 echo -e "${GREEN} ====== Installing Terminal ======"
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm kitty zsh starship
-pacman -S --noconfirm zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
-pacman -S --noconfirm bat lsd fzf tree
+pacman -S --noconfirm kitty nushell
+chsh -s $(which nu) "$USER_NAME"
+
+sudo -u "$USER_NAME" bash -c 'paru -S carapace-bin'
+pacman -S --noconfirm bat fzf tree starship
 pacman -S --noconfirm sccache
 
-echo ""
-echo -e "${BLUE} ================================"
-echo -e "${GREEN} === Configurando el terminal ==="
-echo -e "${BLUE} ================================"
-echo -e "${RESET}"
-
-PLUGIN_DIR="/usr/share/zsh-sudo"
-
-mkdir -p "${PLUGIN_DIR}"
-chown -R "${USER_NAME}:${USER_NAME}" "${PLUGIN_DIR}"
-sudo -u "${USER_NAME}" wget -qO "${PLUGIN_DIR}/sudo.plugin.zsh" \
-  https://raw.githubusercontent.com/hcgraf/zsh-sudo/master/sudo.plugin.zsh
+sudo -u "$USER_NAME" bash -c 'paru -S fnm-bin'
+sudo -u "$USER_NAME" bash -c 'export PATH="$HOME/.local/share/fnm:$PATH"; fnm install --latest'
 
 echo ""
 echo -e "${BLUE} ================================="
@@ -174,6 +157,7 @@ cp -r "${FUIS_REPO}/etc/greetd/." /etc/greetd/
 chmod 644 /etc/greetd/config.toml
 systemctl enable greetd
 
+echo ""
 echo -e "${BLUE} ================================="
 echo -e "${GREEN} ============= Fonts ============="
 echo -e "${BLUE} ================================="

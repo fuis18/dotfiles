@@ -1,0 +1,46 @@
+ls
+config nu
+help config nv
+help config env
+help config env -h
+l
+la
+ls -la
+ls -la .config
+lsd
+ls
+lsd -la
+ls
+l
+sudo pacman -Ss lsd
+sudo su
+bat
+ls
+cd Pictures/
+l
+ls
+cd Screenshots/
+ls
+cat Screenshot_2026-05-08_00-37-50.png
+bat Screenshot_2026-05-08_00-37-50.png
+ls ~/Projects/recipe-book
+exit
+startship init
+starship init
+starship init --help
+starship --help
+starship init --full-help
+starship --full-help
+startship --
+startship init -- --full-help
+starship init -- --full-help
+starship init nu
+starship
+starship print-config
+exit
+fnm -v
+fnm --version
+exit
+ls
+icat Screenshot_2026-05-08_00-37-50.png
+exit
