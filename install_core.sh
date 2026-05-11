@@ -51,7 +51,8 @@ pacman -S --noconfirm v4l2loopback-dkms
 # Intel
 pacman -S --noconfirm libva-intel-driver intel-media-driver
 # AMD
-pacman -S --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils vulkan-radeon lib32-vulkan-radeon
+pacman -S --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils
+# vulkan-radeon lib32-vulkan-radeon
 # NVidia
 # pacman -S --noconfirm nvidia-utils libva-vdpau-driver
 
@@ -92,6 +93,7 @@ sudo -u "$USER_NAME" bash -c 'paru -S carapace-bin'
 pacman -S --noconfirm bat fzf tree starship
 pacman -S --noconfirm sccache
 
+# Node
 sudo -u "$USER_NAME" bash -c 'paru -S fnm-bin'
 sudo -u "$USER_NAME" bash -c 'export PATH="$HOME/.local/share/fnm:$PATH"; fnm install --latest'
 
