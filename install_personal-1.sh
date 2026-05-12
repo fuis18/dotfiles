@@ -29,10 +29,8 @@ echo -e "${GREEN} ========== Applications =========="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-# browsers
-sudo -u "$USER_NAME" bash -c 'paru -S brave-bin'
+# browser
 sudo -u "$USER_NAME" bash -c 'paru -S google-chrome'
-sudo -u "$USER_NAME" bash -c 'paru -S librewolf-bin'
 
 # notas
 sudo -u "$USER_NAME" bash -c 'paru -S obsidian-bin'

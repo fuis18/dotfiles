@@ -31,17 +31,19 @@ pacman -S --noconfirm zellij
 pacman -S --noconfirm zed
 pacman -S --noconfirm helix
 
-pacman -S --noconfirm docker docker-compose docker-buildx
+# browsers
+pacman -S --noconfirm epiphany
+sudo -u "$USER_NAME" bash -c 'paru -S brave-bin'
+sudo -u "$USER_NAME" bash -c 'paru -S librewolf-bin'
 
+# docker
+pacman -S --noconfirm docker docker-compose docker-buildx
 sudo -u "$USER_NAME" bash -c 'paru -S oxker-bin'
 
 systemctl enable docker.socket
 systemctl start docker.socket
 
 sudo usermod -aG docker $USER_NAME
-
-# android tool
-pacman -S --noconfirm android-tools scrcpy
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -55,9 +57,17 @@ pacman -S --noconfirm kseexpr
 pacman -S --noconfirm blender
 pacman -S --noconfirm gimp krita
 
-sudo -u "$USER_NAME" bash -c 'paru -S tlauncher-installer'
+# android tool
+pacman -S --noconfirm android-tools scrcpy
 
 pacman -S --noconfirm texlive-basic texlive-latex texlive-latexextra texlive-fontsextra texlive-bibtexextra texlive-pictures pandoc
+
+# games
+pacman -S lutris
+sudo -u "$USER_NAME" bash -c 'paru -S tlauncher-installer'
+sudo -u "$USER_NAME" bash -c 'paru -S pcsx2'
+# sudo -u "$USER_NAME" bash -c 'paru -S rpcs3-bin'
+# sudo pacman -S steam
 
 echo ""
 echo -e "${BLUE} =================================="
