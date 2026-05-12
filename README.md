@@ -64,7 +64,7 @@ sudo pacman -S git
 mkdir -p Downloads/repos/fuis18 && cd Downloads/repos/fuis18
 git clone https://github.com/fuis18/dotfiles.git
 
-sudo bash dotfiles/install_core.sh
+sudo bash dotfiles/install_setup.sh
 sudo bash dotfiles/setup_post_reboot.sh
 ```
 
