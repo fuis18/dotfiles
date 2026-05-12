@@ -1,3 +1,6 @@
+scan_timeout     = 10000
+command_timeout  = 5000
+
 format = """
 [](#2e3436)\
 [  ](bg:#303030 fg:#c4a000)\
@@ -14,7 +17,6 @@ $nodejs\
 $golang\
 $kotlin\
 $python\
-$haskell\
 $time\
 [](fg:#3e4042)\
 \n$character"""
@@ -50,12 +52,6 @@ format = '[[ $symbol $branch ](fg:#3387c8 bg:#303030)]($style)'
 style = "bg:#3e4042"
 format = '[[($all_status$ahead_behind )](fg:#3387c8 bg:#303030)]($style)'
 
-
-[c]
-symbol = " "
-style = "bg:3e4042"
-format = '[[ $symbol( $version) ](fg:#3387c8 bg:3e4042)]($style)'
-
 [nodejs]
 symbol = ""
 style = "bg:#3e4042"
@@ -71,11 +67,6 @@ symbol = ""
 style = "bg:#3e4042"
 format = '[[ $symbol ($version) ](fg:#3387c8 bg:#3e4042)]($style)'
 
-[php]
-symbol = ""
-style = "bg:#3e4042"
-format = '[[ $symbol ($version) ](fg:#3387c8 bg:#3e4042)]($style)'
-
 [java]
 symbol = " "
 style = "bg:3e4042"
@@ -83,11 +74,6 @@ format = '[[ $symbol( $version) ](fg:#3387c8 bg:#3e4042)]($style)'
 
 [kotlin]
 symbol = ""
-style = "bg:3e4042"
-format = '[[ $symbol( $version) ](fg:#3387c8 bg:#3e4042)]($style)'
-
-[haskell]
-symbol = ""
 style = "bg:3e4042"
 format = '[[ $symbol( $version) ](fg:#3387c8 bg:#3e4042)]($style)'
 
