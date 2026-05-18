@@ -73,7 +73,7 @@ return {
           {
             "mode",
             color = function()
-              return { fg = mode_color[vim.fn.mode()] }
+              return { fg = mode_color[vim.fn.mode()] or colors.fg }
             end,
             padding = { left = 1, right = 1 },
           },
@@ -185,7 +185,7 @@ return {
               return " "
             end,
             color = function()
-              return { fg = mode_color[vim.fn.mode()] }
+              return { fg = mode_color[vim.fn.mode()] or colors.fg }
             end,
             padding = { left = 1, right = 1 },
           },

@@ -73,26 +73,6 @@ return {
       },
     })
 
-    -- Rust
-    vim.lsp.config("rust_analyzer", {
-      on_attach = on_attach,
-      capabilities = capabilities,
-      root_dir = get_root_dir,
-      settings = {
-        ["rust-analyzer"] = {
-          cargo = {
-            allFeatures = true,
-          },
-          checkOnSave = {
-            command = "clippy",
-          },
-          procMacro = {
-            enable = true,
-          },
-        },
-      },
-    })
-
     -- TypeScript/JavaScript
     vim.lsp.config("ts_ls", {
       on_attach = on_attach,
@@ -327,6 +307,6 @@ return {
     })
 
     -- Enable all configured LSP servers
-    vim.lsp.enable("lua_ls", "rust_analyzer", "ts_ls", "html", "cssls", "tailwindcss", "jsonls", "yamlls", "pyright", "clangd", "bashls", "sqls", "prismals", "graphql_lsp", "dockerls", "svelte")
+    vim.lsp.enable("lua_ls", "ts_ls", "html", "cssls", "tailwindcss", "jsonls", "yamlls", "pyright", "clangd", "bashls", "sqls", "prismals", "graphql_lsp", "dockerls", "svelte")
   end,
 }

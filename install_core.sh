@@ -223,7 +223,8 @@ sudo pacman -S --noconfirm \
 	gst-libav \
   gst-plugins-good \
   gst-plugins-bad \
-  gst-plugins-ugly
+  gst-plugins-ugly \
+  tumbler
 
 # 3. Reproducción: Máxima potencia, mínima RAM
 pacman -S --noconfirm \

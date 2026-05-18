@@ -61,6 +61,8 @@ pacman -S --noconfirm kdenlive
 pacman -S --noconfirm inkscape
 pacman -S --noconfirm obs-studio
 
+sudo usermod -aG video $USER_NAME
+
 echo ""
 echo -e "${BLUE} =================================="
 echo -e "${GREEN} ============ Keyboard ==========="
