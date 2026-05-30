@@ -30,7 +30,10 @@ echo -e "${BLUE} =============================="
 echo -e "${RESET}"
 
 # file explorer
+# pacman -S thunar
+pacman -S nautilus
 sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive-bin'
+
 pacman -S --noconfirm yazi
 sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag'
 # copy history
@@ -45,12 +48,16 @@ sudo -u "$USER_NAME" bash -c 'paru -S wallust'
 pacman -S --noconfirm hyprpicker
 pacman -S --noconfirm grim slurp swappy
 sudo -u "${USER_NAME}" bash -c 'paru -S grimblast'
-# media
+# videos
 pacman -S --noconfirm vlc vlc-plugin-ffmpeg
+# images
+pacman -S eog
 sudo -u "$USER_NAME" bash -c 'paru -S oculante'
 sudo -u "$USER_NAME" bash -c 'paru -S musikcube-bin'
 # tools media
-pacman -S --noconfirm handbrak
+pacman -S --noconfirm handbrake
+# other
+sudo pacman -S gnome-clocks
 
 echo ""
 echo -e "${BLUE} =================================="

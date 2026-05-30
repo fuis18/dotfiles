@@ -33,13 +33,13 @@ same problem, one gets cut.
 | Terminal       | kitty                  |
 | Shell          | zsh + starship         |
 | Editor         | nvim, helix, zed       |
-| File Manager   | yazi / spacedrive      |
+| File Manager   | yazi & spacedrive      |
 | Launcher       | anyrun                 |
 | Status bar     | ironbar                |
 | Notifications  | swaync                 |
 | Audio          | pipewire + cava        |
 | Bluetooth      | bluez + bluetui        |
-| Network        | impala                 |
+| Network        | impala + iwd           |
 | Screenshot     | grim + slurp + swappy  |
 | Brightness     | brightnessctl          |
 | System monitor | btm                    |
@@ -53,8 +53,8 @@ same problem, one gets cut.
 ### Connect to the network
 
 ```sh
-sudo systemctl enable --now NetworkManager
-nmcli device wifi connect "SSID" password "password"
+sudo systemctl enable --now iwd
+iwctl station wlan0 connect "SSID"
 ```
 
 ### Clone and run

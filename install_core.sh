@@ -128,9 +128,9 @@ echo -e "${GREEN} ===== Network Configuration ====="
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm wpa_supplicant bluez bluez-utils dbus
+pacman -S --noconfirm iwd bluez bluez-utils dbus 
 
-systemctl enable NetworkManager
+systemctl enable iwd
 systemctl enable bluetooth
 systemctl start bluetooth
 
@@ -243,7 +243,7 @@ pacman -S --noconfirm wl-clipboard
 
 echo ""
 echo -e "${BLUE} =============================="
-echo -e "${GREEN} === APPS System Defatuls ==="
+echo -e "${GREEN} ====== APPS System Core ======"
 echo -e "${BLUE} =============================="
 echo -e "${RESET}"
 
