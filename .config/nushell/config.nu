@@ -168,6 +168,8 @@ alias lla = ls -la
 alias cat = bat
 alias icat = kitty +kitten icat
 alias mp3 = musikcube
+alias npm = pnpm
+alias npx = pnpx
 
 # pacs: buscar e instalar paquetes de pacman con fzf
 # (usa bash interno para el pipeline complejo con comillas anidadas)

@@ -23,7 +23,8 @@ echo -e "${GREEN} ===== Installing Base System ====="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm base-devel wayland hyprland hyprlock hypridle hyprpolkitagent
+pacman -S --noconfirm base-devel devtools
+pacman -S --noconfirm wayland hyprland hyprlock hypridle hyprpolkitagent
 pacman -S --noconfirm xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 
 echo ""
@@ -37,24 +38,6 @@ pacman -S --noconfirm wget openssh openssl
 pacman -S --noconfirm gtk4 gtk4-layer-shell pkg-config
 pacman -S --noconfirm qt6-base qt6-declarative qt6-wayland qt5-wayland
 pacman -S --noconfirm upower gnome-keyring xsettingsd
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ============ Drivers ============"
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-echo ""
-
-pacman -S --noconfirm libva
-pacman -S --noconfirm v4l2loopback-dkms
-
-# Intel
-pacman -S --noconfirm libva-intel-driver intel-media-driver
-# AMD
-pacman -S --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils
-# vulkan-radeon lib32-vulkan-radeon
-# NVidia
-# pacman -S --noconfirm nvidia-utils libva-vdpau-driver
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -79,6 +62,26 @@ if [[ -d "$PARU_DIR" ]]; then
   chown -R "${USER_NAME}:${USER_NAME}" "$PARU_DIR"
   sudo -u "${USER_NAME}" bash -c "cd '$PARU_DIR' && makepkg -si --noconfirm"
 fi
+
+sudo -u "$USER_NAME" bash -c 'paru -S fakeroot-tcp'
+
+echo ""
+echo -e "${BLUE} ================================="
+echo -e "${GREEN} ============ Drivers ============"
+echo -e "${BLUE} ================================="
+echo -e "${RESET}"
+echo ""
+
+pacman -S --noconfirm libva
+pacman -S --noconfirm v4l2loopback-dkms
+
+# Intel
+pacman -S --noconfirm libva-intel-driver intel-media-driver
+# AMD
+pacman -S --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils
+# vulkan-radeon lib32-vulkan-radeon
+# NVidia
+# pacman -S --noconfirm nvidia-utils libva-vdpau-driver
 
 echo ""
 echo -e "${BLUE} ================================="
@@ -282,5 +285,3 @@ echo ""
 echo ""
 echo ""
 echo ""
-
-sudo bash "${FUIS_REPO}/update_system.sh"
