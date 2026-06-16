@@ -251,7 +251,8 @@ echo -e "${BLUE} =============================="
 echo -e "${RESET}"
 
 # interfaces
-sudo -u "${USER_NAME}" bash -c 'paru -S libastal-meta'
+sudo -u "${USER_NAME}" bash -c 'paru -S aylurs-gtk-shell-git'
+sudo -u "${USER_NAME}" bash -c 'paru -S libastal-notifd-git libastal-battery-git libastal-mpris-git'
 # bar
 pacman -S ironbar
 # Sistema de apagado

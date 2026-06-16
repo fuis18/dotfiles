@@ -149,6 +149,8 @@ swapon /dev/sda3
 
 ```sh
 mount | grep /mnt
+findmnt -t btrfs
+mount | grep btrfs
 lsblk -f
 ```
 

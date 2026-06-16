@@ -115,6 +115,7 @@ return {
             spinner_symbols = { " ", " ", " ", " ", " ", " " },
             timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
             separator = " ",
+            color = { fg = colors.fg },
             lsp_client_name = {
               icon = " LSP:",
               name = "lsp_client_name",
