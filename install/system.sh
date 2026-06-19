@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 # Handle Errors
 set -euo pipefail
@@ -32,7 +32,7 @@ echo -e "${RESET}"
 # file explorer
 # pacman -S thunar
 pacman -S nautilus
-sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive-bin'
+sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive-clean'
 
 pacman -S --noconfirm yazi
 sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag'

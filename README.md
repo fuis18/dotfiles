@@ -64,8 +64,8 @@ sudo pacman -S git
 mkdir -p Downloads/repos/fuis18 && cd Downloads/repos/fuis18
 git clone https://github.com/fuis18/dotfiles.git
 
-sudo bash dotfiles/install_setup.sh
-sudo bash dotfiles/setup_post_reboot.sh
+sudo bash dotfiles/setup.sh
+sudo zsh dotfiles/post.sh
 ```
 
 > For full disk partitioning and bootloader setup, see [SETUP.md](./SETUP.md).

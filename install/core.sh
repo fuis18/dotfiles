@@ -89,8 +89,27 @@ echo -e "${GREEN} ====== Installing Terminal ======"
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm kitty nushell
+pacman -S --noconfirm kitty starship
+pacman -S --noconfirm zsh nushell
+
+pacman -S --noconfirm zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
+
 chsh -s $(which nu) "$USER_NAME"
+
+echo ""
+echo -e "${BLUE} ================================="
+echo -e "${GREEN} ===== Actualizando el Shell ====="
+echo -e "${BLUE} ================================="
+echo -e "${RESET}"
+
+ZSH_PATH="$(command -v zsh || true)"
+
+echo "-> Cambiando shell a zsh..."
+usermod --shell "$ZSH_PATH" root
+usermod --shell "$ZSH_PATH" "$USER_NAME"
+
+echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
+chmod 440 /etc/sudoers.d/wheel
 
 sudo -u "$USER_NAME" bash -c 'paru -S carapace-bin'
 pacman -S --noconfirm bat fzf tree starship
@@ -179,21 +198,6 @@ pacman -S --noconfirm noto-fonts \
 sudo -u "${USER_NAME}" bash -c 'paru -S ttf-sarasa-gothic-nerd-fonts'
 
 fc-cache -fv
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ===== Actualizando el Shell ====="
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-ZSH_PATH="$(command -v zsh || true)"
-
-echo "-> Cambiando shell a zsh..."
-usermod --shell "$ZSH_PATH" root
-usermod --shell "$ZSH_PATH" "$USER_NAME"
-
-echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
-chmod 440 /etc/sudoers.d/wheel
 
 echo ""
 echo -e "${BLUE} ================================="
