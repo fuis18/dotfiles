@@ -149,10 +149,6 @@ function rmk(){
 	shred -zun 10 -v $1
 }
 
-# Init Starship
+# Init's
 eval "$(starship init zsh)"
-
-# Init Arch's Logo
-fastfetch
-
 eval "$(fnm env --use-on-cd)"
