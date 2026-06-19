@@ -1,0 +1,7 @@
+require("config.monitors")
+require("config.environment")
+require("config.settings")
+require("config.autostart")
+require("config.keybinds")
+require("config.windowrules")
+require("config.workspaces")
