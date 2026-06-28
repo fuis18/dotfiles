@@ -54,8 +54,7 @@ echo -e "${RESET}"
 pacman -S --noconfirm muse # musescore
 
 pacman -S --noconfirm kseexpr
-pacman -S --noconfirm blender
-pacman -S --noconfirm gimp krita
+pacman -S --noconfirm blender gimp krita
 
 # android tool
 pacman -S --noconfirm android-tools scrcpy
