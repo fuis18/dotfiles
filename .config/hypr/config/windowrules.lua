@@ -21,18 +21,23 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    name = "float-zoom-main",
-    match = { class = "zoom", title = "Zoom" },
+    name = "float-zoom-meeting",
+    match = { class = "zoom", title = "Zoom Meeting" },
     float = true,
-    size = { 860, 580 },
     center = true,
 })
 
 hl.window_rule({
-    name = "float-zoom-sub",
+    name = "float-zoom-main",
+    match = { class = "zoom", title = "Zoom" },
+    float = true,
+    center = true,
+})
+
+hl.window_rule({
+    name = "float-zoom-other",
     match = { class = "zoom" },
     float = true,
-    size = { 700, 500 },
     center = true,
 })
 

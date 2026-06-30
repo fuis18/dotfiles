@@ -25,7 +25,7 @@ hl.bind(mainMod .. " + Q",          hl.dsp.window.close())
 hl.bind(mainMod .. " + SHIFT + Q",  hl.dsp.exec_cmd(scriptsDir .. "/KillActiveProcess.sh"))
 
 hl.bind(mainMod .. " + F",          hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + SHIFT + F",  hl.dsp.window.fullscreen({ action = "maximize" }))
+hl.bind(mainMod .. " + SHIFT + F",  hl.dsp.exec_cmd("hyprctl dispatch fullscreen 2"))
 
 hl.bind(mainMod .. " + V",          hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + C",          hl.dsp.exec_cmd(scriptsDir .. "/clipboard.sh"))
