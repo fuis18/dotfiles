@@ -23,9 +23,25 @@ echo -e "${GREEN} ===== Installing Base System ====="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm base-devel devtools
-pacman -S --noconfirm wayland hyprland hyprlock hypridle hyprpolkitagent
-pacman -S --noconfirm xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
+pacman -S --noconfirm base-devel \
+  devtools \
+  wayland \
+  xdg-desktop-portal \
+  xdg-desktop-portal-gtk
+
+echo ""
+echo -e "${BLUE} =================================="
+echo -e "${GREEN} ========= Hyprland Shell ========="
+echo -e "${BLUE} =================================="
+echo -e "${RESET}"
+
+pacman -S --noconfirm hyprland \
+  hyprlock \
+  hypridle \
+  hyprpolkitagent \
+  xdg-desktop-portal-hyprland
+
+sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown hyprswitch'
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -89,8 +105,7 @@ echo -e "${GREEN} ====== Installing Terminal ======"
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm kitty starship
-pacman -S --noconfirm zsh nushell
+pacman -S --noconfirm kitty starship zsh nushell
 
 pacman -S --noconfirm zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
 
@@ -208,38 +223,6 @@ echo -e "${RESET}"
 pacman -S --noconfirm locate man-db
 
 echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ==== Multimedia applications ===="
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-# 1. PipeWire: El motor de audio y video unificado
-pacman -S --noconfirm pipewire \
-	pipewire-pulse \
-	pipewire-alsa \
-	pipewire-jack \
-	wireplumber \
-	pavucontrol \
-	pulsemixer
-
-# 2. Codecs: Los motores esenciales para video/audio
-sudo pacman -S --noconfirm \
-  ffmpeg \
-	ffmpegthumbs \
-	taglib \
-	gst-libav \
-  gst-plugins-good \
-  gst-plugins-bad \
-  gst-plugins-ugly \
-  tumbler
-
-# 3. Reproducción: Máxima potencia, mínima RAM
-pacman -S --noconfirm \
-  mpv \
-  cava \
-  yt-dlp
-
-echo ""
 echo -e "${BLUE} =================================="
 echo -e "${GREEN} ====== Instalando el Editor ======"
 echo -e "${BLUE} =================================="
@@ -255,16 +238,12 @@ echo -e "${BLUE} =============================="
 echo -e "${RESET}"
 
 # interfaces
-sudo -u "${USER_NAME}" bash -c 'paru -S aylurs-gtk-shell-git'
+sudo -u "${USER_NAME}" bash -c 'paru -S aylurs-gtk-shell'
 sudo -u "${USER_NAME}" bash -c 'paru -S libastal-notifd-git libastal-battery-git libastal-mpris-git'
 # bar
-pacman -S ironbar
-# Sistema de apagado
-sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown'
+pacman -S --noconfirm ironbar
 # launcher
 sudo -u "${USER_NAME}" bash -c 'paru -S anyrun'
-# window switcher
-sudo -u "${USER_NAME}" bash -c 'paru -S hyprswitch'
 # logout
 sudo -u "${USER_NAME}" bash -c 'paru -S wlogout'
 # monitores

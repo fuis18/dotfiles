@@ -31,12 +31,28 @@ pacman -S --noconfirm zellij
 pacman -S --noconfirm zed
 pacman -S --noconfirm helix
 
-# browsers
-pacman -S --noconfirm epiphany
-sudo -u "$USER_NAME" bash -c 'paru -S brave-bin'
-sudo -u "$USER_NAME" bash -c 'paru -S librewolf-bin'
+echo ""
+echo -e "${BLUE} ================================"
+echo -e "${GREEN} =========== Browsers ==========="
+echo -e "${BLUE} ================================"
+echo -e "${RESET}"
 
-# docker
+# Diary
+pacman -S --noconfirm epiphany
+sudo -u "$USER_NAME" bash -c 'paru -S helium-browser-bin'
+sudo -u "$USER_NAME" bash -c 'paru -S zen-browser-bin'
+sudo -u "$USER_NAME" bash -c 'paru -S brave-bin'
+
+# Privacity
+sudo -u "$USER_NAME" bash -c 'paru -S librewolf-bin'
+pacman -S --noconfirm torbrowser-launcher
+
+echo ""
+echo -e "${BLUE} ================================"
+echo -e "${GREEN} ============ Docker ============"
+echo -e "${BLUE} ================================"
+echo -e "${RESET}"
+
 pacman -S --noconfirm docker docker-compose docker-buildx
 sudo -u "$USER_NAME" bash -c 'paru -S oxker-bin'
 

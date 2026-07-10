@@ -30,12 +30,12 @@ echo -e "${BLUE} =============================="
 echo -e "${RESET}"
 
 # file explorer
-# pacman -S thunar
 pacman -S nautilus
 sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive-clean'
 
 pacman -S --noconfirm yazi
 sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag'
+
 # copy history
 pacman -S --noconfirm cliphist
 # texteditor
@@ -48,16 +48,48 @@ sudo -u "$USER_NAME" bash -c 'paru -S wallust'
 pacman -S --noconfirm hyprpicker
 pacman -S --noconfirm grim slurp swappy
 sudo -u "${USER_NAME}" bash -c 'paru -S grimblast'
-# videos
-pacman -S --noconfirm vlc vlc-plugin-ffmpeg
 # images
 pacman -S eog
 sudo -u "$USER_NAME" bash -c 'paru -S oculante'
-sudo -u "$USER_NAME" bash -c 'paru -S musikcube-bin'
 # tools media
 pacman -S --noconfirm handbrake
 # other
 sudo pacman -S gnome-clocks
+
+echo ""
+echo -e "${BLUE} ================================="
+echo -e "${GREEN} ==== Multimedia applications ===="
+echo -e "${BLUE} ================================="
+echo -e "${RESET}"
+
+# 1. PipeWire
+pacman -S --noconfirm pipewire \
+	pipewire-pulse \
+	pipewire-alsa \
+	pipewire-jack \
+	wireplumber \
+	pavucontrol \
+	pulsemixer
+
+# 2. Codecs
+sudo pacman -S --noconfirm \
+  ffmpeg \
+	ffmpegthumbs \
+	taglib \
+	gst-libav \
+  gst-plugins-good \
+  gst-plugins-bad \
+  gst-plugins-ugly \
+  tumbler
+
+# 3. Media player
+pacman -S --noconfirm \
+  mpv \
+  cava \
+  yt-dlp
+
+sudo -u "$USER_NAME" bash -c 'paru -S musikcube-bin'
+pacman -S --noconfirm vlc vlc-plugin-ffmpeg
 
 echo ""
 echo -e "${BLUE} =================================="
