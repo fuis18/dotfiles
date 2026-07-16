@@ -1,6 +1,12 @@
 [Match]
-Name=wlan0 wlp*
+Name=wl*
 
 [Network]
 DHCP=yes
 IgnoreCarrierLoss=3s
+
+[DHCPv4]
+UseDNS=no
+
+[DHCPv6]
+UseDNS=no
