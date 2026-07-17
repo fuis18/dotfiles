@@ -114,7 +114,7 @@ $env.config = {
             ]
         }
     }
-    
+
     completions: {
         external: {
             enable: true
@@ -154,27 +154,29 @@ $env.config = {
 }
 
 # ─────────────────────────────────────────────
-# FASTFETCH  (reemplaza show_banner)
+# FASTFETCH
 # ─────────────────────────────────────────────
 fastfetch
 
 # ─────────────────────────────────────────────
-# ALIASES  (de tu zshrc)
+# ALIAS
 # ─────────────────────────────────────────────
+alias l   = ls
 alias ll  = ls -l
 alias la  = ls -a
-alias l   = ls
+alias lsa = ls -a
 alias lla = ls -la
 alias cat = bat
 alias icat = kitty +kitten icat
 alias mp3 = musikcube
 alias npm = pnpm
 alias npx = pnpx
+alias music = ncmpcpp
 
 # pacs: buscar e instalar paquetes de pacman con fzf
 # (usa bash interno para el pipeline complejo con comillas anidadas)
 def pacs [] {
-    bash -c "pacman -Slq | fzf -m --preview 'pacman -Si {} ; pacman -Fl {} | awk \"{print \\$2}\"' | xargs -ro sudo pacman -S"
+  ^zsh ~/.local/bin/pacs.zsh
 }
 
 # ─────────────────────────────────────────────
@@ -189,12 +191,7 @@ def mkt [] {
 
 # fzf con preview de archivos (usa bat para resaltado)
 def fzfh [] {
-    bash -c "fzf -m --reverse --preview-window down:20 --preview '
-        if file --mime {} | grep -q binary; then
-            echo \"{} es un archivo binario\"
-        else
-            bat --style=numbers --color=always {} 2>/dev/null || cat {}
-        fi | head -500'"
+    ^fzf -m --reverse --preview-window down:20 --preview $"($env.HOME)/.local/bin/fzfh_preview.zsh {}"
 }
 
 # Extrae puertos abiertos de un archivo de salida de nmap
