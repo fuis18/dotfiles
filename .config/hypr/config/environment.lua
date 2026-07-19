@@ -4,6 +4,7 @@ hl.env("XDG_SESSION_DESKTOP", "Hyprland")
 
 hl.env("GDK_BACKEND", "wayland,x11,*")
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")
+hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 hl.env("QT_AUTO_SCREEN_SCALE_FACTOR", "1")
 hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
 hl.env("WEBRTC_ENABLE_HW_ENCODING", "1")
@@ -16,7 +17,7 @@ hl.env("XMODIFIERS", "@im=fcitx5")
 
 hl.env("GTK_THEME", "catppuccin-mocha-blue-standard+default")
 hl.env("GTK_ICON_THEME", "Papirus-Dark")
-hl.env("GTK_APPLICATION_PREFER_DARK_THEME", "1")
+-- hl.env("GTK_APPLICATION_PREFER_DARK_THEME", "1")
 
 hl.env("GNOME_KEYRING_CONTROL", os.getenv("HOME") .. "/.local/share/keyrings")
 hl.env("SSH_AUTH_SOCK", os.getenv("HOME") .. "/.local/share/keyrings/ssh")

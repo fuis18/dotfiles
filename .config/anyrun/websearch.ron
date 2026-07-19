@@ -2,10 +2,6 @@ Config(
     prefix: "?",
     engines: [
         Custom(
-            name: "Brave",
-            url: "search.brave.com/search?q={}",
-        ),
-        Custom(
             name: "DuckDuckGo",
             url: "duckduckgo.com/?q={}",
         ),
