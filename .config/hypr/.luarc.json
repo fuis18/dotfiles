@@ -1,0 +1,32 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "workspace": {
+    "library": [
+      "types"
+    ],
+    "ignoreDir": [],
+    "maxPreload": 5000,
+    "preloadFileSize": 500
+  },
+  "diagnostics": {
+    "globals": [
+      "hl"
+    ]
+  },
+  "runtime": {
+    "version": "Lua 5.4",
+    "pathStrict": false,
+    "nonstandardSymbol": [],
+    "special": {}
+  },
+  "hint": {
+    "enable": true,
+    "paramName": "all",
+    "paramType": true,
+    "setType": true
+  },
+  "completion": {
+    "callSnippet": "Disable",
+    "autoRequire": false
+  }
+}

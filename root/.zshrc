@@ -82,13 +82,7 @@ function mkt(){
 
 # fzf improvement
 function fzfh() {
-    fzf -m --reverse --preview-window down:20 --preview '[[ $(file --mime {}) =~ binary ]] &&
-			echo {} is a binary file ||
-			(bat --style=numbers --color=always {} ||
-				highlight -O ansi -l {} ||
-				coderay {} ||
-				rougify {} ||
-				cat {}) 2> /dev/null | head -500'
+    fzf -m --reverse --preview-window down:20 --preview '~/.local/bin/fzfh_preview.zsh {}'
 }
 
 # Extract nmap information
@@ -101,19 +95,6 @@ function extractPorts(){
 	echo $ports | tr -d '\n' | xclip -sel clip
 	echo -e "[*] Ports copied to clipboard\n"  >> extractPorts.tmp
 	cat extractPorts.tmp; rm extractPorts.tmp
-}
-
-# man is a package that provides the manual pages for commands
-# Set 'man' colors
-function man() {
-    LESS_TERMCAP_mb=$'\e[01;31m' \
-    LESS_TERMCAP_md=$'\e[01;31m' \
-    LESS_TERMCAP_me=$'\e[0m' \
-    LESS_TERMCAP_se=$'\e[0m' \
-    LESS_TERMCAP_so=$'\e[01;44;30m' \
-    LESS_TERMCAP_ue=$'\e[0m' \
-    LESS_TERMCAP_us=$'\e[01;32m' \
-    command man "$@"
 }
 
 function rmk(){
