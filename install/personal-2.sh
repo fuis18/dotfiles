@@ -67,7 +67,7 @@ echo -e "${GREEN} ============= APPS ============="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm muse # musescore
+pacman -S --noconfirm musescore
 
 pacman -S --noconfirm kseexpr
 pacman -S --noconfirm blender gimp krita
