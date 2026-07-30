@@ -41,8 +41,6 @@ pacman -S --noconfirm hyprland \
   hyprpolkitagent \
   xdg-desktop-portal-hyprland
 
-sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown hyprswitch'
-
 echo ""
 echo -e "${BLUE} =================================="
 echo -e "${GREEN} ============== Core =============="
@@ -113,7 +111,9 @@ else
   sudo -u "${USER_NAME}" bash -c "cd '$PARU_DIR' && makepkg -si --noconfirm"
 fi
 
-sudo -u "$USER_NAME" bash -c 'paru -S fakeroot-tcp'
+sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown hyprswitch'
+# experimental
+# sudo -u "$USER_NAME" bash -c 'paru -S fakeroot-tcp'
 
 echo ""
 echo -e "${BLUE} ================================="

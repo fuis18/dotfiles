@@ -193,7 +193,7 @@ mount | grep mnt
 
 ```sh
 pacstrap -K /mnt base linux-zen linux-zen-headers linux-firmware
-pacstrap /mnt sudo nvim git iwd
+pacstrap /mnt sudo nvim git iwd less
 
 vim /mnt/etc/vconsole.conf
 ```
@@ -444,6 +444,8 @@ nvim /etc/hosts
 127.0.0.1  hacker.localhost hacker
 
 systemctl enable iwd
+systemctl enable systemd-networkd
+systemctl enable systemd-resolved
 
 ln -sf /usr/share/zoneinfo/America/Lima /etc/localtime
 hwclock --systohc

@@ -4,6 +4,7 @@ Name=wl*
 [Network]
 DHCP=yes
 IgnoreCarrierLoss=3s
+FallbackDNS=1.1.1.1 9.9.9.9 8.8.8.8
 
 [DHCPv4]
 UseDNS=no
