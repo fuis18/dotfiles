@@ -4,8 +4,8 @@
 set -euo pipefail
 
 if [[ $EUID -ne 0 ]]; then
-    echo "Use sudo, need the root"
-    exit 1
+  echo "Use sudo, need the root"
+  exit 1
 fi
 
 USER_NAME=$(logname)
@@ -49,7 +49,6 @@ echo -e "${GREEN} ============== Core =============="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-
 pacman -S --noconfirm wget openssh openssl
 pacman -S --noconfirm gtk4 gtk4-layer-shell pkg-config
 pacman -S --noconfirm qt6-base qt6-declarative qt6-wayland qt5-wayland
@@ -73,7 +72,7 @@ echo -e "${RESET}"
 PARU_DIR="${USER_REPOS}/paru"
 if [[ -d "$PARU_DIR" ]]; then
   echo -e "${GREEN}[!] Directorio '$PARU_DIR' ya existe.${RESET}"
-  else
+else
   git clone https://aur.archlinux.org/paru.git "$PARU_DIR"
   chown -R "${USER_NAME}:${USER_NAME}" "$PARU_DIR"
   sudo -u "${USER_NAME}" bash -c "cd '$PARU_DIR' && makepkg -si --noconfirm"
@@ -108,6 +107,7 @@ echo -e "${RESET}"
 pacman -S --noconfirm kitty starship zsh nushell
 
 pacman -S --noconfirm zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
+pacman -S --noconfirm lsd bat
 
 chsh -s $(which nu) "$USER_NAME"
 
@@ -123,7 +123,7 @@ echo "-> Cambiando shell a zsh..."
 usermod --shell "$ZSH_PATH" root
 usermod --shell "$ZSH_PATH" "$USER_NAME"
 
-echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
+echo "%wheel ALL=(ALL) ALL" >/etc/sudoers.d/wheel
 chmod 440 /etc/sudoers.d/wheel
 
 sudo -u "$USER_NAME" bash -c 'paru -S carapace-bin'
@@ -154,7 +154,7 @@ echo -e "${RESET}"
 LOCALES=("de_DE.UTF-8" "en_US.UTF-8" "es_ES.UTF-8" "ja_JP.UTF-8")
 
 for locale in "${LOCALES[@]}"; do
-    sed -i "s/^#\s*${locale} UTF-8/${locale} UTF-8/" /etc/locale.gen
+  sed -i "s/^#\s*${locale} UTF-8/${locale} UTF-8/" /etc/locale.gen
 done
 
 locale-gen
@@ -165,7 +165,7 @@ echo -e "${GREEN} ===== Network Configuration ====="
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm iwd bluez bluez-utils dbus 
+pacman -S --noconfirm iwd bluez bluez-utils dbus
 
 systemctl enable iwd
 systemctl enable bluetooth
@@ -183,12 +183,12 @@ echo -e "${GREEN} ==== Instalando Login Manager ===="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm greetd greetd-tuigreet
+pacman -S --noconfirm greetd greetd-regreet cage
 
 if id greeter &>/dev/null; then
-    echo "✔ El usuario greeter ya existe. Continuando..."
+  echo "✔ El usuario greeter ya existe. Continuando..."
 else
-    useradd -r -s /usr/bin/nologin -d /var/lib/greetd -M greeter
+  useradd -r -s /usr/bin/nologin -d /var/lib/greetd -M greeter
 fi
 
 cp -r "${FUIS_REPO}/etc/greetd/." /etc/greetd/
@@ -203,12 +203,12 @@ echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
 pacman -S --noconfirm noto-fonts \
-	noto-fonts-cjk \
-	noto-fonts-emoji \
-	gnu-free-fonts \
-	ttf-firacode-nerd \
-	ttf-dejavu \
-	ttf-liberation
+  noto-fonts-cjk \
+  noto-fonts-emoji \
+  gnu-free-fonts \
+  ttf-firacode-nerd \
+  ttf-dejavu \
+  ttf-liberation
 
 sudo -u "${USER_NAME}" bash -c 'paru -S ttf-sarasa-gothic-nerd-fonts'
 

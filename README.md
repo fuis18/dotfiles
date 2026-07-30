@@ -43,7 +43,7 @@ same problem, one gets cut.
 | Screenshot     | grim + slurp + swappy  |
 | Brightness     | brightnessctl          |
 | System monitor | btm                    |
-| Login Manager  | greetd + tuigreet      |
+| Login Manager  | greetd + regreet      |
 | Power menu     | wlogout                |
 
 ---
