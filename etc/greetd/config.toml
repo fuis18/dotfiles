@@ -2,6 +2,6 @@
 vt = 1
 
 [default_session]
-command = "dbus-run-session start-hyprland --config /etc/greetd/hyprland.lua"
+command = "dbus-run-session env HOME=/var/lib/greetd XDG_CONFIG_HOME=/var/lib/greetd/.config /etc/greetd/start-greeter --config /etc/greetd/hyprland.lua"
 
 user = "greeter"

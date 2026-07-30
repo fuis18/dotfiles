@@ -191,9 +191,13 @@ else
   useradd -r -s /usr/bin/nologin -d /var/lib/greetd -M greeter
 fi
 
+mkdir -p /var/lib/greetd/.config/hypr
+chown -R greeter:greeter /var/lib/greetd
+
 cp -r "${FUIS_REPO}/etc/greetd/." /etc/greetd/
 
 chmod 644 /etc/greetd/config.toml
+chmod +x /etc/greetd/start-greeter
 systemctl enable greetd
 
 echo ""
