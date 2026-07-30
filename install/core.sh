@@ -183,7 +183,7 @@ echo -e "${GREEN} ==== Instalando Login Manager ===="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm greetd greetd-regreet cage
+pacman -S --noconfirm greetd greetd-regreet
 
 if id greeter &>/dev/null; then
   echo "✔ El usuario greeter ya existe. Continuando..."
