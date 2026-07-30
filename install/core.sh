@@ -55,6 +55,41 @@ pacman -S --noconfirm qt6-base qt6-declarative qt6-wayland qt5-wayland
 pacman -S --noconfirm upower gnome-keyring xsettingsd
 
 echo ""
+echo -e "${BLUE} ================================="
+echo -e "${GREEN} ============ Drivers ============"
+echo -e "${BLUE} ================================="
+echo -e "${RESET}"
+echo ""
+
+pacman -S --noconfirm libva
+pacman -S --noconfirm v4l2loopback-dkms
+
+# Intel
+pacman -S --noconfirm libva-intel-driver intel-media-driver
+# AMD
+pacman -S --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils
+# vulkan-radeon lib32-vulkan-radeon
+# NVidia
+# pacman -S --noconfirm nvidia-utils libva-vdpau-driver
+
+echo ""
+echo -e "${BLUE} ================================="
+echo -e "${GREEN} ===== Network Configuration ====="
+echo -e "${BLUE} ================================="
+echo -e "${RESET}"
+
+pacman -S --noconfirm bluez bluez-utils dbus
+
+systemctl enable bluetooth
+systemctl start bluetooth
+
+pacman -S --noconfirm impala bluetui
+
+# Segurity
+
+pacman -S --noconfirm ufw
+
+echo ""
 echo -e "${BLUE} =================================="
 echo -e "${GREEN} =========== AUR Helper ==========="
 echo -e "${BLUE} =================================="
@@ -79,24 +114,6 @@ else
 fi
 
 sudo -u "$USER_NAME" bash -c 'paru -S fakeroot-tcp'
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ============ Drivers ============"
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-echo ""
-
-pacman -S --noconfirm libva
-pacman -S --noconfirm v4l2loopback-dkms
-
-# Intel
-pacman -S --noconfirm libva-intel-driver intel-media-driver
-# AMD
-pacman -S --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils
-# vulkan-radeon lib32-vulkan-radeon
-# NVidia
-# pacman -S --noconfirm nvidia-utils libva-vdpau-driver
 
 echo ""
 echo -e "${BLUE} ================================="
@@ -158,24 +175,6 @@ for locale in "${LOCALES[@]}"; do
 done
 
 locale-gen
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ===== Network Configuration ====="
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-pacman -S --noconfirm iwd bluez bluez-utils dbus
-
-systemctl enable iwd
-systemctl enable bluetooth
-systemctl start bluetooth
-
-pacman -S --noconfirm impala bluetui
-
-# Segurity
-
-pacman -S --noconfirm ufw
 
 echo ""
 echo -e "${BLUE} =================================="

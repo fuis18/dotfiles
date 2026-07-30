@@ -30,6 +30,7 @@ sudo pacman -Sy
 
 ```sh
 cfdisk
+# cfdisk /dev/nvme0n1
 ```
 
 ---
@@ -42,8 +43,6 @@ cfdisk
 | /dev/sda2 | 100G  | Linux filesystem | root  |
 | /dev/sda3 | resto | Linux filesystem | home  |
 | /dev/sda4 | 4GB   | Linux swap       | swap  |
-
-Nuevo sistema de archivos Btrfs
 
 ```sh
 lsblk
@@ -81,9 +80,8 @@ swapon /dev/sda4
 | Device    | Size  | Type             | Label |
 | --------- | ----- | ---------------- | ----- |
 | /dev/sda1 | 1G    | EFI System       | boot  |
-| /dev/sda2 | resto | Linux filesystem | root  |
-| /dev/sda3 | 4GB   | Linux swap       | swap  |
-
+| /dev/sda2 | 4GB   | Linux swap       | swap  |
+| /dev/sda3 | resto | Linux filesystem | root  |
 
 ```sh
 lsblk
@@ -91,16 +89,16 @@ lsblk
 # EFI
 mkfs.fat -F 32 /dev/sda1
 # Root (Btrfs)
-mkfs.btrfs -L root /dev/sda2
+mkfs.btrfs -L root /dev/sda3
 # Swap
-mkswap /dev/sda3
+mkswap /dev/sda2
 ```
 
 #### Crear subvolúmenes
 
 ```sh
 # Montar root temporalmente para crear subvolúmenes
-mount /dev/sda2 /mnt
+mount /dev/sda3 /mnt
 
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
@@ -119,30 +117,30 @@ umount /mnt
 OPTS="noatime,compress=zstd,space_cache=v2,commit=120"
 
 # Root (@)
-mount -o ${OPTS},subvol=@ /dev/sda2 /mnt
+mount -o ${OPTS},subvol=@ /dev/sda3 /mnt
 
 # Home (@home)
 mkdir -p /mnt/home
-mount -o ${OPTS},subvol=@home /dev/sda2 /mnt/home
+mount -o ${OPTS},subvol=@home /dev/sda3 /mnt/home
 
 # Snapshots
 mkdir -p /mnt/.snapshots
-mount -o ${OPTS},subvol=@snapshots /dev/sda2 /mnt/.snapshots
+mount -o ${OPTS},subvol=@snapshots /dev/sda3 /mnt/.snapshots
 
 # Logs
 mkdir -p /mnt/var/log
-mount -o ${OPTS},subvol=@log /dev/sda2 /mnt/var/log
+mount -o ${OPTS},subvol=@log /dev/sda3 /mnt/var/log
 
 # Cache
 mkdir -p /mnt/var/cache
-mount -o ${OPTS},subvol=@cache /dev/sda2 /mnt/var/cache
+mount -o ${OPTS},subvol=@cache /dev/sda3 /mnt/var/cache
 
 # EFI
 mkdir -p /mnt/boot
 mount /dev/sda1 /mnt/boot
 
 # Swap
-swapon /dev/sda3
+swapon /dev/sda2
 ```
 
 #### Verificar montaje
@@ -195,9 +193,9 @@ mount | grep mnt
 
 ```sh
 pacstrap -K /mnt base linux-zen linux-zen-headers linux-firmware
-pacstrap /mnt networkmanager sudo nvim git
+pacstrap /mnt sudo nvim git iwd
 
-nvim /mnt/etc/vconsole.conf
+vim /mnt/etc/vconsole.conf
 ```
 
 ```conf
@@ -210,7 +208,7 @@ ls /mnt/boot
 ls /mnt/lib/modules
 
 # CPU
-lscpu
+lscpu | less
 ```
 
 | Intel                       | AMD                       |
@@ -252,20 +250,31 @@ exit
 
 # 1. Desmontar @snapshots
 umount /mnt/.snapshots
+btrfs subvolume delete /mnt/.snapshots
 rm -rf /mnt/.snapshots
 
-# 2. Volver al chroot y crear la config
-arch-chroot /mnt
-snapper -c root create-config /
+mkdir -p /mnt/etc/snapper/configs
 
-# 3. Salir y borrar el subvolumen que creó snapper
-exit
-btrfs subvolume delete /mnt/.snapshots
+cat << 'EOF' > /mnt/etc/snapper/configs/root
+FSTYPE="btrfs"
+SUBDIR=".snapshots"
+CMS_DEFAULT="allow"
+TIMELINE_CREATE="yes"
+TIMELINE_CLEANUP="yes"
+TIMELINE_MIN_AGE="1800"
+TIMELINE_LIMIT_HOURLY="5"
+TIMELINE_LIMIT_DAILY="5"
+TIMELINE_LIMIT_WEEKLY="2"
+TIMELINE_LIMIT_MONTHLY="0"
+TIMELINE_LIMIT_YEARLY="0"
+EOF
+
+echo 'SNAPPER_CONFIGS="root"' > /mnt/etc/conf.d/snapper
 
 # 4. Remontar @snapshots
-mkdir -p /mnt/.snapshots
+btrfs subvolume create /mnt/.snapshots
 chmod 750 /mnt/.snapshots
-mount -o noatime,compress=zstd,space_cache=v2,subvol=@snapshots /dev/sda2 /mnt/.snapshots
+mount -o noatime,compress=zstd,space_cache=v2,subvol=@snapshots /dev/sda3 /mnt/.snapshots
 
 # 5. Volver al chroot para continuar
 arch-chroot /mnt
@@ -328,8 +337,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ```sh
 # rm /boot/loader/entries/*.conf
 
-daemon-reload
-
 bootctl install
 
 bootctl
@@ -344,14 +351,18 @@ ls -R /boot
 #   EFI initramfs-linux-zen.img intel-ucode.img loader vmlinuz-linux-zen
 # /boot/EFI:
 #   BOOT Linux systemd
+#
 # /boot/EFI/BOOT:
 #   BOOTX64.EFI
+#
 # /boot/EFI/Linux:
 #
 # /boot/EFI/systemd:
 # systemd-bootx64.efi
+#
 # /boot/loader:
 #   entries entries.srel keys loader.conf random-seed
+#
 # /boot/loader/entries:
 #
 # /boot/loeader/keys:
@@ -365,7 +376,7 @@ editor   no
 EOF
 
 # UUID
-blkid /dev/sda2
+blkid /dev/sda3
 # blkid -s UUID -o value /dev/sda2
 ```
 
@@ -375,8 +386,8 @@ cat > /boot/loader/entries/arch.conf <<EOF
 title   Arch Linux
 linux   /vmlinuz-linux-zen
 initrd  /intel-ucode.img
-initrd  /initramfs-linux.img
-options root=UUID=TU_UUID rw
+initrd  /initramfs-linux-zen.img
+options root=UUID=TU_UUID rootflags=subvol=@ rw
 EOF
 
 # AMD
@@ -432,11 +443,11 @@ nvim /etc/hosts
 ::1        localhost
 127.0.0.1  hacker.localhost hacker
 
+systemctl enable iwd
+
 ln -sf /usr/share/zoneinfo/America/Lima /etc/localtime
 hwclock --systohc
 date
-
-systemctl enable NetworkManager
 ```
 
 ```sh
