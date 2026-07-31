@@ -67,34 +67,33 @@ pacman -S --noconfirm pipewire \
 	pipewire-pulse \
 	pipewire-alsa \
 	pipewire-jack \
-	lib32-pipewire \
 	wireplumber \
 	pavucontrol \
 	pulsemixer
 
 # 2. Codecs
 pacman -S --noconfirm \
-    ffmpeg \
+  ffmpeg \
 	ffmpegthumbs \
 	taglib \
 	gst-libav \
 	gst-plugins-base \
 	gst-plugins-good \
 	gst-plugins-bad \
-    gst-plugins-ugly \
-    tumbler
+  gst-plugins-ugly \
+  tumbler
 
 # 3. Media player & Control
 pacman -S --noconfirm \
-    mpd \
-    mpv \
-    cava \
-    yt-dlp \
-    ncmpcpp \
-    celluloid \
-    playerctl \
-    mpd-mpris \
-    mpv-mpris
+  mpd \
+  mpv \
+  cava \
+  yt-dlp \
+  ncmpcpp \
+  celluloid \
+  playerctl \
+  mpd-mpris \
+  mpv-mpris
 
 sudo -u "$USER_NAME" bash -c 'paru -S musikcube-bin'
 

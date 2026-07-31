@@ -259,9 +259,8 @@ echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
 # root
-cp -r "${FUIS_REPO}/root/config/." /root/.config/
-cp -r "${FUIS_REPO}/root/zshrc" /root/
-mv /root/zshrc /root/.zshrc
+cp -r "${FUIS_REPO}/root/.config/." /root/.config/
+cp -r "${FUIS_REPO}/root/.zshrc" /root/
 
 echo ""
 echo -e "${BLUE}=================================="

@@ -21,15 +21,13 @@ echo -e "${GREEN} ========== Programaing =========="
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm bun bacon
+pacman -S --noconfirm deno bacon
 
 pacman -S --noconfirm github-cli
 pacman -S --noconfirm lazygit
-pacman -S --noconfirm zellij
 
 # editors
 pacman -S --noconfirm zed
-pacman -S --noconfirm helix
 
 echo ""
 echo -e "${BLUE} ================================"
@@ -46,6 +44,14 @@ sudo -u "$USER_NAME" bash -c 'paru -S brave-bin'
 # Privacity
 sudo -u "$USER_NAME" bash -c 'paru -S librewolf-bin'
 pacman -S --noconfirm torbrowser-launcher
+
+echo ""
+echo -e "${BLUE} ================================"
+echo -e "${GREEN} ========== Pentesting =========="
+echo -e "${BLUE} ================================"
+echo -e "${RESET}"
+
+pacman -S --noconfirm nmap
 
 echo ""
 echo -e "${BLUE} ================================"
