@@ -28,6 +28,4 @@ sudo -u "$USER_NAME" cp -r "${FUIS_REPO}/.config/." "${USER_HOME}/.config/"
 sudo -u "$USER_NAME" cp -r "${FUIS_REPO}/.local/bin/." "${USER_HOME}/.local/bin/"
 sudo -u "$USER_NAME" cp -r "${FUIS_REPO}/.zshrc" "${USER_HOME}/.zshrc"
 
-# cp -r "${FUIS_REPO}/etc/." "/etc/"
-
 find "${USER_HOME}/.config/hypr/scripts/" -type f -name "*.sh" -exec chmod +x {} \;

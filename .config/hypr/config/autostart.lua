@@ -13,6 +13,8 @@ hl.on("hyprland.start", function()
 	-- legacy support
 	hl.exec_cmd("xsettingsd")
 
+	hl.exec_cmd(scriptsDir .. "/xwayland-keymap.sh")
+
 	-- 3. TERCERO: Iniciar el resto de tus servicios y barras de estado
 	hl.exec_cmd("anyrun daemon")
 	hl.exec_cmd("hyprpaper")

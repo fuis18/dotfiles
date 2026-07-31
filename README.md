@@ -64,6 +64,9 @@ sudo pacman -S git
 mkdir -p Downloads/repos/fuis18 && cd Downloads/repos/fuis18
 git clone https://github.com/fuis18/dotfiles.git
 
+sudo cp -r dotfiles/etc/. /etc/
+sudo chmod +x /etc/greetd/start-greeter
+
 sudo bash dotfiles/setup.sh
 sudo zsh dotfiles/post.sh
 ```
