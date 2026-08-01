@@ -1,0 +1,4 @@
+[Thumbnailer Entry]
+TryExec=ffmpegthumbnailer
+Exec=ffmpegthumbnailer -i %i -o %o -s %s
+MimeType=audio/mpeg;audio/mp3;audio/x-mp3;audio/x-mpeg;audio/mpegurl;audio/x-mpegurl;audio/mp4;audio/m4a;audio/x-m4a;audio/x-matroska;audio/flac;audio/x-flac;audio/ogg;audio/vorbis;audio/x-vorbis+ogg;audio/opus;audio/x-opus+ogg;audio/aac;audio/x-aac;audio/ac3;audio/x-ac3;audio/wav;audio/x-wav;audio/wave;audio/x-aiff;audio/aiff;audio/x-ms-wma;audio/x-ms-wax;audio/x-musepack;audio/x-ape;audio/x-tta;audio/x-wavpack;audio/x-wv;audio/midi;audio/x-midi;application/ogg;application/x-flac;

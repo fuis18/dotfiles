@@ -75,6 +75,7 @@ pacman -S --noconfirm pipewire \
 pacman -S --noconfirm \
   ffmpeg \
 	ffmpegthumbs \
+  ffmpegthumbnailer \
 	taglib \
 	gst-libav \
 	gst-plugins-base \
