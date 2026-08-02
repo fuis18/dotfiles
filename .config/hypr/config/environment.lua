@@ -23,4 +23,4 @@ hl.env("GNOME_KEYRING_CONTROL", os.getenv("HOME") .. "/.local/share/keyrings")
 hl.env("SSH_AUTH_SOCK", os.getenv("HOME") .. "/.local/share/keyrings/ssh")
 
 hl.env("GRIMBLAST_SCREENSHOTS_DIR", os.getenv("HOME") .. "/Pictures/Screenshots")
-hl.env("GRIMBLAST_EDITOR", "oculante")
+hl.env("GRIMBLAST_EDITOR", "satty --filename")
