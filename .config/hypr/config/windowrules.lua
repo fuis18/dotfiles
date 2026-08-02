@@ -54,3 +54,11 @@ hl.window_rule({
 	size = { 900, 650 },
 	center = true,
 })
+
+hl.window_rule({
+	name = "float-proton-authenticator",
+	match = { class = "proton-authenticator" },
+	float = true,
+	size = { 900, 650 },
+	center = true,
+})

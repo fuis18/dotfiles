@@ -1,0 +1,27 @@
+{
+  "main": {
+    "width": 1100,
+    "height": 700,
+    "x": 0,
+    "y": 0,
+    "prev_x": 0,
+    "prev_y": 0,
+    "maximized": false,
+    "visible": true,
+    "decorated": true,
+    "fullscreen": false
+  },
+  "login": {
+    "width": 1000,
+    "height": 700,
+    "x": 0,
+    "y": 0,
+    "prev_x": 103,
+    "prev_y": 103,
+    "maximized": false,
+    "visible": true,
+    "decorated": true,
+    "fullscreen": false
+  }
+}
+
