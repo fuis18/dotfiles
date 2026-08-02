@@ -13,7 +13,7 @@ station list scan
 station wlan0 connect "Your_wifi"
 exit
 
-ping www.archlinux.org
+ping archlinux.org
 ```
 
 ## Keyring
@@ -41,20 +41,20 @@ cfdisk
 | --------- | ----- | ---------------- | ----- |
 | /dev/sda1 | 1G    | EFI System       | boot  |
 | /dev/sda2 | 100G  | Linux filesystem | root  |
-| /dev/sda3 | resto | Linux filesystem | home  |
-| /dev/sda4 | 4GB   | Linux swap       | swap  |
+| /dev/sda3 | 4GB   | Linux swap       | swap  |
+| /dev/sda4 | resto | Linux filesystem | home  |
 
 ```sh
 lsblk
 
-# Primary
+# primary
 mkfs.fat -F 32 /dev/sda1
-# Root
+# root
 mkfs.ext4 /dev/sda2
-# Home
-mkfs.ext4 /dev/sda3
 # swap
-mkswap /dev/sda4
+mkswap /dev/sda3
+# home
+mkfs.ext4 /dev/sda4
 ```
 
 ```sh
@@ -68,9 +68,9 @@ mount /dev/sda1 /mnt/boot
 
 # Montar home
 mkdir -p /mnt/home
-mount /dev/sda3 /mnt/home
+mount /dev/sda4 /mnt/home
 # swap
-swapon /dev/sda4
+swapon /dev/sda3
 ```
 
 ---
@@ -88,16 +88,15 @@ lsblk
 
 # EFI
 mkfs.fat -F 32 /dev/sda1
-# Root (Btrfs)
-mkfs.btrfs -L root /dev/sda3
 # Swap
 mkswap /dev/sda2
+# Root (Btrfs)
+mkfs.btrfs -L root /dev/sda3
 ```
 
 #### Crear subvolúmenes
 
 ```sh
-# Montar root temporalmente para crear subvolúmenes
 mount /dev/sda3 /mnt
 
 btrfs subvolume create /mnt/@
@@ -107,6 +106,13 @@ btrfs subvolume create /mnt/@log
 btrfs subvolume create /mnt/@cache
 
 umount /mnt
+
+# EFI
+mkdir -p /mnt/boot
+mount /dev/sda1 /mnt/boot
+
+# Swap
+swapon /dev/sda2
 ```
 
 #### Montar subvolúmenes
@@ -134,13 +140,6 @@ mount -o ${OPTS},subvol=@log /dev/sda3 /mnt/var/log
 # Cache
 mkdir -p /mnt/var/cache
 mount -o ${OPTS},subvol=@cache /dev/sda3 /mnt/var/cache
-
-# EFI
-mkdir -p /mnt/boot
-mount /dev/sda1 /mnt/boot
-
-# Swap
-swapon /dev/sda2
 ```
 
 #### Verificar montaje
@@ -155,33 +154,33 @@ lsblk -f
 ---
 
 ### GRUB
-
 | Device    | Size  | Type             | Label |
 | --------- | ----- | ---------------- | ----- |
 | /dev/sda1 | 2M    | BIOS boot        | boot  |
 | /dev/sda2 | 100G  | Linux filesystem | root  |
-| /dev/sda3 | resto | Linux filesystem | home  |
-| /dev/sda4 | 4G    | Linux swap       | swap  |
+| /dev/sda3 | 4G    | Linux swap       | swap  |
+| /dev/sda4 | resto | Linux filesystem | home  |
 
 ```sh
 lsblk
 
 # Root
 mkfs.ext4 /dev/sda2
-# Home
-mkfs.ext4 /dev/sda3
 # Swap
-mkswap /dev/sda4
+mkswap /dev/sda3
+# Home
+mkfs.ext4 /dev/sda4
 ```
 
 ```sh
+# root
 mkdir -p /mnt
 mount /dev/sda2 /mnt
-
-mkdir -p /mnt/home
-mount /dev/sda3 /mnt/home
 # swap
-swapon /dev/sda4
+swapon /dev/sda3
+# home
+mkdir -p /mnt/home
+mount /dev/sda4 /mnt/home
 ```
 
 ## Pacstrap
@@ -235,58 +234,11 @@ mount | grep boot
 
 #### Snapper (Only Btrfs)
 
-Snapper no puede crear la config si `@snapshots` ya está montado en `/.snapshots`. El truco es desmontarlo desde el **USB live** (con prefijo `/mnt`), dejar que snapper cree su propio subvolumen, borrarlo, y volver a montar `@snapshots`.
-
-Instalar dentro del chroot:
-
 ```sh
 pacman -S snapper snap-pac
 ```
 
-Salir del chroot y hacer el intercambio desde el USB live:
-
-```sh
-exit
-
-# 1. Desmontar @snapshots
-umount /mnt/.snapshots
-btrfs subvolume delete /mnt/.snapshots
-rm -rf /mnt/.snapshots
-
-mkdir -p /mnt/etc/snapper/configs
-
-cat << 'EOF' > /mnt/etc/snapper/configs/root
-FSTYPE="btrfs"
-SUBDIR=".snapshots"
-CMS_DEFAULT="allow"
-TIMELINE_CREATE="yes"
-TIMELINE_CLEANUP="yes"
-TIMELINE_MIN_AGE="1800"
-TIMELINE_LIMIT_HOURLY="5"
-TIMELINE_LIMIT_DAILY="5"
-TIMELINE_LIMIT_WEEKLY="2"
-TIMELINE_LIMIT_MONTHLY="0"
-TIMELINE_LIMIT_YEARLY="0"
-EOF
-
-echo 'SNAPPER_CONFIGS="root"' > /mnt/etc/conf.d/snapper
-
-# 4. Remontar @snapshots
-btrfs subvolume create /mnt/.snapshots
-chmod 750 /mnt/.snapshots
-mount -o noatime,compress=zstd,space_cache=v2,subvol=@snapshots /dev/sda3 /mnt/.snapshots
-
-# 5. Volver al chroot para continuar
-arch-chroot /mnt
-```
-
-```sh
-# Activar timers
-systemctl enable snapper-timeline.timer
-systemctl enable snapper-cleanup.timer
-```
-
-#### Desactivar y desmontar
+### Helper: Desactivar y desmontar
 
 ```sh
 swapoff /mnt/swapfile
@@ -304,14 +256,15 @@ swapon --show
 ```sh
 pacman -S zram-generator
 
+# ram * .5 to ram * .75
 nvim /etc/systemd/zram-generator.conf
 ```
 
 ```conf
 [zram0]
-zram-size = ram * 0.75
+zram-size = ram * 0.5
 compression-algorithm = zstd
-swap-priority = 100
+swap-priority = 150
 ```
 
 ```sh
@@ -320,6 +273,8 @@ nvim /etc/sysctl.d/99-swappiness.conf
 
 ```sh
 vm.swappiness=100
+# 150 less cache saved
+vm.vfs_cache_pressure=150
 ```
 
 ## Bootloader
@@ -376,7 +331,7 @@ editor   no
 EOF
 
 # UUID
-blkid /dev/sda3
+blkid /dev/sda2
 # blkid -s UUID -o value /dev/sda2
 ```
 
@@ -426,7 +381,7 @@ bootctl list
 passwd
 admin18 # root password
 useradd -m -G wheel fuis18
-passwd fuis18
+passwd fuis18pacman -S snapper snap-pac
 luis18 # user password
 
 usermod -aG wheel fuis18

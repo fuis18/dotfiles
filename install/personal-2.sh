@@ -36,13 +36,12 @@ echo -e "${BLUE} ================================"
 echo -e "${RESET}"
 
 # Diary
-pacman -S --noconfirm epiphany
 sudo -u "$USER_NAME" bash -c 'paru -S helium-browser-bin'
 sudo -u "$USER_NAME" bash -c 'paru -S zen-browser-bin'
 sudo -u "$USER_NAME" bash -c 'paru -S brave-bin'
 
 # Privacity
-sudo -u "$USER_NAME" bash -c 'paru -S librewolf-bin'
+sudo -u "$USER_NAME" bash -c 'paru -S mullvad-browser-bin'
 pacman -S --noconfirm torbrowser-launcher
 
 echo ""
@@ -60,7 +59,7 @@ echo -e "${BLUE} ================================"
 echo -e "${RESET}"
 
 pacman -S --noconfirm docker docker-compose docker-buildx
-sudo -u "$USER_NAME" bash -c 'paru -S oxker-bin'
+sudo -u "$USER_NAME" bash -c 'paru -S oxker-bin lazydocker'
 
 systemctl enable docker.socket
 systemctl start docker.socket
@@ -85,8 +84,7 @@ pacman -S --noconfirm texlive-basic texlive-latex texlive-latexextra texlive-fon
 
 # games
 pacman -S lutris
-sudo -u "$USER_NAME" bash -c 'paru -S tlauncher-installer'
-sudo -u "$USER_NAME" bash -c 'paru -S pcsx2'
+sudo -u "$USER_NAME" bash -c 'paru -S pcsx2-latest-bin'
 # sudo -u "$USER_NAME" bash -c 'paru -S rpcs3-bin'
 # sudo pacman -S steam
 

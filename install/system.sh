@@ -50,7 +50,7 @@ pacman -S --noconfirm grim slurp swappy
 sudo -u "${USER_NAME}" bash -c 'paru -S grimblast'
 # images
 pacman -S eog
-sudo -u "$USER_NAME" bash -c 'paru -S oculante'
+sudo -u "$USER_NAME" bash -c 'paru -S satty drawing'
 # tools media
 pacman -S --noconfirm handbrake
 # other
@@ -135,9 +135,9 @@ echo -e "${GREEN} ==== Creating the directories ===="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Documents/Organizer"
+sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Documents/"
 sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Music"
-sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Pictures/Wallpaper"
+sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Pictures/"
 sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Videos"
 
 echo ""

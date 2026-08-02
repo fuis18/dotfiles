@@ -19,6 +19,47 @@ RESET='\033[0m'
 
 echo ""
 echo -e "${BLUE} =================================="
+echo -e "${GREEN} ===== Snapper (Btrfs config) ====="
+echo -e "${BLUE} =================================="
+echo -e "${RESET}"
+
+# Solo aplica si root es Btrfs y @snapshots quedó registrado en fstab
+# (ver SETUP.md). En ext4/GRUB layout esto se salta sin hacer nada.
+if findmnt -no FSTYPE / | grep -q btrfs && grep -q ' /.snapshots ' /etc/fstab; then
+  if [[ -f /etc/snapper/configs/root ]]; then
+    echo -e "${GREEN}[!] Config de snapper 'root' ya existe, saltando.${RESET}"
+  else
+    echo "-> Liberando el punto de montaje /.snapshots"
+    umount /.snapshots
+    rm -rf /.snapshots
+
+    echo "-> Creando la config real con snapper"
+    snapper -c root create-config /
+
+    echo "-> Descartando el subvolumen que snapper acaba de crear"
+    umount /.snapshots
+    btrfs subvolume delete /.snapshots
+    mkdir -p /.snapshots
+
+    echo "-> Montando el @snapshots definitivo (vía fstab)"
+    mount /.snapshots
+    chmod 750 /.snapshots
+
+    if ! grep -q '^SNAPPER_CONFIGS="root"' /etc/conf.d/snapper 2>/dev/null; then
+      echo 'SNAPPER_CONFIGS="root"' >/etc/conf.d/snapper
+    fi
+
+    systemctl enable --now snapper-timeline.timer
+    systemctl enable --now snapper-cleanup.timer
+
+    echo -e "${GREEN}[✔] Snapper listo, snap-pac capturará desde aquí.${RESET}"
+  fi
+else
+  echo -e "${GREEN}[!] No es Btrfs o no hay /.snapshots en fstab, saltando snapper.${RESET}"
+fi
+
+echo ""
+echo -e "${BLUE} =================================="
 echo -e "${GREEN} ===== Installing Base System ====="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
@@ -47,10 +88,10 @@ echo -e "${GREEN} ============== Core =============="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm wget openssh openssl
-pacman -S --noconfirm gtk4 gtk4-layer-shell pkg-config
-pacman -S --noconfirm qt6-base qt6-declarative qt6-wayland qt5-wayland
-pacman -S --noconfirm upower gnome-keyring xsettingsd
+pacman -S --noconfirm wget openssh openssl \
+  gtk4 gtk4-layer-shell pkg-config \
+  qt6ct qt6-base qt6-declarative qt6-wayland qt5-wayland \
+  upower gnome-keyring xsettingsd
 
 echo ""
 echo -e "${BLUE} ================================="
@@ -112,8 +153,6 @@ else
 fi
 
 sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown hyprswitch'
-# experimental
-# sudo -u "$USER_NAME" bash -c 'paru -S fakeroot-tcp'
 
 echo ""
 echo -e "${BLUE} ================================="
