@@ -87,6 +87,7 @@ pacman -S lutris
 sudo -u "$USER_NAME" bash -c 'paru -S pcsx2-latest-bin'
 # sudo -u "$USER_NAME" bash -c 'paru -S rpcs3-bin'
 # sudo pacman -S steam
+# sudo pacman -S lib32-openal
 
 echo ""
 echo -e "${BLUE} =================================="
