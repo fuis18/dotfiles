@@ -120,7 +120,7 @@ swapon /dev/sda2
 
 ```sh
 # Opciones recomendadas para Btrfs
-OPTS="noatime,compress=zstd,space_cache=v2,commit=120"
+OPTS="noatime,compress=zstd:2,space_cache=v2,commit=120"
 
 # Root (@)
 mount -o ${OPTS},subvol=@ /dev/sda3 /mnt
