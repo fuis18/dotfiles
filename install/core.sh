@@ -152,7 +152,56 @@ else
   sudo -u "${USER_NAME}" bash -c "cd '$PARU_DIR' && makepkg -si --noconfirm"
 fi
 
+echo ""
+echo -e "${BLUE} ================================="
+echo -e "${GREEN} ===== Configuration Mirrors ====="
+echo -e "${BLUE} ================================="
+echo -e "${RESET}"
+
+sudo -u "${USER_NAME}" bash -c 'paru -S rate-mirrors-bin'
+rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist
+
 sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown hyprswitch'
+
+echo ""
+echo -e "${BLUE} =================================="
+echo -e "${GREEN} ===== CachyOS Repos Config ======="
+echo -e "${BLUE} =================================="
+
+# 1. Clave GPG (Forzando servidor HTTP vía puerto 80 para evitar bloqueos)
+echo "-> Importando y firmando llaves GPG de CachyOS..."
+pacman-key --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys F3B607488DB35A47 || true
+pacman-key --lsign-key F3B607488DB35A47
+
+# 2. Instalación de paquetes esenciales del repositorio CachyOS
+echo "-> Instalando keyring y mirrorlists de CachyOS..."
+CACHY_URL="https://mirror.cachyos.org/repo/x86_64/cachyos"
+
+pacman -U --noconfirm \
+  "${CACHY_URL}/cachyos-keyring-20240331-1-any.pkg.tar.zst" \
+  "${CACHY_URL}/cachyos-mirrorlist-27-1-any.pkg.tar.zst" \
+  "${CACHY_URL}/cachyos-v3-mirrorlist-27-1-any.pkg.tar.zst" \
+  "${CACHY_URL}/cachyos-v4-mirrorlist-27-1-any.pkg.tar.zst"
+
+# 3. Automatización del script de detección de CPU (v3/v4/znver4)
+echo "-> Descargando y aplicando configuración de repositorios CachyOS..."
+TMP_CACHYDIR=$(mktemp -d)
+curl -sSL https://mirror.cachyos.org/cachyos-repo.tar.xz | tar -xJ -C "$TMP_CACHYDIR"
+
+pushd "${TMP_CACHYDIR}/cachyos-repo" >/dev/null
+
+# Comentamos la línea de descarga remota redundante dentro del script para prevenir fallos
+sed -i 's/.*pacman-key --recv-keys/# &/' cachyos-repo.sh 2>/dev/null || true
+
+# Ejecutamos la instalación de los repos
+./cachyos-repo.sh --install
+
+popd >/dev/null
+rm -rf "$TMP_CACHYDIR"
+
+# 4. Sincronización final de la base de datos de pacman
+echo "-> Sincronizando bases de datos..."
+pacman -Syu --noconfirm
 
 echo ""
 echo -e "${BLUE} ================================="
