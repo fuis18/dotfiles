@@ -31,18 +31,17 @@ same problem, one gets cut.
 | -------------- | ---------------------- |
 | Window Manager | hyprland               |
 | Terminal       | kitty                  |
-| Shell          | zsh + starship         |
-| Editor         | nvim, helix, zed       |
+| Shell          | nushell + starship     |
+| Editor         | Lazyvim, zed           |
 | File Manager   | yazi & spacedrive      |
 | Launcher       | anyrun                 |
 | Status bar     | ironbar                |
 | Notifications  | swaync                 |
 | Audio          | pipewire + cava        |
 | Bluetooth      | bluez + bluetui        |
-| Network        | impala + iwd           |
+| Network        | iwd + Knot Resolver    |
 | Screenshot     | grim + slurp + swappy  |
 | Brightness     | brightnessctl          |
-| System monitor | btm                    |
 | Login Manager  | greetd + regreet      |
 | Power menu     | wlogout                |
 
@@ -66,6 +65,11 @@ git clone https://github.com/fuis18/dotfiles.git
 
 sudo cp -r dotfiles/etc/. /etc/
 sudo chmod +x /etc/greetd/start-greeter
+```
+Edit /etc/knot-resolver/config.yaml for your dns
+
+```sh
+
 
 sudo bash dotfiles/setup.sh
 sudo zsh dotfiles/post.sh

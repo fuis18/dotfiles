@@ -25,7 +25,7 @@ echo -e "${RESET}"
 
 # Solo aplica si root es Btrfs y @snapshots quedó registrado en fstab
 # (ver SETUP.md). En ext4/GRUB layout esto se salta sin hacer nada.
-if findmnt -no FSTYPE / | grep -q btrfs && grep -q ' /.snapshots ' /etc/fstab; then
+if findmnt -no FSTYPE / | grep -q btrfs && grep -qE '[[:space:]]/\.snapshots[[:space:]]' /etc/fstab; then
   if [[ -f /etc/snapper/configs/root ]]; then
     echo -e "${GREEN}[!] Config de snapper 'root' ya existe, saltando.${RESET}"
   else
@@ -57,111 +57,6 @@ if findmnt -no FSTYPE / | grep -q btrfs && grep -q ' /.snapshots ' /etc/fstab; t
 else
   echo -e "${GREEN}[!] No es Btrfs o no hay /.snapshots en fstab, saltando snapper.${RESET}"
 fi
-
-echo ""
-echo -e "${BLUE} =================================="
-echo -e "${GREEN} ===== Installing Base System ====="
-echo -e "${BLUE} =================================="
-echo -e "${RESET}"
-
-pacman -S --noconfirm base-devel \
-  devtools \
-  wayland \
-  xdg-desktop-portal \
-  xdg-desktop-portal-gtk
-
-echo ""
-echo -e "${BLUE} =================================="
-echo -e "${GREEN} ========= Hyprland Shell ========="
-echo -e "${BLUE} =================================="
-echo -e "${RESET}"
-
-pacman -S --noconfirm hyprland \
-  hyprlock \
-  hypridle \
-  hyprpolkitagent \
-  xdg-desktop-portal-hyprland
-
-echo ""
-echo -e "${BLUE} =================================="
-echo -e "${GREEN} ============== Core =============="
-echo -e "${BLUE} =================================="
-echo -e "${RESET}"
-
-pacman -S --noconfirm wget openssh openssl \
-  gtk4 gtk4-layer-shell pkg-config \
-  qt6ct qt6-base qt6-declarative qt6-wayland qt5-wayland \
-  upower gnome-keyring xsettingsd
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ============ Drivers ============"
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-echo ""
-
-pacman -S --noconfirm libva
-pacman -S --noconfirm v4l2loopback-dkms
-
-# Intel
-pacman -S --noconfirm libva-intel-driver intel-media-driver
-# AMD
-pacman -S --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils
-# vulkan-radeon lib32-vulkan-radeon
-# NVidia
-# pacman -S --noconfirm nvidia-utils libva-vdpau-driver
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ===== Network Configuration ====="
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-pacman -S --noconfirm bluez bluez-utils dbus
-
-systemctl enable bluetooth
-systemctl start bluetooth
-
-pacman -S --noconfirm impala bluetui
-
-# Segurity
-
-pacman -S --noconfirm ufw
-
-echo ""
-echo -e "${BLUE} =================================="
-echo -e "${GREEN} =========== AUR Helper ==========="
-echo -e "${BLUE} =================================="
-echo -e "${RESET}"
-echo ""
-
-chown -R "${USER_NAME}:${USER_NAME}" "${USER_HOME}/Downloads"
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ========== Aur => paru =========="
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-PARU_DIR="${USER_REPOS}/paru"
-if [[ -d "$PARU_DIR" ]]; then
-  echo -e "${GREEN}[!] Directorio '$PARU_DIR' ya existe.${RESET}"
-else
-  git clone https://aur.archlinux.org/paru.git "$PARU_DIR"
-  chown -R "${USER_NAME}:${USER_NAME}" "$PARU_DIR"
-  sudo -u "${USER_NAME}" bash -c "cd '$PARU_DIR' && makepkg -si --noconfirm"
-fi
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ===== Configuration Mirrors ====="
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-sudo -u "${USER_NAME}" bash -c 'paru -S rate-mirrors-bin'
-rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist
-
-sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown hyprswitch'
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -201,161 +96,59 @@ rm -rf "$TMP_CACHYDIR"
 
 # 4. Sincronización final de la base de datos de pacman
 echo "-> Sincronizando bases de datos..."
-pacman -Syu --noconfirm
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ====== Installing Terminal ======"
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-pacman -S --noconfirm kitty starship zsh nushell
-
-pacman -S --noconfirm zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
-pacman -S --noconfirm lsd bat
-
-chsh -s $(which nu) "$USER_NAME"
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ===== Actualizando el Shell ====="
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-ZSH_PATH="$(command -v zsh || true)"
-
-echo "-> Cambiando shell a zsh..."
-usermod --shell "$ZSH_PATH" root
-usermod --shell "$ZSH_PATH" "$USER_NAME"
-
-echo "%wheel ALL=(ALL) ALL" >/etc/sudoers.d/wheel
-chmod 440 /etc/sudoers.d/wheel
-
-sudo -u "$USER_NAME" bash -c 'paru -S carapace-bin'
-pacman -S --noconfirm bat fzf tree starship
-pacman -S --noconfirm sccache
-
-# Node
-sudo -u "$USER_NAME" bash -c 'paru -S fnm-bin'
-sudo -u "$USER_NAME" bash -c 'export PATH="$HOME/.local/share/fnm:$PATH"; fnm install --latest'
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ======== Essential tools ========"
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-pacman -S --noconfirm brightnessctl wl-clipboard bottom
-pacman -S --noconfirm curl unzip wget lm_sensors pkg-config
-# notify
-pacman -S --noconfirm libnotify swaync
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} =========== Lenguages ==========="
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-LOCALES=("de_DE.UTF-8" "en_US.UTF-8" "es_ES.UTF-8" "ja_JP.UTF-8")
-
-for locale in "${LOCALES[@]}"; do
-  sed -i "s/^#\s*${locale} UTF-8/${locale} UTF-8/" /etc/locale.gen
-done
-
-locale-gen
+# pacman -Syu --noconfirm
 
 echo ""
 echo -e "${BLUE} =================================="
-echo -e "${GREEN} ==== Instalando Login Manager ===="
+echo -e "${GREEN} ========= Kernel CachyOS ========="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm greetd greetd-regreet
-
-if id greeter &>/dev/null; then
-  echo "✔ El usuario greeter ya existe. Continuando..."
+# Detectar qué microcódigo quedó instalado (Intel o AMD) para
+# no tener que asumirlo a mano.
+UCODE_IMG=""
+if [[ -f /boot/intel-ucode.img ]]; then
+  UCODE_IMG="intel-ucode.img"
+elif [[ -f /boot/amd-ucode.img ]]; then
+  UCODE_IMG="amd-ucode.img"
 else
-  useradd -r -s /usr/bin/nologin -d /var/lib/greetd -M greeter
+  echo -e "${GREEN}[!] No se encontró intel-ucode.img ni amd-ucode.img en /boot.${RESET}"
 fi
 
-mkdir -p /var/lib/greetd/.config/hypr
-chown -R greeter:greeter /var/lib/greetd
+# Kernel linux-cachyos (EEVDF, estándar) + headers para que
+# los módulos DKMS (v4l2loopback, etc.) también compilen para él.
+pacman -S --noconfirm linux-cachyos linux-cachyos-headers
 
-cp -r "${FUIS_REPO}/etc/greetd/." /etc/greetd/
+ARCH_ENTRY="/boot/loader/entries/arch.conf"
+CACHY_ENTRY="/boot/loader/entries/cachyos.conf"
+LOADER_CONF="/boot/loader/loader.conf"
 
-chmod 644 /etc/greetd/config.toml
-chmod +x /etc/greetd/start-greeter
-systemctl enable greetd
+if [[ ! -f "$ARCH_ENTRY" ]]; then
+  echo -e "${GREEN}[!] No existe $ARCH_ENTRY, no puedo copiar las 'options' de root. Saltando entrada de CachyOS.${RESET}"
+elif [[ -f "$CACHY_ENTRY" ]] && grep -q '^options' "$CACHY_ENTRY" && grep -q '^initrd' "$CACHY_ENTRY"; then
+  echo -e "${GREEN}[!] $CACHY_ENTRY ya existe y está completa, saltando.${RESET}"
+else
+  # Reutilizamos la misma línea "options" (UUID + rootflags) que ya
+  # quedó bien armada en arch.conf, así nunca se desincroniza.
+  ROOT_OPTIONS=$(grep '^options' "$ARCH_ENTRY")
 
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ============= Fonts ============="
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
+  {
+    echo "title   CachyOS Kernel"
+    echo "linux   /vmlinuz-linux-cachyos"
+    [[ -n "$UCODE_IMG" ]] && echo "initrd  /${UCODE_IMG}"
+    echo "initrd  /initramfs-linux-cachyos.img"
+    echo "$ROOT_OPTIONS"
+  } >"$CACHY_ENTRY"
 
-pacman -S --noconfirm noto-fonts \
-  noto-fonts-cjk \
-  noto-fonts-emoji \
-  gnu-free-fonts \
-  ttf-firacode-nerd \
-  ttf-dejavu \
-  ttf-liberation
+  echo "-> Entrada creada en $CACHY_ENTRY"
 
-sudo -u "${USER_NAME}" bash -c 'paru -S ttf-sarasa-gothic-nerd-fonts'
+  # CachyOS queda como default; arch.conf (linux-zen) queda de respaldo
+  # en el menú de systemd-boot (F2 / Space al arrancar).
+  if [[ -f "$LOADER_CONF" ]]; then
+    sed -i 's/^default.*/default  cachyos.conf/' "$LOADER_CONF"
+  fi
 
-fc-cache -fv
+  echo -e "${GREEN}[✔] CachyOS queda como kernel por defecto, linux-zen sigue disponible en el menú.${RESET}"
+fi
 
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ==== Instaling documentation ===="
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-pacman -S --noconfirm locate man-db
-
-echo ""
-echo -e "${BLUE} =================================="
-echo -e "${GREEN} ====== Instalando el Editor ======"
-echo -e "${BLUE} =================================="
-echo -e "${RESET}"
-
-pacman -S --noconfirm vim neovim
-pacman -S --noconfirm wl-clipboard
-
-echo ""
-echo -e "${BLUE} =============================="
-echo -e "${GREEN} ====== APPS System Core ======"
-echo -e "${BLUE} =============================="
-echo -e "${RESET}"
-
-# interfaces
-sudo -u "${USER_NAME}" bash -c 'paru -S aylurs-gtk-shell'
-sudo -u "${USER_NAME}" bash -c 'paru -S libastal-notifd-git libastal-battery-git libastal-mpris-git'
-# bar
-pacman -S --noconfirm ironbar
-# launcher
-sudo -u "${USER_NAME}" bash -c 'paru -S anyrun'
-# logout
-sudo -u "${USER_NAME}" bash -c 'paru -S wlogout'
-# monitores
-pacman -S --noconfirm wdisplays
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ======= Copiying My Files ======="
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-# root
-cp -r "${FUIS_REPO}/root/.config/." /root/.config/
-cp -r "${FUIS_REPO}/root/.zshrc" /root/
-
-echo ""
-echo -e "${BLUE}=================================="
-echo -e "${GREEN}============= READY! ============="
-echo -e "${BLUE}=================================="
-echo -e "${RESET}"
-echo ""
-echo ""
-echo ""
-echo ""
+mkinitcpio -P
