@@ -82,3 +82,6 @@ hl.bind(mainMod .. " + CTRL + SHIFT + S", hl.dsp.exec_cmd("grimblast edit screen
 -- Notifications
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(notify .. " --toggle-panel"))
 hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd(notify .. " --close-latest"))
+
+-- Performance Mode
+hl.bind(mainMod .. " + SHIFT + G", hl.dsp.exec_cmd(scriptsDir .. "/performance-mode.sh"))

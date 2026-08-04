@@ -245,6 +245,7 @@ let {
   }
 
 } in {
+  name = "main"
   position = "top"
   height = 32
   start = [
