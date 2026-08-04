@@ -1,0 +1,16 @@
+# Exmple config 
+
+network:
+  listen:
+    - interface:
+        - 127.0.0.1
+        - "::1"
+
+forward:
+  - subtree: .
+    servers:
+      - address: []
+        transport: tls
+        hostname: TU_CONFIG_ID.dns.DOMAINDNS.com
+    options:
+      dnssec: false
