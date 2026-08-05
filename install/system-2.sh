@@ -30,8 +30,6 @@ echo -e "${BLUE} =============================="
 echo -e "${RESET}"
 
 # file explorer
-sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag'
-
 pacman -S nautilus
 sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive-clean'
 
@@ -81,7 +79,8 @@ pacman -S --noconfirm \
 	gst-plugins-good \
 	gst-plugins-bad \
   gst-plugins-ugly \
-  tumbler
+  tumbler \
+  mediainfo
 
 # 3. Media player & Control
 pacman -S --noconfirm \

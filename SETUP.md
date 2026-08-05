@@ -117,10 +117,9 @@ swapon /dev/sda2
 
 #### Montar subvolúmenes
 
-
 ```sh
 # Opciones recomendadas para Btrfs
-OPTS="noatime,compress=zstd:2,space_cache=v2,commit=120"
+OPTS="noatime,compress=zstd,space_cache=v2,commit=120"
 
 # Root (@)
 mount -o ${OPTS},subvol=@ /dev/sda3 /mnt
@@ -253,10 +252,16 @@ umount /mnt/home
 swapon --show
 ```
 
+### zram
+
+For 4GB of ram use .75, obtain 7GB
+For 6GB of ram use 1, obtain 12GB
+For 8GB of ram use 1.5, obtain 20GB
+For 16GB of ram use 1, obtain 32GB
+
 ```sh
 pacman -S zram-generator
 
-# ram * .5 to ram * .75
 nvim /etc/systemd/zram-generator.conf
 ```
 
@@ -271,7 +276,7 @@ swap-priority = 150
 nvim /etc/sysctl.d/99-swappiness.conf
 ```
 
-```sh
+```conf
 vm.swappiness=100
 # 150 less cache saved
 vm.vfs_cache_pressure=150

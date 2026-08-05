@@ -29,6 +29,8 @@ same problem, one gets cut.
 
 | Role           | Tool                   |
 | -------------- | ---------------------- |
+| kernel iso     | Arch Linux             |
+| Kernel         | linux-cachyos          |
 | Window Manager | hyprland               |
 | Terminal       | kitty                  |
 | Shell          | nushell + starship     |

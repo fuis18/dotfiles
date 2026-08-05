@@ -144,6 +144,8 @@ pacman -S --needed --noconfirm lsd bat \
   zoxide resvg imagemagick \
   yazi
 
+sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag'
+
 chsh -s $(which nu) "$USER_NAME"
 
 echo ""
