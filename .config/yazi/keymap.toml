@@ -1,1 +1,36 @@
-/home/fuis18/dotfiles/.config/yazi/keymap.toml
+# A TOML linter such as https://github.com/tombi-toml/tombi can use this schema to validate your config.
+# If you encounter any problems, please make an issue at https://github.com/yazi-rs/schemas.
+
+#:schema https://yazi-rs.github.io/schemas/keymap.json
+
+[mgr]
+
+[[mgr.prepend_keymap]]
+on   = "l"
+run  = "plugin smart-enter"
+desc = "Enter the child directory, or open the file"
+
+[[mgr.prepend_keymap]]
+on   = "p"
+run  = "plugin smart-paste"
+desc = "Paste into the hovered directory or CWD"
+
+[[mgr.prepend_keymap]]
+on   = "<A-d>"
+run  = "plugin drag"
+desc = "Drag files with ripdrag"
+
+[[mgr.prepend_keymap]]
+on   = "<F3>"
+run  = "plugin mediainfo -- toggle-metadata"
+desc = "Toggle media preview metadata"
+
+[[mgr.prepend_keymap]]
+on   = "<F4>"
+run  = "plugin mediainfo -- toggle-preview"
+desc = "Toggle media preview image"
+
+[[mgr.prepend_keymap]]
+on   = "<C-y>"
+run  = "plugin wl-clipboard"
+desc = "Copy selected files to Wayland clipboard"

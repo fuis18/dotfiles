@@ -1,1 +1,53 @@
-/home/fuis18/dotfiles/.config/yazi/yazi.toml
+[mgr]
+ratio = [1, 4, 4]
+
+[opener]
+edit = [
+	{ run = "nvim %s", desc = "Edit with nvim", for = "unix", block = true },
+]
+
+[plugin]
+prepend_preloaders = [
+	# Replace magick, image, video with mediainfo
+	{ mime = "{audio,video,image}/*", run = "mediainfo" },
+	# .srt subtitle, adobe illustrator, adobe photoshop
+	{ mime = "application/{subrip,postscript,illustrator,dvb.ait,vnd.adobe.illustrator,eps}", run = "mediainfo" },
+	# AI files sometimes detected as application/pdf, match by extension
+	{ url = "*.{ai,eps,ait}", run = "mediainfo" },
+	# Office documents
+	{ mime = "application/vnd.openxmlformats-officedocument.*", run = "office" },
+	{ mime = "application/vnd.oasis.opendocument.*", run = "office" },
+	{ mime = "application/vnd.ms-*", run = "office" },
+	{ mime = "application/msword", run = "office" },
+]
+prepend_previewers = [
+	# Replace magick, image, video with mediainfo
+	{ mime = "{audio,video,image}/*", run = "mediainfo" },
+	# .srt subtitle, adobe illustrator, adobe photoshop
+	{ mime = "application/{subrip,postscript,illustrator,dvb.ait,vnd.adobe.illustrator,eps}", run = "mediainfo" },
+	# AI files sometimes detected as application/pdf, match by extension
+	{ url = "*.{ai,eps,ait}", run = "mediainfo" },
+	# Office documents
+	{ mime = "application/vnd.openxmlformats-officedocument.*", run = "office" },
+	{ mime = "application/vnd.oasis.opendocument.*", run = "office" },
+	{ mime = "application/vnd.ms-*", run = "office" },
+	{ mime = "application/msword", run = "office" },
+	# Rich preview (markdown, json, csv, rst, ipynb)
+	{ url = "*.csv", run = "rich-preview" },
+	{ url = "*.tsv", run = "rich-preview" },
+	{ url = "*.md", run = "rich-preview" },
+	{ url = "*.markdown", run = "rich-preview" },
+	{ url = "*.rst", run = "rich-preview" },
+	{ url = "*.ipynb", run = "rich-preview" },
+	{ url = "*.json", run = "rich-preview" },
+]
+
+[[plugin.prepend_fetchers]]
+url   = "*"
+run   = "git"
+group = "git"
+
+[[plugin.prepend_fetchers]]
+url   = "*/"
+run   = "git"
+group = "git"
