@@ -4,14 +4,31 @@
 #
 # ON:
 #   - Disables animations, blur, shadows, transparency, rounding and gaps in Hyprland
+#   - Sets kitty background opacity to 1.0 (fully opaque) via remote control
+#   - Fills the wallpaper to black with awww (swww fork) — no image decode while gaming
 #   - Pauses cava (SIGSTOP) and syncthing (systemd user unit)
 #   - Hides ironbar via IPC (no kill/respawn, no flicker)
 # OFF:
 #   - Reloads hyprland.conf to restore your normal visual settings
+#   - Restores kitty opacity to your configured background_opacity
+#   - Restores the wallpaper with `awww restore`
 #   - Resumes cava and syncthing, shows ironbar again
 #
 # Requires your ironbar config to set a top-level `name` (this script
 # targets "main" — see config.corn).
+#
+# Requires kitty.conf to have:
+#   allow_remote_control yes
+#   listen_on unix:/tmp/kitty-hypr
+#   dynamic_background_opacity yes
+# (listen_on is read at kitty startup: restart kitty once after editing.)
+#
+# Requires kitty to be launched with --single-instance (or -1) so all
+# terminal windows share one socket. Update bindings.lua:
+#   local term = "kitty --single-instance"
+#
+# Wallpaper is handled by awww (drop-in for swww); the daemon is started
+# in config/autostart.lua. Change WALLPAPER below to pick your default.
 #
 # Bind: SUPER + SHIFT + G
 #
@@ -47,6 +64,28 @@ show_ironbar() {
   ironbar bar set-visibility "$IRONBAR_NAME" true >/dev/null 2>&1 || true
 }
 
+KITTY_SOCKET="unix:/tmp/kitty-hypr"
+KITTY_OPACITY_NORMAL="0.9" # matches background_opacity in kitty.conf
+
+set_kitty_opacity() {
+  kitty @ --to "$KITTY_SOCKET" set-background-opacity --all "$1" >/dev/null 2>&1 || true
+}
+
+WALLPAPER="$HOME/Pictures/Wallpaper/dark/wallpaper-4.png"
+
+pause_wallpaper() {
+  # if the daemon isn't running the screen is already black; nothing to do
+  awww clear 000000 >/dev/null 2>&1 || true
+}
+
+resume_wallpaper() {
+  if ! awww restore >/dev/null 2>&1; then
+    setsid -f awww-daemon >/dev/null 2>&1
+    sleep 0.5
+    awww img "$WALLPAPER" >/dev/null 2>&1 || true
+  fi
+}
+
 if [ -f "$STATE_FILE" ]; then
   # --- OFF: restore defaults from hyprland.conf ---
   hyprctl reload >/dev/null 2>&1
@@ -54,6 +93,8 @@ if [ -f "$STATE_FILE" ]; then
   resume_proc cava
   systemctl --user start syncthing >/dev/null 2>&1 || true
   show_ironbar
+  set_kitty_opacity "$KITTY_OPACITY_NORMAL"
+  resume_wallpaper
 
   rm -f "$STATE_FILE"
   notify "rgb(a6e3a1)" "  Performance Mode OFF"
@@ -75,6 +116,12 @@ else
   pause_proc cava
   systemctl --user stop syncthing >/dev/null 2>&1 || true
   hide_ironbar
+  if [ ! -S /tmp/kitty-hypr ]; then
+    notify "rgb(f38ba8)" "  kitty sin socket - reinicia kitty"
+  else
+    set_kitty_opacity "1.0"
+  fi
+  pause_wallpaper
 
   touch "$STATE_FILE"
   notify "rgb(f38ba8)" "  Performance Mode ON"

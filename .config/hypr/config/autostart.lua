@@ -18,7 +18,10 @@ hl.on("hyprland.start", function()
 
 	-- 3. TERCERO: Iniciar el resto de tus servicios y barras de estado
 	hl.exec_cmd("anyrun daemon")
-	hl.exec_cmd("hyprpaper")
+	-- wallpaper: awww daemon + imagen (ajusta la ruta a tu gusto)
+	hl.exec_cmd(
+		"(awww-daemon &) ; sleep 0.5 ; awww img " .. os.getenv("HOME") .. "/Pictures/Wallpaper/dark/wallpaper-4.png"
+	)
 	hl.exec_cmd("swaync")
 	hl.exec_cmd("ironbar")
 	hl.exec_cmd("systemctl --user restart pipewire wireplumber")
