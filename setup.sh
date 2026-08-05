@@ -8,5 +8,6 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
-sudo bash install/core.sh
-sudo zsh install/update.sh
+sudo bash ./install/core.sh
+sudo zsh ./install/system-1.sh
+sudo zsh ./install/update.sh

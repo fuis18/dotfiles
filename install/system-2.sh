@@ -30,11 +30,10 @@ echo -e "${BLUE} =============================="
 echo -e "${RESET}"
 
 # file explorer
+sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag'
+
 pacman -S nautilus
 sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive-clean'
-
-pacman -S --noconfirm yazi
-sudo -u "${USER_NAME}" bash -c 'paru -S ripdrag'
 
 # copy history
 pacman -S --noconfirm cliphist
@@ -42,7 +41,7 @@ pacman -S --noconfirm cliphist
 pacman -S --noconfirm gnome-text-editor
 pacman -S --noconfirm aspell-es aspell-en nuspell
 # wallpaper
-sudo -u "$USER_NAME" bash -c 'paru -S swww'
+pacman -S --noconfirm awww
 sudo -u "$USER_NAME" bash -c 'paru -S wallust'
 # screenshot
 pacman -S --noconfirm hyprpicker

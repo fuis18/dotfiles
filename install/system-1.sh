@@ -23,7 +23,7 @@ echo -e "${GREEN} ===== Installing Base System ====="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -S ---needed -noconfirm base-devel \
+pacman -S --needed --noconfirm base-devel \
   devtools \
   wayland \
   xdg-desktop-portal \
@@ -62,9 +62,9 @@ echo ""
 pacman -S --needed --noconfirm libva v4l2loopback-dkms
 
 # Intel
-pacman -S --noconfirm libva-intel-driver intel-media-driver
+pacman -S --needed --noconfirm libva-intel-driver intel-media-driver
 # AMD
-pacman -S --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils
+pacman -S --needed --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils
 # vulkan-radeon lib32-vulkan-radeon
 # NVidia
 # pacman -S --noconfirm nvidia-utils libva-vdpau-driver
@@ -80,11 +80,11 @@ pacman -S --needed --noconfirm bluez bluez-utils dbus
 systemctl enable bluetooth
 systemctl start bluetooth
 
-pacman -S --noconfirm impala bluetui
+pacman -S --needed --noconfirm impala bluetui
 
 # Segurity
 
-pacman -S --noconfirm ufw
+pacman -S --needed --noconfirm ufw
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -128,8 +128,21 @@ echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
 pacman -S --needed --noconfirm kitty starship zsh nushell \
-  zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting \
-  lsd bat
+  zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
+
+sudo -u "$USER_NAME" bash -c 'paru -S carapace-bin'
+
+echo ""
+echo -e "${BLUE} ================================"
+echo -e "${GREEN} ======== Terminal Tools ========"
+echo -e "${BLUE} ================================"
+echo -e "${RESET}"
+
+pacman -S --needed --noconfirm lsd bat \
+  fzf tree sccache \
+  jq poppler fd ripgrep \
+  zoxide resvg imagemagick \
+  yazi
 
 chsh -s $(which nu) "$USER_NAME"
 
@@ -148,10 +161,6 @@ usermod --shell "$ZSH_PATH" "$USER_NAME"
 echo "%wheel ALL=(ALL) ALL" >/etc/sudoers.d/wheel
 chmod 440 /etc/sudoers.d/wheel
 
-sudo -u "$USER_NAME" bash -c 'paru -S carapace-bin'
-pacman -S --noconfirm bat fzf tree starship
-pacman -S --noconfirm sccache
-
 # Node
 sudo -u "$USER_NAME" bash -c 'paru -S fnm-bin'
 sudo -u "$USER_NAME" bash -c 'export PATH="$HOME/.local/share/fnm:$PATH"; fnm install --latest'
@@ -162,8 +171,11 @@ echo -e "${GREEN} ======== Essential tools ========"
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm brightnessctl wl-clipboard bottom
-pacman -S --noconfirm curl unzip wget lm_sensors pkg-config
+pacman -S --needed --noconfirm brightnessctl \
+  wl-clipboard \
+  curl unzip wget \
+  lm_sensors pkg-config \
+  bottom btop htop
 # notify
 pacman -S --noconfirm libnotify swaync
 
@@ -210,7 +222,7 @@ echo -e "${GREEN} ============= Fonts ============="
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm noto-fonts \
+pacman -S --needed --noconfirm noto-fonts \
   noto-fonts-cjk \
   noto-fonts-emoji \
   gnu-free-fonts \
@@ -229,15 +241,6 @@ echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
 pacman -S --noconfirm locate man-db
-
-echo ""
-echo -e "${BLUE} =================================="
-echo -e "${GREEN} ====== Instalando el Editor ======"
-echo -e "${BLUE} =================================="
-echo -e "${RESET}"
-
-pacman -S --noconfirm vim neovim
-pacman -S --noconfirm wl-clipboard
 
 echo ""
 echo -e "${BLUE} =============================="
