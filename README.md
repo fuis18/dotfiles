@@ -1,51 +1,38 @@
-# dotfiles
+# Arch + Hyprland + CachyOS.
 
-> Arch Linux · Hyprland · Wayland — built for performance and productivity.
+The goal of these dotfiles is performance and maximum customization.
 
-A minimal, fast, keyboard-driven setup. Every tool was chosen intentionally:
-no bloat, no eye candy for its own sake — just a system that stays out of
-the way and lets you work.
+[![OS](https://img.shields.io/badge/OS-Arch%20Linux-blue?logo=arch-linux)](https://archlinux.org)
+[![WM](https://img.shields.io/badge/WM-Hyprland-blue?logo=hyprland)](https://hyprland.org)
+[![Kernel](https://img.shields.io/badge/Kernel-Linux--CachyOS-green)](https://cachyos.org)
 
----
-
-## Philosophy
-
-**The shell is the UI.** A fast terminal, a good prompt and smart completions
-beat any GUI file manager or launcher. `zsh` + `starship` + `yazi` cover 90%
-of daily navigation.
-
-**Audio and notifications should be invisible.** `pipewire` handles audio
-without config drama. `swaync` shows what matters and nothing else.
-
-**One tool per job.** No redundancy in the stack — if two packages solve the
-same problem, one gets cut.
-
-**Performance first.** `zram` + swappiness tuning, `btop` always available,
-`hyprland` for GPU-accelerated compositing with near-zero idle overhead.
+![Desktop](.github/assets/img-1.png)
+![Desktop](.github/assets/img-2.png)
 
 ---
 
 ## Stack
 
-| Role           | Tool                   |
-| -------------- | ---------------------- |
-| kernel iso     | Arch Linux             |
-| Kernel         | linux-cachyos          |
-| Window Manager | hyprland               |
-| Terminal       | kitty                  |
-| Shell          | nushell + starship     |
-| Editor         | Lazyvim, zed           |
-| File Manager   | yazi & spacedrive      |
-| Launcher       | anyrun                 |
-| Status bar     | ironbar                |
-| Notifications  | swaync                 |
-| Audio          | pipewire + cava        |
-| Bluetooth      | bluez + bluetui        |
-| Network        | iwd + Knot Resolver    |
-| Screenshot     | grim + slurp + swappy  |
-| Brightness     | brightnessctl          |
+| Role           | Tool                  |
+| -------------- | --------------------- |
+| kernel iso     | Arch Linux            |
+| Kernel         | Linux-cachyos         |
+| Repos          | CachyOS               |
+| Window Manager | Hyprland              |
+| Terminal       | Kitty                 |
+| Shell          | Nushell + Starship    |
+| Editor         | Lazyvim, zed          |
+| File Manager   | Yazi & spacedrive     |
+| Launcher       | Anyrun                |
+| Status bar     | Ironbar               |
+| Notifications  | swaync                |
+| Audio          | pipewire + cava       |
+| Bluetooth      | bluez + bluetui       |
+| Network        | iwd + Knot Resolver   |
+| Screenshot     | grim + slurp + swappy |
+| Brightness     | brightnessctl         |
 | Login Manager  | greetd + regreet      |
-| Power menu     | wlogout                |
+| Power menu     | wlogout               |
 
 ---
 
@@ -62,19 +49,24 @@ iwctl station wlan0 connect "SSID"
 
 ```sh
 sudo pacman -S git
-mkdir -p Downloads/repos/fuis18 && cd Downloads/repos/fuis18
+
 git clone https://github.com/fuis18/dotfiles.git
 
 sudo cp -r dotfiles/etc/. /etc/
 sudo chmod +x /etc/greetd/start-greeter
 ```
+
 Edit /etc/knot-resolver/config.yaml for your dns
 
 ```sh
-
-
 sudo bash dotfiles/setup.sh
 sudo zsh dotfiles/post.sh
 ```
 
 > For full disk partitioning and bootloader setup, see [SETUP.md](./SETUP.md).
+
+## TODO
+
+- Ironbar to AGS
+- Arch to Artix (dinit)
+- config niri
