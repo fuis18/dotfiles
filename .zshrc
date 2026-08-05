@@ -72,7 +72,7 @@ zstyle ':autocomplete:*' recent-dirs true
 zstyle ':autocomplete:*' tilde true
 
 # Plugins
-source /usr/share/zsh-sudo/sudo.plugin.zsh
+source /usr/share/zsh/plugins/zsh-sudo/sudo.plugin.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # key bindings

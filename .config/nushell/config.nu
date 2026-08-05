@@ -183,6 +183,16 @@ def pacs [] {
 # FUNCIONES  (de tu zshrc, portadas a Nushell)
 # ─────────────────────────────────────────────
 
+def toggle_sudo [] {
+    let line = (commandline)
+    let new = if ($line | str starts-with 'sudo ') {
+        $line | str replace -r '^sudo\s+' ''
+    } else {
+        $"sudo ($line)"
+    }
+    commandline edit --replace $new
+}
+
 # Crea estructura de directorios para pentest/CTF
 def mkt [] {
     mkdir nmap content exploits scripts
