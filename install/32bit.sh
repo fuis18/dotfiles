@@ -8,9 +8,6 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
-USER_NAME=${SUDO_USER:-$(whoami)}
-USER_HOME="/home/${USER_NAME}"
-
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 RESET='\033[0m'

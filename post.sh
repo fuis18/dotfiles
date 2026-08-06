@@ -8,7 +8,7 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-sudo zsh install/system-2.sh
-sudo zsh install/personal-1.sh
-sudo zsh install/personal-2.sh
-sudo zsh install/normal.sh
+sudo zsh ./install/system-2.sh
+sudo zsh ./install/personal-1.sh
+sudo zsh ./install/personal-2.sh
+sudo zsh ./install/normal.sh

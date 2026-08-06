@@ -8,11 +8,6 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
-USER_NAME=$(logname)
-USER_HOME="/home/${USER_NAME}"
-USER_REPOS="${USER_HOME}/Downloads/repos"
-FUIS_REPO="${USER_REPOS}/fuis18/dotfiles"
-
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 RESET='\033[0m'
@@ -117,7 +112,7 @@ fi
 
 # Kernel linux-cachyos (EEVDF, estándar) + headers para que
 # los módulos DKMS (v4l2loopback, etc.) también compilen para él.
-pacman -S --noconfirm linux-cachyos linux-cachyos-headers
+pacman -S --needed --noconfirm linux-cachyos linux-cachyos-headers
 
 ARCH_ENTRY="/boot/loader/entries/arch.conf"
 CACHY_ENTRY="/boot/loader/entries/cachyos.conf"

@@ -10,8 +10,7 @@ fi
 
 USER_NAME=$(logname)
 USER_HOME="/home/${USER_NAME}"
-USER_REPOS="${USER_HOME}/Downloads/repos"
-FUIS_REPO="${USER_REPOS}/fuis18/dotfiles"
+DOTFILES="${USER_HOME}/dotfiles"
 
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
@@ -134,9 +133,9 @@ echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
 sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Documents/"
-sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Music"
+sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Music/"
 sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Pictures/"
-sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Videos"
+sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Videos/"
 
 echo ""
 echo -e "${BLUE}=================================="

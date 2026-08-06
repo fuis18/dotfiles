@@ -10,8 +10,7 @@ fi
 
 USER_NAME=$(logname)
 USER_HOME="/home/${USER_NAME}"
-USER_REPOS="${USER_HOME}/Downloads/repos"
-FUIS_REPO="${USER_REPOS}/fuis18/dotfiles"
+DOTFILES="${USER_HOME}/dotfiles"
 
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
@@ -24,9 +23,9 @@ echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
 # .config
-sudo -u "$USER_NAME" cp -r "${FUIS_REPO}/.config/." "${USER_HOME}/.config/"
-sudo -u "$USER_NAME" cp -r "${FUIS_REPO}/.local/bin/." "${USER_HOME}/.local/bin/"
-sudo -u "$USER_NAME" cp -r "${FUIS_REPO}/.zshrc" "${USER_HOME}/.zshrc"
+sudo -u "$USER_NAME" cp -r "${DOTFILES}/.config/." "${USER_HOME}/.config/"
+sudo -u "$USER_NAME" cp -r "${DOTFILES}/.local/bin/." "${USER_HOME}/.local/bin/"
+sudo -u "$USER_NAME" cp -r "${DOTFILES}/.zshrc" "${USER_HOME}/.zshrc"
 
 sudo -u "$USER_NAME" ya pack -a
 

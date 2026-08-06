@@ -10,8 +10,7 @@ fi
 
 USER_NAME=$(logname)
 USER_HOME="/home/${USER_NAME}"
-USER_REPOS="${USER_HOME}/Downloads/repos"
-FUIS_REPO="${USER_REPOS}/fuis18/dotfiles"
+DOTFILES="${USER_HOME}/dotfiles"
 
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
@@ -101,7 +100,7 @@ echo -e "${GREEN} ========== Aur => paru =========="
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-PARU_DIR="${USER_REPOS}/paru"
+PARU_DIR="${USER_HOME}/paru"
 if [[ -d "$PARU_DIR" ]]; then
   echo -e "${GREEN}[!] Directorio '$PARU_DIR' ya existe.${RESET}"
 else
@@ -212,7 +211,7 @@ fi
 mkdir -p /var/lib/greetd/.config/hypr
 chown -R greeter:greeter /var/lib/greetd
 
-cp -r "${FUIS_REPO}/etc/greetd/." /etc/greetd/
+cp -r "${DOTFILES}/etc/greetd/." /etc/greetd/
 
 chmod 644 /etc/greetd/config.toml
 chmod +x /etc/greetd/start-greeter
@@ -269,8 +268,8 @@ echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
 # root
-cp -r "${FUIS_REPO}/root/.config/." /root/.config/
-cp -r "${FUIS_REPO}/root/.zshrc" /root/
+cp -r "${DOTFILES}/root/.config/." /root/.config/
+cp -r "${DOTFILES}/root/.zshrc" /root/
 
 echo ""
 echo -e "${BLUE}=================================="

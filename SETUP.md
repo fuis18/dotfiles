@@ -13,7 +13,7 @@ station list scan
 station wlan0 connect "Your_wifi"
 exit
 
-ping archlinux.org
+ping -c 5 archlinux.org
 ```
 
 ## Keyring
@@ -153,6 +153,7 @@ lsblk -f
 ---
 
 ### GRUB
+
 | Device    | Size  | Type             | Label |
 | --------- | ----- | ---------------- | ----- |
 | /dev/sda1 | 2M    | BIOS boot        | boot  |
@@ -267,7 +268,7 @@ nvim /etc/systemd/zram-generator.conf
 
 ```conf
 [zram0]
-zram-size = ram * 0.5
+zram-size = ram * 0.75
 compression-algorithm = zstd
 swap-priority = 150
 ```
@@ -361,6 +362,7 @@ EOF
 ```
 
 > Para Btrfs, agregar al final de `options`:
+>
 > ```
 > options root=UUID=TU_UUID rootflags=subvol=@ rw
 > ```
@@ -411,7 +413,6 @@ date
 ```
 
 ```sh
-
 exit
 reboot
 ```

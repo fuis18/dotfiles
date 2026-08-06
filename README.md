@@ -8,7 +8,7 @@ The goal of these dotfiles is performance and maximum customization.
 
 ![Desktop](.github/assets/img-1.png)
 ![Desktop](.github/assets/img-2.png)
-
+![Desktop](.github/assets/img-3.png)
 ---
 
 ## Stack
