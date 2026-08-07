@@ -28,10 +28,7 @@ function dsp_window.resize() end
 function dsp_window.pin() end
 
 ---@return string
-function dsp_window.toggleGroup() end
-
----@return string
-function dsp_window.activateGroup() end
+function dsp_window.deny_from_group() end
 
 ---@return string
 function dsp_window.swapNext() end
@@ -69,8 +66,45 @@ function dsp.setsGaps(opts) end
 ---@return string
 function dsp.setsBorder(opts) end
 
----@param layout "master"|"dwindle"
-function dsp.changeLayout(layout) end
+---@class hl.dsp.group
+local dsp_group = {}
+
+---@param opts? { window?: string }
+---@return string
+function dsp_group.toggle(opts) end
+
+---@param opts? { window?: string }
+---@return string
+function dsp_group.next(opts) end
+
+---@param opts? { window?: string }
+---@return string
+function dsp_group.prev(opts) end
+
+---@param opts { index: integer, window?: string }
+---@return string
+function dsp_group.active(opts) end
+
+---@param opts? { forward?: boolean, window?: string }
+---@return string
+function dsp_group.move_window(opts) end
+
+---@param opts? { action?: string, window?: string }
+---@return string
+function dsp_group.lock(opts) end
+
+---@param opts? { action?: string }
+---@return string
+function dsp_group.lock_active(opts) end
+
+---@class hl.dsp
+local dsp = {}
+
+---@type hl.dsp.window
+dsp.window = {}
+
+---@type hl.dsp.group
+dsp.group = {}
 
 ---@param opts { to: string, cycles: integer }
 function dsp.scrollOpts(opts) end

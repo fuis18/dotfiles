@@ -98,6 +98,14 @@ $env.config = {
             mode:     [emacs, vi_insert]
             event:    { edit: movewordleft }
         }
+        # Esc → añade/quita sudo al inicio (como zsh-sudo, una pulsación)
+        {
+            name:     toggle_sudo
+            modifier: none
+            keycode:  esc
+            mode:     [emacs]
+            event:    { send: executehostcommand, cmd: "toggle_sudo" }
+        }
     ]
 
     # ── hook: fnm use-on-cd ──────────────────────────────────────────────
@@ -129,7 +137,7 @@ $env.config = {
     color_config: {
         # Comandos
         shape_internalcall: { fg: cyan attr: b }   # comandos built-in
-        shape_external:     { fg: green attr: b }  # comandos externos (pactl, git…)
+        shape_external:     { fg: cyan attr: b }  # comandos externos (pactl, git…)
         shape_garbage:      { fg: red attr: b }    # comando no existe → rojo
 
         # Valores
@@ -154,6 +162,39 @@ $env.config = {
 }
 
 # ─────────────────────────────────────────────
+# ZOXIDE  (navegación por directorios históricos)
+#   z  → cd al directorio más frecuente que coincide
+#   zi → selección interactiva con fzf
+#   zq → query sin cambiar de directorio
+# ─────────────────────────────────────────────
+if (which zoxide | is-not-empty) {
+    # hook: registra los directorios visitados
+    $env.config.hooks.env_change.PWD = ($env.config.hooks.env_change.PWD | append {
+        __zoxide_hook: true
+        code: {|_, dir| ^zoxide add -- $dir }
+    })
+}
+
+# z → cd al mejor match (o al dir si ya es uno existente)
+def --env z [...rest: string] {
+    cd (
+        if ($rest | is-empty) { '~' }
+        else if ($rest | length) == 1 and (($rest.0 | path expand) | path type) == 'dir' { $rest.0 }
+        else { ^zoxide query --exclude $env.PWD -- ...$rest | str trim -r -c "\n" }
+    )
+}
+
+# zi → selección interactiva de directorio histórico (zoxide + fzf)
+def --env zi [...rest: string] {
+    cd (^zoxide query --interactive -- ...$rest | str trim -r -c "\n")
+}
+
+# zq → query sin cambiar de directorio
+def zq [...rest: string] {
+    ^zoxide query -- ...$rest
+}
+
+# ─────────────────────────────────────────────
 # FASTFETCH
 # ─────────────────────────────────────────────
 fastfetch
@@ -172,6 +213,7 @@ alias mp3 = musikcube
 alias npm = pnpm
 alias npx = pnpx
 alias music = ncmpcpp
+alias cmatrix = ^cmatrix -C cyan
 
 # pacs: buscar e instalar paquetes de pacman con fzf
 # (usa bash interno para el pipeline complejo con comillas anidadas)

@@ -1,5 +1,5 @@
 local mainMod = "SUPER"
-local term = "kitty --single-instance"
+local term = "ghostty"
 local launcher = "anyrun"
 local explorer_fast = "nautilus"
 local explorer_high = "spacedrive"
@@ -20,16 +20,17 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser_high))
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind("CTRL + ALT + DELETE", hl.dsp.exec_cmd(scriptsDir .. "/wlogout.sh"))
 
--- Hyprswitch (window tabs)
-hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd("hyprswitch gui --mod-key super --key tab --close mod-key-release"))
-hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd("hyprswitch close"), { release = true, non_consuming = true })
-
 -- Window Management
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd(scriptsDir .. "/KillActiveProcess.sh"))
 
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd("hyprctl dispatch fullscreen 2"))
+
+-- Groups
+hl.bind(mainMod .. " + G", hl.dsp.group.toggle())
+hl.bind("ALT + TAB", hl.dsp.group.next())
+hl.bind("ALT + SHIFT + TAB", hl.dsp.group.prev())
 
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(scriptsDir .. "/clipboard.sh"))

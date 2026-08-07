@@ -118,7 +118,7 @@ echo -e "${RESET}"
 sudo -u "${USER_NAME}" bash -c 'paru -S rate-mirrors-bin'
 sudo -u "${USER_NAME}" bash -c 'rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist'
 
-sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown hyprswitch'
+sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown hyprshell-bin'
 
 echo ""
 echo -e "${BLUE} ================================="
@@ -126,7 +126,7 @@ echo -e "${GREEN} ====== Installing Terminal ======"
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --needed --noconfirm kitty starship zsh nushell \
+pacman -S --needed --noconfirm ghostty starship zsh nushell \
   zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
 
 sudo -u "$USER_NAME" bash -c 'paru -S carapace-bin'

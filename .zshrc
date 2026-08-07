@@ -92,8 +92,6 @@ alias la='lsd -a --group-dirs=first'
 alias l='lsd --group-dirs=first'
 alias lla='lsd -lha --group-dirs=first'
 alias cat='bat'
-# Images
-alias icat='kitty +kitten icat'
 # alias for searching and installing packages
 alias pacs="pacman -Slq | fzf -m --preview 'pacman -Si {} ; pacman -Fl {} | awk \"{print \\$2}\"' | xargs -ro sudo pacman -S"
 alias mp3="musikcube"

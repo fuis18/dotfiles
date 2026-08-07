@@ -1,8 +1,32 @@
 # ~/.zshrc
 
-# Fix the Java Problem
+# --- Entorno y Variables de Sistema ---
+export QT_QPA_PLATFORM="wayland;xcb"
+export XDG_SESSION_TYPE=wayland
 export _JAVA_AWT_WM_NONREPARENTING=1
 export SYSTEMD_PAGER=cat
+
+# --- Configuración de Rust / Cargo ---
+export CARGO_BUILD_JOBS=2
+export RUSTC_WRAPPER=sccache
+export CARGO_NET_GIT_FETCH_WITH_CLI=true
+
+# --- Gestión de Node (fnm) ---
+export PATH="$HOME/.local/share/fnm:$PATH"
+eval "$(fnm env --use-on-cd)"
+
+# --- PATH (Forma segura de añadir directorios sin borrar los anteriores) ---
+typeset -U path # Evita duplicados en el PATH
+path=(
+    $HOME/.local/bin
+    $HOME/.cargo/bin    # Importante para que rustup/cargo funcionen siempre
+    /usr/local/bin
+    /usr/bin
+    /bin
+    /usr/local/sbin
+    $path               # Mantiene lo que ya estaba (como fnm)
+)
+export PATH
 
 # Enable history
 setopt histignorealldups sharehistory
@@ -16,9 +40,11 @@ HISTFILE=~/.zsh_history
 # Manual configuration
 PATH=/root/.local/bin:/snap/bin:/usr/sandbox/:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
 
+zstyle ':completion:*:*:pacman:*' ignored-patterns '*'
+
 # Use modern completion system
 autoload -Uz compinit
-compinit
+compinit -C
 
 # Autosuggestions (inline)
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -26,7 +52,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(history)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 
-bindkey '^[[C' autosuggest-accept
+bindkey '^F' autosuggest-accept
 
 # Autocomplete (list)
 source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
@@ -44,7 +70,7 @@ zstyle ':autocomplete:*' ignore-case yes
 zstyle ':autocomplete:*' recent-dirs true
 
 # Plugins
-source /usr/share/zsh-sudo/sudo.plugin.zsh
+source /usr/share/zsh/plugins/zsh-sudo/sudo.plugin.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # key bindings
@@ -64,8 +90,6 @@ alias la='lsd -a --group-dirs=first'
 alias l='lsd --group-dirs=first'
 alias lla='lsd -lha --group-dirs=first'
 alias cat='bat'
-# Images
-alias icat='kitty +kitten icat'
 # alias for searching and installing packages
 alias pacs="pacman -Slq | fzf -m --preview 'pacman -Si {} ; pacman -Fl {} | awk \"{print \\$2}\"' | xargs -ro sudo pacman -S"
 alias mp3="ncmpcpp"
