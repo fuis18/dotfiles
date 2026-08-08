@@ -1,9 +1,16 @@
 local nav_mode = false
 
+local function reset_nav()
+  nav_mode = false
+end
+
 vim.api.nvim_create_autocmd("InsertLeave", {
-  callback = function()
-    nav_mode = false
-  end,
+  callback = reset_nav,
+})
+
+vim.api.nvim_create_autocmd("User", {
+  pattern = "BlinkCmpHide",
+  callback = reset_nav,
 })
 
 local function select(direction)
@@ -20,6 +27,22 @@ local function select(direction)
   }
 end
 
+local function activate(direction)
+  return function(cmp)
+    nav_mode = true
+    if cmp.is_menu_visible() then
+      if direction == "next" then
+        return cmp.select_next()
+      end
+      return cmp.select_prev()
+    end
+    if direction == "next" then
+      return cmp.show({ initial_selected_item_idx = 1 })
+    end
+    return cmp.show({ initial_selected_item_idx = -1 })
+  end
+end
+
 return {
   {
     "saghen/blink.cmp",
@@ -34,31 +57,11 @@ return {
       },
       keymap = {
         preset = "super-tab",
-        ["<Tab>"] = {
-          function(cmp)
-            if cmp.snippet_active() then
-              return cmp.snippet_forward()
-            end
-          end,
-          function(cmp)
-            nav_mode = true
-            if cmp.is_menu_visible() then
-              return cmp.select_next()
-            end
-            return cmp.show({ initial_selected_item_idx = 1 })
-          end,
-          "fallback",
-        },
-        ["<S-Tab>"] = {
-          function(cmp)
-            nav_mode = true
-            if cmp.is_menu_visible() then
-              return cmp.select_prev()
-            end
-            return cmp.show({ initial_selected_item_idx = -1 })
-          end,
-          "fallback",
-        },
+        ["<C-.>"] = { activate("next") },
+        ["<C-n>"] = { activate("next") },
+        ["<C-p>"] = { activate("prev") },
+        ["<Tab>"] = { "snippet_forward", "fallback" },
+        ["<S-Tab>"] = { "snippet_backward", "fallback" },
         ["<CR>"] = {
           function(cmp)
             if nav_mode and cmp.is_menu_visible() then
@@ -70,22 +73,6 @@ return {
         },
         ["<Down>"] = select("next"),
         ["<Up>"] = select("prev"),
-        ["<C-n>"] = {
-          function(cmp)
-            if nav_mode and cmp.is_menu_visible() then
-              return cmp.select_next()
-            end
-          end,
-          "fallback_to_mappings",
-        },
-        ["<C-p>"] = {
-          function(cmp)
-            if nav_mode and cmp.is_menu_visible() then
-              return cmp.select_prev()
-            end
-          end,
-          "fallback_to_mappings",
-        },
         ["<C-e>"] = {
           function(cmp)
             nav_mode = false
