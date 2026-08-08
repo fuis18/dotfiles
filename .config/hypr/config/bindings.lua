@@ -11,10 +11,10 @@ local scriptsDir = os.getenv("HOME") .. "/.config/hypr/scripts"
 -- Applications
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(term))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(launcher))
-hl.bind(mainMod .. " + e", hl.dsp.exec_cmd(explorer_fast))
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(explorer_high))
-hl.bind(mainMod .. " + b", hl.dsp.exec_cmd(browser_fast))
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser_high))
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(explorer_fast))
+hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(explorer_high))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser_fast))
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(browser_high))
 
 -- Hyprland Utilities
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))

@@ -4,15 +4,19 @@
 #
 # ON:
 #   - Disables animations, blur, shadows, transparency, rounding and gaps in Hyprland
-#   - Sets kitty background opacity to 1.0 (fully opaque) via remote control
+#   - Makes the terminal fully opaque (kitty via remote control, ghostty via
+#     a Hyprland windowrule opacity override, since ghostty has no remote IPC yet)
 #   - Fills the wallpaper to black with awww (swww fork) — no image decode while gaming
 #   - Pauses cava (SIGSTOP) and syncthing (systemd user unit)
 #   - Hides ironbar via IPC (no kill/respawn, no flicker)
 # OFF:
 #   - Reloads hyprland.conf to restore your normal visual settings
-#   - Restores kitty opacity to your configured background_opacity
+#   - Restores the terminal opacity
 #   - Restores the wallpaper with `awww restore`
 #   - Resumes cava and syncthing, shows ironbar again
+#
+# Terminal detection: if the kitty socket exists (kitty running with
+# allow_remote_control), kitty is used; otherwise ghostty is assumed.
 #
 # Requires your ironbar config to set a top-level `name` (this script
 # targets "main" — see config.corn).
@@ -64,11 +68,30 @@ show_ironbar() {
   ironbar bar set-visibility "$IRONBAR_NAME" true >/dev/null 2>&1 || true
 }
 
+# --- Terminal: kitty (remote control) or ghostty (hyprland override) ---
 KITTY_SOCKET="unix:/tmp/kitty-hypr"
+KITTY_SOCKET_FILE="/tmp/kitty-hypr"
 KITTY_OPACITY_NORMAL="0.9" # matches background_opacity in kitty.conf
+GHOSTTY_CLASS="com.mitchellh.ghostty"
 
-set_kitty_opacity() {
-  kitty @ --to "$KITTY_SOCKET" set-background-opacity --all "$1" >/dev/null 2>&1 || true
+terminal_is_kitty() {
+  [ -S "$KITTY_SOCKET_FILE" ]
+}
+
+set_terminal_opaque() {
+  if terminal_is_kitty; then
+    kitty @ --to "$KITTY_SOCKET" set-background-opacity --all "1.0" >/dev/null 2>&1 || true
+  else
+    hyprctl keyword windowrule "opacity 1.0 override 1.0 override, class:^($GHOSTTY_CLASS)$" >/dev/null 2>&1 || true
+  fi
+}
+
+restore_terminal_opacity() {
+  if terminal_is_kitty; then
+    kitty @ --to "$KITTY_SOCKET" set-background-opacity --all "$KITTY_OPACITY_NORMAL" >/dev/null 2>&1 || true
+  else
+    hyprctl keyword windowrule "unset, class:^($GHOSTTY_CLASS)$" >/dev/null 2>&1 || true
+  fi
 }
 
 WALLPAPER="$HOME/Pictures/Wallpaper/dark/wallpaper-4.png"
@@ -93,7 +116,7 @@ if [ -f "$STATE_FILE" ]; then
   resume_proc cava
   systemctl --user start syncthing >/dev/null 2>&1 || true
   show_ironbar
-  set_kitty_opacity "$KITTY_OPACITY_NORMAL"
+  restore_terminal_opacity
   resume_wallpaper
 
   rm -f "$STATE_FILE"
@@ -116,11 +139,7 @@ else
   pause_proc cava
   systemctl --user stop syncthing >/dev/null 2>&1 || true
   hide_ironbar
-  if [ ! -S /tmp/kitty-hypr ]; then
-    notify "rgb(f38ba8)" "  kitty sin socket - reinicia kitty"
-  else
-    set_kitty_opacity "1.0"
-  fi
+  set_terminal_opaque
   pause_wallpaper
 
   touch "$STATE_FILE"
