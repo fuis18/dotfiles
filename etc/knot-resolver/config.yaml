@@ -14,3 +14,7 @@ forward:
         hostname: TU_CONFIG_ID.dns.DOMAINDNS.com
     options:
       dnssec: false
+
+cache:
+  storage: /var/cache/knot-resolver
+  size-max: 100M

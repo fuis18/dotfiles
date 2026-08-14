@@ -63,35 +63,29 @@ echo "-> Importando y firmando llaves GPG de CachyOS..."
 pacman-key --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys F3B607488DB35A47 || true
 pacman-key --lsign-key F3B607488DB35A47
 
-# 2. Instalación de paquetes esenciales del repositorio CachyOS
-echo "-> Instalando keyring y mirrorlists de CachyOS..."
-CACHY_URL="https://mirror.cachyos.org/repo/x86_64/cachyos"
-
-pacman -U --noconfirm \
-  "${CACHY_URL}/cachyos-keyring-20240331-1-any.pkg.tar.zst" \
-  "${CACHY_URL}/cachyos-mirrorlist-27-1-any.pkg.tar.zst" \
-  "${CACHY_URL}/cachyos-v3-mirrorlist-27-1-any.pkg.tar.zst" \
-  "${CACHY_URL}/cachyos-v4-mirrorlist-27-1-any.pkg.tar.zst"
-
-# 3. Automatización del script de detección de CPU (v3/v4/znver4)
-echo "-> Descargando y aplicando configuración de repositorios CachyOS..."
+# 2. Instalación limpia usando el script oficial de CachyOS
+echo "-> Descargando e instalando repositorios CachyOS..."
 TMP_CACHYDIR=$(mktemp -d)
 curl -sSL https://mirror.cachyos.org/cachyos-repo.tar.xz | tar -xJ -C "$TMP_CACHYDIR"
 
 pushd "${TMP_CACHYDIR}/cachyos-repo" >/dev/null
 
-# Comentamos la línea de descarga remota redundante dentro del script para prevenir fallos
+# Evitar reconexión redundante a llaves si la red está restringida
 sed -i 's/.*pacman-key --recv-keys/# &/' cachyos-repo.sh 2>/dev/null || true
 
-# Ejecutamos la instalación de los repos
+# El script oficial instala keyring, mirrorlists y detecta CPU (v3/v4)
 ./cachyos-repo.sh --install
 
 popd >/dev/null
 rm -rf "$TMP_CACHYDIR"
 
-# 4. Sincronización final de la base de datos de pacman
-echo "-> Sincronizando bases de datos..."
-# pacman -Syu --noconfirm
+# 3. Instalación de rate-mirrors, ordenamiento y actualización de DB
+echo "-> Instalando cachyos-rate-mirrors y filtrando mirrors caídos..."
+pacman -Sy --needed --noconfirm cachyos-rate-mirrors
+cachyos-rate-mirrors || true
+
+echo "-> Sincronizando bases de datos de Pacman..."
+pacman -Syyu --noconfirm
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -99,8 +93,7 @@ echo -e "${GREEN} ========= Kernel CachyOS ========="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-# Detectar qué microcódigo quedó instalado (Intel o AMD) para
-# no tener que asumirlo a mano.
+# Detectar qué microcódigo quedó instalado (Intel o AMD) para no tener que asumirlo a mano.
 UCODE_IMG=""
 if [[ -f /boot/intel-ucode.img ]]; then
   UCODE_IMG="intel-ucode.img"

@@ -410,6 +410,9 @@ systemctl enable iwd knot-resolver
 ln -sf /usr/share/zoneinfo/America/Lima /etc/localtime
 hwclock --systohc
 date
+
+timedatectl set-ntp true
+systemctl status systemd-timesyncd.service
 ```
 
 ```sh

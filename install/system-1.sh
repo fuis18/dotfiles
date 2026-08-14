@@ -49,6 +49,7 @@ echo -e "${RESET}"
 pacman -S --needed --noconfirm wget openssh openssl \
   gtk4 gtk4-layer-shell pkg-config \
   qt6ct qt6-base qt6-declarative qt6-wayland qt5-wayland \
+  qt6-websockets gamemode \
   upower gnome-keyring xsettingsd
 
 echo ""
@@ -83,7 +84,7 @@ pacman -S --needed --noconfirm impala bluetui
 
 # Segurity
 
-pacman -S --needed --noconfirm ufw
+pacman -S --needed --noconfirm ufw bind
 
 echo ""
 echo -e "${BLUE} =================================="
