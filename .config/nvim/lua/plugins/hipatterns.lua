@@ -174,12 +174,20 @@ return {
           end
         end
       end
+      local function inline_swatch(_, _, data)
+        return {
+          virt_text = { { "█", data.hl_group } },
+          virt_text_pos = "inline",
+          priority = 200,
+          right_gravity = false,
+        }
+      end
       return {
         highlighters = {
-          hex_color = gen.hex_color({ filter = is_stylesheet }),
+          hex_color = gen.hex_color({ filter = is_stylesheet, style = "inline", inline_text = "█" }),
           hex_color_short = {
             pattern = stylesheet_pattern("#%x%x%x%f[%X]"),
-            filter = is_stylesheet,
+            extmark_opts = inline_swatch,
             group = function(_, match)
               local hex = match:sub(2):gsub(".", function(c)
                 return c .. c
@@ -189,7 +197,7 @@ return {
           },
           named_color = {
             pattern = stylesheet_pattern("[A-Za-z]+"),
-            filter = is_stylesheet,
+            extmark_opts = inline_swatch,
             group = function(_, match)
               local hex = css_colors[match:lower()]
               if not hex then
