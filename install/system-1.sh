@@ -23,7 +23,7 @@ echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
 pacman -S --needed --noconfirm base-devel \
-  devtools \
+  devtools coreutils-uutils \
   wayland \
   xdg-desktop-portal \
   xdg-desktop-portal-gtk

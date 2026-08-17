@@ -36,6 +36,7 @@ echo -e "${BLUE} ================================"
 echo -e "${RESET}"
 
 # Diary
+pacman -S epiphany
 sudo -u "$USER_NAME" bash -c 'paru -S helium-browser-bin'
 sudo -u "$USER_NAME" bash -c 'paru -S zen-browser-bin'
 sudo -u "$USER_NAME" bash -c 'paru -S brave-bin'
