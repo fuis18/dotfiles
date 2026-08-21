@@ -30,6 +30,7 @@ if findmnt -no FSTYPE / | grep -q btrfs && grep -qE '[[:space:]]/\.snapshots[[:s
 
     echo "-> Creando la config real con snapper"
     snapper -c root create-config /
+    snapper -c home create-config /home
 
     echo "-> Descartando el subvolumen que snapper acaba de crear"
     umount /.snapshots
