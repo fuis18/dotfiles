@@ -56,6 +56,43 @@ fi
 
 echo ""
 echo -e "${BLUE} =================================="
+echo -e "${GREEN} ===== Symlinks a ~/.cache ========="
+echo -e "${BLUE} =================================="
+echo -e "${RESET}"
+
+TARGET_USER=${SUDO_USER:-$(whoami)}
+
+if [[ -z "$TARGET_USER" || "$TARGET_USER" == "root" ]]; then
+  echo -e "${GREEN}[!] No se detectó SUDO_USER, saltando symlinks a cache.${RESET}"
+else
+  USER_HOME=$(getent passwd "$TARGET_USER" | cut -d: -f6)
+
+  enlazar_a_cache() {
+    local origen="$1"
+    local destino="$2"
+
+    sudo -u "$TARGET_USER" mkdir -p "$destino"
+
+    if [[ -e "$origen" && ! -L "$origen" ]]; then
+      echo "Moviendo datos existentes de $origen a $destino..."
+      sudo -u "$TARGET_USER" bash -c "mv '$origen'/* '$destino'/ 2>/dev/null; rm -rf '$origen'"
+    fi
+
+    if [[ ! -L "$origen" ]]; then
+      sudo -u "$TARGET_USER" mkdir -p "$(dirname "$origen")"
+      sudo -u "$TARGET_USER" ln -s "$destino" "$origen"
+      echo "Symlink creado: $origen -> $destino"
+    fi
+  }
+
+  enlazar_a_cache "$USER_HOME/.config/BraveSoftware/Brave-Browser/Safe Browsing" "$USER_HOME/.cache/BraveSoftware/Safe Browsing"
+  for suf in "" "-shm" "-wal"; do
+    enlazar_archivo_a_cache "$USER_HOME/.config/nushell/history.sqlite3${suf}" "$USER_HOME/.cache/nushell/history.sqlite3${suf}"
+  done
+fi
+
+echo ""
+echo -e "${BLUE} =================================="
 echo -e "${GREEN} ===== CachyOS Repos Config ======="
 echo -e "${BLUE} =================================="
 

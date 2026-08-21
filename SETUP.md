@@ -388,11 +388,16 @@ bootctl list
 passwd
 admin18 # root password
 useradd -m -G wheel fuis18
-passwd fuis18pacman -S snapper snap-pac
+passwd fuis18
 luis18 # user password
 
 usermod -aG wheel fuis18
 groups fuis18
+
+# ~/.cache como subvolumen independiente
+rm -rf /home/fuis18/.cache
+btrfs subvolume create /home/fuis18/.cache
+chown fuis18:fuis18 /home/fuis18/.cache
 
 echo hacker > /etc/hostname
 
