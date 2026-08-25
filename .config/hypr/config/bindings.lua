@@ -1,15 +1,22 @@
 local mainMod = "SUPER"
-local term = "ghostty"
+
 local launcher = "anyrun"
+
+local term_fast = "ghostty"
+local term_high = "kitty"
+
 local explorer_fast = "nautilus"
 local explorer_high = "spacedrive"
+
 local browser_fast = "brave"
 local browser_high = "zen-browser"
+
 local notify = "swaync-client"
 local scriptsDir = os.getenv("HOME") .. "/.config/hypr/scripts"
 
 -- Applications
-hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(term))
+hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(term_fast))
+hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.exec_cmd(term_high))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(launcher))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(explorer_fast))
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(explorer_high))

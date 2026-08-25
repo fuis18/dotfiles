@@ -127,7 +127,7 @@ echo -e "${GREEN} ====== Installing Terminal ======"
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --needed --noconfirm ghostty starship zsh nushell \
+pacman -S --needed --noconfirm kitty ghostty starship zsh nushell \
   zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
 
 sudo -u "$USER_NAME" bash -c 'paru -S carapace-bin'
