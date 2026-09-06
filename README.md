@@ -1,6 +1,6 @@
 # Arch + Hyprland + CachyOS.
 
-The goal of these dotfiles is performance and maximum customization.
+The goal of these dotfiles is maximum performance and greatest customization.
 
 [![OS](https://img.shields.io/badge/OS-Arch%20Linux-blue?logo=arch-linux)](https://archlinux.org)
 [![WM](https://img.shields.io/badge/WM-Hyprland-blue?logo=hyprland)](https://hyprland.org)
@@ -13,26 +13,43 @@ The goal of these dotfiles is performance and maximum customization.
 
 ## Stack
 
-| Role           | Tool                  |
-| -------------- | --------------------- |
-| kernel iso     | Arch Linux            |
-| Kernel         | Linux-cachyos         |
-| Repos          | CachyOS               |
-| Window Manager | Hyprland              |
-| Terminal       | Kitty                 |
-| Shell          | Nushell + Starship    |
-| Editor         | Lazyvim, zed          |
-| File Manager   | Yazi & spacedrive     |
-| Launcher       | Anyrun                |
-| Status bar     | Ironbar               |
-| Notifications  | swaync                |
-| Audio          | pipewire + cava       |
-| Bluetooth      | bluez + bluetui       |
-| Network        | iwd + Knot Resolver   |
-| Screenshot     | grim + slurp + swappy |
-| Brightness     | brightnessctl         |
-| Login Manager  | greetd + regreet      |
-| Power menu     | wlogout               |
+### Core
+
+| Role           | Tool                |
+| -------------- | ------------------- |
+| kernel iso     | Arch Linux          |
+| Kernel         | Linux-cachyos       |
+| Repos          | CachyOS             |
+| Window Manager | Hyprland            |
+| Network        | iwd + Knot Resolver |
+| Launcher       | Anyrun              |
+| Status bar     | Ironbar             |
+| Notifications  | swaync              |
+| Login Manager  | greetd + regreet    |
+| Power menu     | wlogout             |
+
+### TUIs
+
+| Role           | Tool     |
+| -------------- | -------- |
+| Terminal       | Kitty    |
+|                | Starship |
+| Shell 1        | Nushell  |
+| Shell 2        | zsh      |
+| Editor         | Lazyvim  |
+| File Manager 1 | Yazi     |
+| Music          | ncmpcpp  |
+| Bluetooth      | bluetui  |
+
+### GUIs
+
+| Role           | Tool           |
+| -------------- | -------------- |
+| File Manager 1 | Nautilus       |
+| File Manager 2 | spacedrive     |
+| Editor         | zed editor     |
+| Browser 1      | Helium Browser |
+| Browser 2      | Zen Browser    |
 
 ---
 

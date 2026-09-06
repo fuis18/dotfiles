@@ -3,8 +3,6 @@
 # =============================================
 
 # --- Sistema ---
-$env.QT_QPA_PLATFORM             = "wayland;xcb"
-$env.XDG_SESSION_TYPE            = "wayland"
 $env._JAVA_AWT_WM_NONREPARENTING = "1"
 $env.SYSTEMD_PAGER               = "cat"
 $env.TERM                        = "xterm-256color"
