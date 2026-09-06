@@ -48,9 +48,6 @@ sudo -u "$USER_NAME" bash -c 'paru -S localsend-bin'
 pacman -S --noconfirm syncthing
 pacman -S --noconfirm rclone
 
-sudo -u "$USER_NAME" bash -c 'paru -S gtk-youtube-viewer-git perl-lwp-useragent-cache'
-pacman -S --noconfirm perl-json-xs perl-app-cpanminus
-
 # pdf lector
 pacman -S --noconfirm evince
 
