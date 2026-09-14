@@ -95,14 +95,6 @@ echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 echo ""
 
-chown -R "${USER_NAME}:${USER_NAME}" "${USER_HOME}/Downloads"
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ========== Aur => paru =========="
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
 PARU_DIR="${USER_HOME}/paru"
 if [[ -d "$PARU_DIR" ]]; then
   echo -e "${GREEN}[!] Directorio '$PARU_DIR' ya existe.${RESET}"
