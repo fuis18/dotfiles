@@ -71,19 +71,45 @@ curl -sSL https://mirror.cachyos.org/cachyos-repo.tar.xz | tar -xJ -C "$TMP_CACH
 
 pushd "${TMP_CACHYDIR}/cachyos-repo" >/dev/null
 
-# Evitar reconexión redundante a llaves si la red está restringida
-sed -i 's/.*pacman-key --recv-keys/# &/' cachyos-repo.sh 2>/dev/null || true
-
 # El script oficial instala keyring, mirrorlists y detecta CPU (v3/v4)
 ./cachyos-repo.sh --install
 
 popd >/dev/null
 rm -rf "$TMP_CACHYDIR"
 
-# 3. Instalación de rate-mirrors, ordenamiento y actualización de DB
-echo "-> Instalando cachyos-rate-mirrors y filtrando mirrors caídos..."
-pacman -Sy --needed --noconfirm cachyos-rate-mirrors
-cachyos-rate-mirrors || true
+# 3. Verificación / reparación del repo + instalación de rate-mirrors
+echo "-> Verificando que el repo CachyOS haya quedado registrado en pacman.conf..."
+if ! grep -qE '^\[cachyos(-v3|-v4|-znver4)?\]' /etc/pacman.conf; then
+  echo -e "${GREEN}[!] No se encontró ninguna sección [cachyos*] en pacman.conf. cachyos-repo.sh no la escribió, la agrego manualmente.${RESET}"
+
+  cp /etc/pacman.conf "/etc/pacman.conf.bak-manual-$(date +%s)"
+
+  CACHY_BLOCK=$'\n[cachyos]\nInclude = /etc/pacman.d/cachyos-mirrorlist\n'
+
+  if /lib/ld-linux-x86-64.so.2 --help 2>&1 | grep -q 'x86-64-v3 (supported, searched)' \
+     && [[ -f /etc/pacman.d/cachyos-v3-mirrorlist ]]; then
+    CACHY_BLOCK+=$'\n[cachyos-v3]\nInclude = /etc/pacman.d/cachyos-v3-mirrorlist\n'
+  fi
+
+  awk -v block="$CACHY_BLOCK" '
+    !done && /^\[core\]/ { print block; done=1 }
+    { print }
+  ' /etc/pacman.conf > /etc/pacman.conf.new
+  mv /etc/pacman.conf.new /etc/pacman.conf
+
+  echo -e "${GREEN}[✔] Sección [cachyos] agregada manualmente.${RESET}"
+fi
+
+echo "-> Forzando refresco completo de las bases de datos (pacman -Syy)..."
+pacman -Syy
+
+echo "-> Instalando cachyos-rate-mirrors..."
+if ! pacman -S --needed --noconfirm cachyos-rate-mirrors; then
+  echo -e "${GREEN}[!] cachyos-rate-mirrors no está en los repos, se omite (no bloquea el resto del script).${RESET}"
+else
+  echo "-> Ordenando mirrors por velocidad..."
+  cachyos-rate-mirrors || echo -e "${GREEN}[!] cachyos-rate-mirrors falló al correr, se sigue con los mirrors actuales.${RESET}"
+fi
 
 echo "-> Sincronizando bases de datos de Pacman..."
 pacman -Syyu --noconfirm
