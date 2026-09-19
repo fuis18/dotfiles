@@ -3,7 +3,7 @@ local scriptsDir = os.getenv("HOME") .. "/.config/hypr/scripts"
 hl.on("hyprland.start", function()
 	-- 1. PRIMERO: Registrar el entorno en DBus/Systemd (Crucial para Portales y Qt)
 	local envVars =
-		"WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_SESSION_DESKTOP GTK_THEME GTK_ICON_THEME GTK_APPLICATION_PREFER_DARK_THEME QT_QPA_PLATFORM QT_QPA_PLATFORMTHEME QT_AUTO_SCREEN_SCALE_FACTOR GDK_BACKEND MOZ_ENABLE_WAYLAND SDL_VIDEODRIVER XMODIFIERS XKB_DEFAULT_LAYOUT"
+		"WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_SESSION_DESKTOP GTK_THEME GTK_ICON_THEME QT_QPA_PLATFORM QT_QPA_PLATFORMTHEME QT_AUTO_SCREEN_SCALE_FACTOR GDK_BACKEND MOZ_ENABLE_WAYLAND SDL_VIDEODRIVER XMODIFIERS XKB_DEFAULT_LAYOUT"
 	hl.exec_cmd("dbus-update-activation-environment --systemd " .. envVars)
 	hl.exec_cmd("systemctl --user import-environment " .. envVars)
 
@@ -11,7 +11,6 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'")
 	hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme 'catppuccin-mocha-blue-standard+default'")
 	hl.exec_cmd("gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'")
-	hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-application-prefer-dark-theme true")
 
 	-- legacy support
 	hl.exec_cmd("xsettingsd")
