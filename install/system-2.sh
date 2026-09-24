@@ -32,6 +32,9 @@ echo -e "${RESET}"
 pacman -S nautilus
 sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive-clean'
 
+# camera
+pacman -S snapshot
+
 # copy history
 pacman -S --noconfirm cliphist
 # texteditor
