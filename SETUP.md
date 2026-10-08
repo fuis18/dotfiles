@@ -255,10 +255,10 @@ swapon --show
 
 ### zram
 
-For 4GB of ram use .75, obtain 7GB
-For 6GB of ram use 1, obtain 12GB
-For 8GB of ram use 1.5, obtain 20GB
-For 16GB of ram use 1, obtain 32GB
+- For 4GB of ram use .75, obtain 7GB
+- For 6GB of ram use 1, obtain 12GB
+- For 8GB of ram use 1.5, obtain 20GB
+- For 16GB of ram use 1, obtain 32GB
 
 ```sh
 pacman -S zram-generator
