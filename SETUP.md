@@ -418,7 +418,7 @@ hwclock --systohc
 date
 
 timedatectl set-ntp true
-systemctl status systemd-timesyncd.service
+systemctl status systemd-timesyncd
 ```
 
 ```sh
