@@ -27,6 +27,6 @@ sudo -u "$USER_NAME" cp -r "${DOTFILES}/.config/." "${USER_HOME}/.config/"
 sudo -u "$USER_NAME" cp -r "${DOTFILES}/.local/bin/." "${USER_HOME}/.local/bin/"
 sudo -u "$USER_NAME" cp -r "${DOTFILES}/.zshrc" "${USER_HOME}/.zshrc"
 
-sudo -u "$USER_NAME" ya pack -a
+sudo -u "$USER_NAME" ya pkg install
 
 find "${USER_HOME}/.config/hypr/scripts/" -type f -name "*.sh" -exec chmod +x {} \;
