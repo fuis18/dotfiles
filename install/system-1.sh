@@ -156,7 +156,7 @@ echo "%wheel ALL=(ALL) ALL" >/etc/sudoers.d/wheel
 chmod 440 /etc/sudoers.d/wheel
 
 # Node
-sudo -u "$USER_NAME" bash -c 'paru -S fnm-bin'
+sudo -u "$USER_NAME" bash -c 'paru -S --needed fnm-bin'
 sudo -u "$USER_NAME" bash -c 'export PATH="$HOME/.local/share/fnm:$PATH"; fnm install --latest'
 
 echo ""
@@ -171,7 +171,7 @@ pacman -S --needed --noconfirm brightnessctl \
   lm_sensors pkg-config \
   bottom btop htop
 # notify
-pacman -S --noconfirm libnotify swaync
+pacman -S --needed --noconfirm libnotify swaync
 
 echo ""
 echo -e "${BLUE} ================================="
@@ -224,7 +224,7 @@ pacman -S --needed --noconfirm noto-fonts \
   ttf-dejavu \
   ttf-liberation
 
-sudo -u "${USER_NAME}" bash -c 'paru -S ttf-sarasa-gothic-nerd-fonts'
+sudo -u "${USER_NAME}" bash -c 'paru -S --needed ttf-sarasa-gothic-nerd-fonts'
 
 fc-cache -fv
 
@@ -234,7 +234,7 @@ echo -e "${GREEN} ==== Instaling documentation ===="
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm locate man-db
+pacman -S --needed --noconfirm locate man-db
 
 echo ""
 echo -e "${BLUE} =============================="
@@ -243,14 +243,14 @@ echo -e "${BLUE} =============================="
 echo -e "${RESET}"
 
 # interfaces
-sudo -u "${USER_NAME}" bash -c 'paru -S aylurs-gtk-shell'
-sudo -u "${USER_NAME}" bash -c 'paru -S libastal-notifd-git libastal-battery-git libastal-mpris-git'
+sudo -u "${USER_NAME}" bash -c 'paru -S --needed aylurs-gtk-shell'
+sudo -u "${USER_NAME}" bash -c 'paru -S --needed libastal-notifd-git libastal-battery-git libastal-mpris-git'
 # bar
-pacman -S --noconfirm ironbar
+pacman -S --needed --noconfirm ironbar
 # launcher
-sudo -u "${USER_NAME}" bash -c 'paru -S anyrun'
+sudo -u "${USER_NAME}" bash -c 'paru -S --needed anyrun'
 # logout
-sudo -u "${USER_NAME}" bash -c 'paru -S wlogout'
+sudo -u "${USER_NAME}" bash -c 'paru -S --needed wlogout'
 # monitores
 pacman -S --noconfirm wdisplays
 
