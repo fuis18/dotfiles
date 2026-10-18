@@ -1,16 +1,15 @@
 let {
 // https://github.com/JakeStanger/ironbar/wiki/
-// https://github.com/bluebyt/Wayfire-dots/blob/main/.config/ironbar/config.corn
 
   $icon_l = {
     type = "label"
-    class = "icon"
+    class = "icon middle"
     label = ""
   }
 
   $icon_r = {
     type = "label"
-    class = "icon"
+    class = "icon middle"
     label = ""
   }
 
@@ -247,7 +246,7 @@ let {
 } in {
   name = "main"
   position = "top"
-  height = 32
+  height = 30
   start = [
     $launcher
     $upper_l

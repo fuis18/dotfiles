@@ -15,6 +15,15 @@
 		sans-serif;
 }
 
+button, box, .container, .item, .label, .script, .icon, #bar {
+  outline: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  line-heigh: 1;
+  box-sizing: border-box;
+}
+
 .item,
 button,
 .label,
@@ -29,7 +38,11 @@ button,
 }
 
 .icon {
-	font-size: 30px;
+	font-size: 15px;
+}
+
+.middle {
+  font-size: 30px;
 }
 
 .l-edge,
@@ -75,6 +88,8 @@ button,
 }
 
 .workspaces {
+  padding: 0;
+  margin: 0;
 	background: @bg_secondary;
 }
 
@@ -101,6 +116,7 @@ button,
 .performance {
 	background: @bg_primary;
 }
+
 
 .clock {
 	background: @bg_secondary;
