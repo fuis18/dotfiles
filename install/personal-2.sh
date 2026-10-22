@@ -81,11 +81,11 @@ pacman -S --noconfirm blender gimp krita
 # android tool
 pacman -S --noconfirm android-tools scrcpy
 
-pacman -S --noconfirm texlive-basic texlive-latex texlive-latexextra texlive-fontsextra texlive-bibtexextra texlive-pictures pandoc
+pacman -S --noconfirm texlive-basic texlive-latex pandoc-cli
 
 # games
-pacman -S lutris
-sudo -u "$USER_NAME" bash -c 'paru -S pcsx2-latest-bin'
+# pacman -S lutris
+# sudo -u "$USER_NAME" bash -c 'paru -S pcsx2-latest-bin'
 # sudo -u "$USER_NAME" bash -c 'paru -S rpcs3-bin'
 
 echo ""

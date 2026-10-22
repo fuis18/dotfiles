@@ -22,7 +22,7 @@ echo -e "${GREEN} ===== Installing Base System ====="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -S coreutils-uutils
+# pacman -S coreutils-uutils
 
 pacman -S --needed --noconfirm base-devel \
   devtools \
