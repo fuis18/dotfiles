@@ -126,10 +126,9 @@ $env.config = {
     completions: {
         external: {
             enable: true
-            completer: {|spans|
-                carapace $spans.0 nushell ...$spans
+            completer: {|place|
+                carapace $place.command.0 nushell ...$place.command
                 | from json
-                | if ($in | default [] | where value =~ '^-' | is-empty) { $in } else { $in }
             }
         }
     }
@@ -137,7 +136,7 @@ $env.config = {
     color_config: {
         # Comandos
         shape_internalcall: { fg: cyan attr: b }   # comandos built-in
-        shape_external:     { fg: cyan attr: b }  # comandos externos (pactl, git…)
+        shape_external:     { fg: blue attr: b }  # comandos externos (pactl, git…)
         shape_garbage:      { fg: red attr: b }    # comando no existe → rojo
 
         # Valores
@@ -225,6 +224,8 @@ def pacs [] {
 # FUNCIONES  (de tu zshrc, portadas a Nushell)
 # ─────────────────────────────────────────────
 
+# Esc alterna sudo al inicio del comando actual
+# (equivalente a zsh-sudo pero con una sola pulsación)
 def toggle_sudo [] {
     let line = (commandline)
     let new = if ($line | str starts-with 'sudo ') {
@@ -241,9 +242,16 @@ def mkt [] {
     print "✓ Creados: nmap/ content/ exploits/ scripts/"
 }
 
-# fzf con preview de archivos (usa bat para resaltado)
-def fzfh [] {
-    ^fzf -m --reverse --preview-window down:20 --preview $"($env.HOME)/.local/bin/fzfh_preview.zsh {}"
+# fzfh: navegación de archivos con fzf + fd / rg
+#   fzfh            → buscar archivos y directorios (fd, respeta .gitignore)
+#   fzfh "patrón"   → buscar archivos que contienen "patrón" (rg)
+def fzfh [query?: string] {
+    let src = if $query != null {
+        ^rg -l --hidden --no-messages --glob '!.git/**' --glob '!node_modules/**' $query
+    } else {
+        ^fd --type f --type d --hidden --exclude .git --exclude node_modules
+    }
+    $src | ^fzf -m --reverse --preview-window down:20 --preview $"($env.HOME)/.local/bin/fzfh_preview.zsh {}"
 }
 
 def --env y [...args] {
@@ -254,6 +262,18 @@ def --env y [...args] {
 		cd $cwd
 	}
 	rm -fp $tmp
+}
+
+# yt-vid: descargar video en WebM (VP9 + Opus) con metadatos completos
+# Uso: yt-vid "https://www.youtube.com/watch?v=..."
+def --env yt-vid [url: string] {
+    ^yt-dlp --merge-output-format webm --embed-thumbnail --embed-metadata -o "%(title)s.%(ext)s" $url
+}
+
+# yt-aud: descargar audio en Opus con metadatos completos
+# Uso: yt-aud "https://www.youtube.com/watch?v=..."
+def --env yt-aud [url: string] {
+    ^yt-dlp --extract-audio --audio-format opus --audio-quality 0 --embed-thumbnail --embed-metadata --add-metadata -o "%(title)s.%(ext)s" $url
 }
 
 # Extrae puertos abiertos de un archivo de salida de nmap
