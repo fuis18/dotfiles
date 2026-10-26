@@ -58,6 +58,7 @@ echo ""
 echo -e "${BLUE} =================================="
 echo -e "${GREEN} ===== CachyOS Repos Config ======="
 echo -e "${BLUE} =================================="
+echo -e "${RESET}"
 
 # 1. Clave GPG (Forzando servidor HTTP vía puerto 80 para evitar bloqueos)
 echo "-> Importando y firmando llaves GPG de CachyOS..."
