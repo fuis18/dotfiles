@@ -31,6 +31,11 @@ sudo pacman -Sy
 ```sh
 cfdisk
 # cfdisk /dev/nvme0n1
+
+[gtp] - 
+[dos] - 
+[sgi] - 
+[sun] - 
 ```
 
 ---
