@@ -118,14 +118,13 @@ umount /mnt
 ```sh
 OPTS="noatime,compress=zstd,space_cache=v2,commit=120"
 
-mount -o ${OPTS},subvol=@ /dev/sda3 /mnt
-
 mkdir -p /mnt/home
 mkdir -p /mnt/.snapshots
 mkdir -p /mnt/var/log
 mkdir -p /mnt/var/cache
 mkdir -p /mnt/boot
 
+mount -o ${OPTS},subvol=@ /dev/sda3 /mnt
 mount -o ${OPTS},subvol=@home /dev/sda3 /mnt/home
 mount -o ${OPTS},subvol=@snapshots /dev/sda3 /mnt/.snapshots
 mount -o ${OPTS},subvol=@log /dev/sda3 /mnt/var/log
