@@ -1,0 +1,27 @@
+#!/bin/sh
+# Greeter session: patched cage (forces 1920x1080@60) + regreet.
+#
+# NOTE: greetd runs its `command` like this:
+#   [ -f /etc/profile ] && . /etc/profile; [ -f $HOME/.profile ] && . $HOME/.profile; exec <command>
+# Because of that leading "exec", a "VAR=x cmd" prefix in config.toml would be
+# taken as the binary to run and the greeter would die instantly with:
+#   /bin/sh: line 1: /var/lib/greetd/VAR=x: No such file or directory
+# so every variable must be set in this script, never in config.toml.
+#
+# HOME/XDG_CONFIG_HOME are deliberately NOT set here: greetd/PAM provides them
+# and the greeter's home in passwd is /var/lib/greetd (the settings portal
+# resolves its config from it; a home of "/" is what made the cursor 42.7 px).
+#
+# CAGE_FORCE_MODE forces a custom mode instead of the panel's EDID preferred
+# (1366x768@60), which rendered the greeter ~41% larger than the Hyprland
+# session. Values: WxH@Hz (e.g. 1920x1080@60) or "off" (use the preferred mode).
+#
+# Changing this script requires: sudo systemctl restart greetd
+# (greetd reads its config only at startup; with vt = 1 a restart steals VT1
+#  from a running session, so rebooting is the cleaner way).
+
+export CAGE_FORCE_MODE=1920x1080@60
+
+# Redirect to the log: otherwise stdout/stderr go straight to the VT and paint
+# xkbcomp/wlroots warnings on top of the greeter UI.
+exec dbus-run-session /usr/local/bin/cage -- /usr/bin/regreet >> /var/log/greetd-greeter.log 2>&1

@@ -27,6 +27,9 @@ echo -e "${RESET}"
 pacman -S --needed --noconfirm base-devel \
   devtools \
   wayland \
+  meson \
+  ninja \
+  wlroots0.20 \
   xdg-desktop-portal \
   xdg-desktop-portal-gtk
 
@@ -193,13 +196,16 @@ echo -e "${GREEN} ==== Instalando Login Manager ===="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-pacman -S --needed --noconfirm greetd greetd-regreet
+pacman -S --needed --noconfirm cage greetd greetd-regreet
 
 if id greeter &>/dev/null; then
   echo "✔ El usuario greeter ya existe. Continuando..."
+  usermod -d /var/lib/greetd greeter
 else
   useradd -r -s /usr/bin/nologin -d /var/lib/greetd -M greeter
 fi
+
+"${DOTFILES}/build/cage/build.sh"
 
 mkdir -p /var/lib/greetd/.config/hypr
 chown -R greeter:greeter /var/lib/greetd

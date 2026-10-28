@@ -1,0 +1,152 @@
+--- a/output.c
++++ b/output.c
+@@ -12,7 +12,10 @@
+ #include "config.h"
+ 
+ #include <assert.h>
++#include <stdbool.h>
++#include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
+ #include <unistd.h>
+ #include <wayland-server-core.h>
+ #include <wlr/backend.h>
+@@ -279,14 +282,85 @@
+ 		return;
+ 	}
+ 
+-	struct wlr_output_state state = {0};
+-	wlr_output_state_set_enabled(&state, true);
+-	if (!wl_list_empty(&wlr_output->modes)) {
+-		struct wlr_output_mode *preferred_mode = wlr_output_preferred_mode(wlr_output);
+-		if (preferred_mode) {
+-			wlr_output_state_set_mode(&state, preferred_mode);
++	/*
++	 * Forzar un modo lógico (CAGE_FORCE_MODE=1920x1080@60, por defecto;
++	 * "off" lo desactiva).
++	 *
++	 * El panel eDP declara 1366x768 como preferred y upstream cage siempre
++	 * elige ese modo, con lo que la UI del greeter sale a 1.41x de la sesión
++	 * Hyprland (1920x1080, que i915 escala al panel nativo con el panel
++	 * fitter).
++	 *
++	 * Orden de intentos:
++	 *   1) modo custom directo (un solo modeset si el driver lo admite);
++	 *   2) modo preferred (camino upstream, siempre aceptado);
++	 *   3) el modo custom encima de ese modeset ya limpio.
++	 * Si todo falla se queda en el preferred: nunca hay regresión.
++	 *
++	 * OJO: wlroots espera el refresh en miliciclos (mHz). Pasarle 60 en vez
++	 * de 60000 genera una CVT a 0,06 Hz con clock=0 y el kernel la rechaza
++	 * con "invalid mode (CLOCK_LOW, -EINVAL)".
++	 */
++	int force_w = 1920, force_h = 1080, force_hz = 60;
++	bool want_custom = true;
++	const char *force_env = getenv("CAGE_FORCE_MODE");
++	if (force_env) {
++		if (strcmp(force_env, "off") == 0) {
++			want_custom = false;
++		} else if (sscanf(force_env, "%dx%d@%d", &force_w, &force_h, &force_hz) != 3 ||
++			   force_w <= 0 || force_h <= 0 || force_hz <= 0) {
++			wlr_log(WLR_ERROR, "CAGE_FORCE_MODE invalido: \"%s\" (usa WxH@Hz o \"off\")",
++				force_env);
++			want_custom = false;
++		}
++	}
++	int force_mhz = force_hz * 1000;
++
++	if (server->output_mode == CAGE_MULTI_OUTPUT_MODE_LAST && wl_list_length(&server->outputs) > 1) {
++		struct cg_output *next = wl_container_of(output->link.next, next, link);
++		output_disable(next);
++	}
++
++	if (!wlr_xcursor_manager_load(server->seat->xcursor_manager, wlr_output->scale)) {
++		wlr_log(WLR_ERROR, "Cannot load XCursor theme for output '%s' with scale %f", wlr_output->name,
++			wlr_output->scale);
++	}
++
++	wlr_log(WLR_DEBUG, "Enabling new output %s", wlr_output->name);
++
++	bool committed = false;
++	bool custom_ok = false;
++
++	/* 1) Intento directo del modo forzado: si cuaja, un solo modeset. */
++	if (want_custom) {
++		struct wlr_output_state state = {0};
++		wlr_output_state_set_enabled(&state, true);
++		wlr_output_state_set_custom_mode(&state, force_w, force_h, force_mhz);
++		custom_ok = wlr_output_commit_state(wlr_output, &state);
++		committed = custom_ok;
++		if (custom_ok) {
++			wlr_log(WLR_INFO, "Modo forzado %dx%d@%d aplicado en %s (intento directo)",
++				force_w, force_h, force_hz, wlr_output->name);
++		} else {
++			wlr_log(WLR_INFO, "El intento directo de %dx%d@%d no cuajo en %s; probando el preferred",
++				force_w, force_h, force_hz, wlr_output->name);
++		}
++	}
++
++	/* 2) Modo preferred (camino upstream), con fallback al resto de modos. */
++	if (!committed) {
++		struct wlr_output_state state = {0};
++		wlr_output_state_set_enabled(&state, true);
++		if (!wl_list_empty(&wlr_output->modes)) {
++			struct wlr_output_mode *preferred_mode = wlr_output_preferred_mode(wlr_output);
++			if (preferred_mode) {
++				wlr_output_state_set_mode(&state, preferred_mode);
++			}
+ 		}
+-		if (!wlr_output_test_state(wlr_output, &state)) {
++
++		committed = wlr_output_commit_state(wlr_output, &state);
++		if (!committed && !wl_list_empty(&wlr_output->modes)) {
++			struct wlr_output_mode *preferred_mode = wlr_output_preferred_mode(wlr_output);
+ 			struct wlr_output_mode *mode;
+ 			wl_list_for_each (mode, &wlr_output->modes, link) {
+ 				if (mode == preferred_mode) {
+@@ -294,25 +368,34 @@
+ 				}
+ 
+ 				wlr_output_state_set_mode(&state, mode);
+-				if (wlr_output_test_state(wlr_output, &state)) {
++				if (wlr_output_commit_state(wlr_output, &state)) {
++					committed = true;
+ 					break;
+ 				}
+ 			}
+ 		}
+ 	}
+ 
+-	if (server->output_mode == CAGE_MULTI_OUTPUT_MODE_LAST && wl_list_length(&server->outputs) > 1) {
+-		struct cg_output *next = wl_container_of(output->link.next, next, link);
+-		output_disable(next);
+-	}
+-
+-	if (!wlr_xcursor_manager_load(server->seat->xcursor_manager, wlr_output->scale)) {
+-		wlr_log(WLR_ERROR, "Cannot load XCursor theme for output '%s' with scale %f", wlr_output->name,
+-			wlr_output->scale);
++	/*
++	 * 3) Si el directo no cuajo, reintenta el modo forzado encima del
++	 *    modeset ya establecido. Si el kernel lo rechaza, el commit
++	 *    atómico no aplica nada (rollback) y se mantiene el preferred.
++	 */
++	if (committed && want_custom && !custom_ok) {
++		struct wlr_output_state state = {0};
++		wlr_output_state_set_enabled(&state, true);
++		wlr_output_state_set_custom_mode(&state, force_w, force_h, force_mhz);
++		if (wlr_output_commit_state(wlr_output, &state)) {
++			custom_ok = true;
++			wlr_log(WLR_INFO, "Modo forzado %dx%d@%d aplicado en %s (segundo intento)",
++				force_w, force_h, force_hz, wlr_output->name);
++		} else {
++			wlr_log(WLR_ERROR, "El driver rechaza %dx%d@%d en %s; se mantiene el modo preferred",
++				force_w, force_h, force_hz, wlr_output->name);
++		}
+ 	}
+ 
+-	wlr_log(WLR_DEBUG, "Enabling new output %s", wlr_output->name);
+-	if (wlr_output_commit_state(wlr_output, &state)) {
++	if (committed) {
+ 		output_layout_add_auto(output);
+ 	}
+ 
