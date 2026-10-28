@@ -398,7 +398,6 @@ usermod -aG wheel fuis18
 groups fuis18
 
 # ~/.cache como subvolumen independiente
-rm -rf /home/fuis18/.cache
 btrfs subvolume create /home/fuis18/.cache
 chown fuis18:fuis18 /home/fuis18/.cache
 
@@ -420,7 +419,7 @@ hwclock --systohc
 date
 
 timedatectl set-ntp true
-systemctl status systemd-timesyncd
+# systemctl status systemd-timesyncd
 ```
 
 ```sh
