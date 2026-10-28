@@ -111,39 +111,35 @@ btrfs subvolume create /mnt/@log
 btrfs subvolume create /mnt/@cache
 
 umount /mnt
-
-# EFI
-mkdir -p /mnt/boot
-mount /dev/sda1 /mnt/boot
-
-# Swap
-swapon /dev/sda2
 ```
 
 #### Montar subvolúmenes
 
 ```sh
-# Opciones recomendadas para Btrfs
 OPTS="noatime,compress=zstd,space_cache=v2,commit=120"
 
-# Root (@)
 mount -o ${OPTS},subvol=@ /dev/sda3 /mnt
 
-# Home (@home)
 mkdir -p /mnt/home
-mount -o ${OPTS},subvol=@home /dev/sda3 /mnt/home
-
-# Snapshots
 mkdir -p /mnt/.snapshots
-mount -o ${OPTS},subvol=@snapshots /dev/sda3 /mnt/.snapshots
-
-# Logs
 mkdir -p /mnt/var/log
-mount -o ${OPTS},subvol=@log /dev/sda3 /mnt/var/log
-
-# Cache
 mkdir -p /mnt/var/cache
+mkdir -p /mnt/boot
+
+mount -o ${OPTS},subvol=@home /dev/sda3 /mnt/home
+mount -o ${OPTS},subvol=@snapshots /dev/sda3 /mnt/.snapshots
+mount -o ${OPTS},subvol=@log /dev/sda3 /mnt/var/log
 mount -o ${OPTS},subvol=@cache /dev/sda3 /mnt/var/cache
+```
+
+#### Montar particiones restantes
+
+```sh
+# EFI
+mount /dev/sda1 /mnt/boot
+
+# Swap
+swapon /dev/sda2
 ```
 
 #### Verificar montaje
