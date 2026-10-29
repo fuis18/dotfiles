@@ -67,6 +67,9 @@ sudo ip link set enp0s3 up
 ```sh
 sudo systemctl enable --now iwd
 iwctl station wlan0 connect "SSID"
+
+sudo pacman -S dhcpcd
+sudo dhcpcd enp0s3
 ```
 
 ### Clone and run
