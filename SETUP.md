@@ -392,16 +392,17 @@ mkinitcpio -P
 ```sh
 passwd
 admin18 # root password
-useradd -m -G wheel fuis18
+useradd -m fuis18
 passwd fuis18
 luis18 # user password
 
 usermod -aG wheel fuis18
 groups fuis18
+getent group fuis18
 
 # ~/.cache como subvolumen independiente
 btrfs subvolume create /home/fuis18/.cache
-chown fuis18:fuis18 /home/fuis18/.cache
+chown -R fuis18:fuis18 /home/fuis18/.cache
 
 echo hacker > /etc/hostname
 
