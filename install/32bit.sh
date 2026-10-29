@@ -18,7 +18,7 @@ echo -e "${GREEN} ========= libs for Steam ========="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-sudo pacman -S steam
+sudo pacman -S steam vulkan-radeon lib32-vulkan-radeon
 sudo pacman -S lib32-openal \
   lib32-libxrandr lib32-libxcursor \ 
   lib32-libxi lib32-pipewire
