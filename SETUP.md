@@ -1,5 +1,7 @@
 # SETUP
 
+In Virtual Machine active UEFI
+
 ## Instalation
 
 ```sh
