@@ -55,6 +55,13 @@ The goal of these dotfiles is maximum performance and greatest customization.
 
 ## Install
 
+### Enable to the network
+
+```sh
+ip addr
+sudo ip link set enp0s3 up
+```
+
 ### Connect to the network
 
 ```sh
