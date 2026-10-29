@@ -342,8 +342,8 @@ editor   no
 EOF
 
 # UUID
-blkid /dev/sda2
-# blkid -s UUID -o value /dev/sda2
+blkid /dev/sda3
+# blkid -s UUID -o value /dev/sda3
 ```
 
 ```sh
