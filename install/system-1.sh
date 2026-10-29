@@ -69,8 +69,7 @@ pacman -S --needed --noconfirm libva v4l2loopback-dkms
 # Intel
 pacman -S --needed --noconfirm libva-intel-driver intel-media-driver
 # AMD
-pacman -S --needed --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils
-vulkan-radeon lib32-vulkan-radeon
+pacman -S --needed --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils vulkan-radeon lib32-vulkan-radeon
 # NVidia
 pacman -S --noconfirm nvidia-utils libva-vdpau-driver
 
