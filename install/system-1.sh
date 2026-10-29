@@ -70,9 +70,9 @@ pacman -S --needed --noconfirm libva v4l2loopback-dkms
 pacman -S --needed --noconfirm libva-intel-driver intel-media-driver
 # AMD
 pacman -S --needed --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils
-# vulkan-radeon lib32-vulkan-radeon
+vulkan-radeon lib32-vulkan-radeon
 # NVidia
-# pacman -S --noconfirm nvidia-utils libva-vdpau-driver
+pacman -S --noconfirm nvidia-utils libva-vdpau-driver
 
 echo ""
 echo -e "${BLUE} ================================="
@@ -80,7 +80,7 @@ echo -e "${GREEN} ===== Network Configuration ====="
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --needed --noconfirm bluez bluez-utils dbus
+pacman -S --needed --noconfirm bluez bluez-utils dbus-broker
 
 systemctl enable bluetooth
 systemctl start bluetooth
