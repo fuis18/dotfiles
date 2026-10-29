@@ -364,6 +364,8 @@ initrd  /amd-ucode.img
 initrd  /initramfs-linux-zen.img
 options root=UUID=TU_UUID rw
 EOF
+
+bootctl list
 ```
 
 > Para Btrfs, agregar al final de `options`:
@@ -383,8 +385,6 @@ UUID=XXXX-XXXX  /boot  vfat  rw,relatime,fmask=0077,dmask=0077,codepage=437,ioch
 
 ```sh
 mkinitcpio -P
-
-bootctl list
 ```
 
 ## End
