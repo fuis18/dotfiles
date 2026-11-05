@@ -77,7 +77,7 @@ sudo dhcpcd enp0s3
 ```sh
 sudo pacman -S git
 
-git clone https://github.com/fuis18/dotfiles.git
+git clone https://github.com/fuis18/dotfiles.git --recursive
 
 sudo cp -r dotfiles/etc/. /etc/
 sudo chmod +x /etc/greetd/start-greeter
