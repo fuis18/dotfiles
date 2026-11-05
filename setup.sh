@@ -9,5 +9,5 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 sudo bash ./install/core.sh
-sudo zsh ./install/system-1.sh
+sudo zsh ./install/system.sh
 sudo zsh ./install/update.sh

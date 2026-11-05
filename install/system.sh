@@ -33,6 +33,11 @@ pacman -S --needed --noconfirm base-devel \
   xdg-desktop-portal \
   xdg-desktop-portal-gtk
 
+pacman -S --noconfirm rustup
+
+sudo -u "${USER_NAME}" bash -c 'rustup default stable'
+sudo -u "${USER_NAME}" bash -c 'rustup target list --installed'
+
 echo ""
 echo -e "${BLUE} =================================="
 echo -e "${GREEN} ========= Hyprland Shell ========="
@@ -115,7 +120,7 @@ echo -e "${RESET}"
 sudo -u "${USER_NAME}" bash -c 'paru -S rate-mirrors-bin'
 sudo -u "${USER_NAME}" bash -c 'rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist'
 
-sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown hyprshell-bin'
+sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown'
 
 echo ""
 echo -e "${BLUE} ================================="
@@ -248,8 +253,7 @@ echo -e "${BLUE} =============================="
 echo -e "${RESET}"
 
 # interfaces
-sudo -u "${USER_NAME}" bash -c 'paru -S --needed aylurs-gtk-shell'
-sudo -u "${USER_NAME}" bash -c 'paru -S --needed libastal-notifd-git libastal-battery-git libastal-mpris-git'
+# sudo -u "${USER_NAME}" bash -c 'paru -S --needed aylurs-gtk-shell libastal-notifd-git libastal-battery-git libastal-mpris-git'
 # bar
 pacman -S --needed --noconfirm ironbar
 # launcher
@@ -268,6 +272,121 @@ echo -e "${RESET}"
 # root
 cp -r "${DOTFILES}/root/.config/." /root/.config/
 cp -r "${DOTFILES}/root/.zshrc" /root/
+
+echo ""
+echo -e "${BLUE} =============================="
+echo -e "${GREEN} === APPS System Defatuls ==="
+echo -e "${BLUE} =============================="
+echo -e "${RESET}"
+
+# file explorer
+pacman -S nautilus
+# sudo -u "${USER_NAME}" bash -c 'paru -S spacedrive-clean'
+
+# copy history
+pacman -S --noconfirm cliphist
+# texteditor
+pacman -S --noconfirm snapshot gnome-text-editor aspell-es aspell-en nuspell
+# wallpaper
+pacman -S --noconfirm awww
+sudo -u "$USER_NAME" bash -c 'paru -S wallust'
+# screenshot
+pacman -S --noconfirm hyprpicker
+pacman -S --noconfirm grim slurp swappy
+sudo -u "${USER_NAME}" bash -c 'paru -S grimblast'
+# images
+pacman -S eog
+sudo -u "$USER_NAME" bash -c 'paru -S satty drawing'
+# tools media
+pacman -S --noconfirm handbrake
+# other
+sudo pacman -S gnome-clocks
+
+echo ""
+echo -e "${BLUE} ================================="
+echo -e "${GREEN} ==== Multimedia applications ===="
+echo -e "${BLUE} ================================="
+echo -e "${RESET}"
+
+# 1. PipeWire
+pacman -S pipewire \
+  pipewire-pulse \
+  pipewire-alsa \
+  pipewire-jack \
+  wireplumber \
+  pavucontrol \
+  pulsemixer
+
+# 2. Codecs
+pacman -S --noconfirm \
+  ffmpeg \
+  ffmpegthumbs \
+  ffmpegthumbnailer \
+  taglib \
+  gst-libav \
+  gst-plugins-base \
+  gst-plugins-good \
+  gst-plugins-bad \
+  gst-plugins-ugly \
+  tumbler \
+  mediainfo
+
+# 3. Media player & Control
+pacman -S --noconfirm \
+  mpd \
+  mpv \
+  cava \
+  yt-dlp \
+  ncmpcpp \
+  celluloid \
+  playerctl \
+  mpd-mpris \
+  mpv-mpris
+
+# sudo -u "$USER_NAME" bash -c 'paru -S musikcube-bin'
+
+sudo -u "$USER_NAME" bash -c 'systemctl --user enable --now mpd'
+sudo -u "$USER_NAME" bash -c 'systemctl --user enable --now mpd-mpris'
+
+echo ""
+echo -e "${BLUE} =================================="
+echo -e "${GREEN} ========== Theme System =========="
+echo -e "${BLUE} =================================="
+echo -e "${RESET}"
+
+pacman -S --noconfirm papirus-icon-theme
+sudo -u "${USER_NAME}" bash -c 'paru -S papirus-folders-catppuccin-git catppuccin-gtk-theme-mocha'
+
+echo ""
+echo -e "${BLUE} ================================="
+echo -e "${GREEN} ======== Logo Arch Linux ========"
+echo -e "${BLUE}         .         "
+echo -e "               / \\       "
+echo -e "              /   \\      "
+echo -e "             /\    \\     "
+echo -e "            /  \    \\    "
+echo -e "           /         \\   "
+echo -e "          /    .-.    \\  "
+echo -e "         /    |   |   _\\ "
+echo -e "        /   _.'   '._   \\"
+echo -e "       /_.-'         '-._\\"
+echo -e "${RESET}"
+
+pacman -S --noconfirm fastfetch
+sudo -u "$USER_NAME" bash -c 'paru -S cbonsai'
+sudo -u "$USER_NAME" bash -c 'paru -S cmatrix-git'
+
+echo ""
+echo -e "${BLUE} =================================="
+echo -e "${GREEN} ==== Creating the directories ===="
+echo -e "${BLUE} =================================="
+echo -e "${RESET}"
+
+sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Documents/"
+sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Music/"
+sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Pictures/"
+sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Projects/"
+sudo -u "$USER_NAME" mkdir -p "$USER_HOME/Videos/"
 
 echo ""
 echo -e "${BLUE}=================================="
