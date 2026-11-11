@@ -33,11 +33,6 @@ sudo pacman -Sy
 ```sh
 cfdisk
 # cfdisk /dev/nvme0n1
-
-[gtp] - 
-[dos] - 
-[sgi] - 
-[sun] - 
 ```
 
 ---
@@ -194,7 +189,7 @@ mount | grep mnt
 
 ```sh
 pacstrap -K /mnt base linux-zen linux-zen-headers linux-firmware
-pacstrap /mnt sudo nvim git iwd openresolv knot-resolver less
+pacstrap /mnt sudo nvim git iwd dhcpcd knot-resolver less
 
 vim /mnt/etc/vconsole.conf
 ```
