@@ -145,8 +145,6 @@ pacman -S --needed --noconfirm lsd bat \
   zoxide resvg imagemagick \
   yazi
 
-chsh -s $(which nu) "$USER_NAME"
-
 echo ""
 echo -e "${BLUE} ================================="
 echo -e "${GREEN} ===== Actualizando el Shell ====="
