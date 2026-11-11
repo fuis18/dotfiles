@@ -81,7 +81,7 @@ pacman -S --noconfirm blender gimp krita
 # android tool
 pacman -S --noconfirm android-tools scrcpy
 
-pacman -S --noconfirm texlive-basic texlive-latex pandoc-cli
+# pacman -S --noconfirm texlive-basic texlive-latex pandoc-cli
 
 # games
 # pacman -S lutris
