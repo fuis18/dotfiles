@@ -264,10 +264,8 @@ def --env y [...args] {
 	rm -fp $tmp
 }
 
-# yt-vid: descargar video en WebM (VP9 + Opus) con metadatos completos
-# Uso: yt-vid "https://www.youtube.com/watch?v=..."
 def --env yt-vid [url: string] {
-    ^yt-dlp --merge-output-format webm --embed-thumbnail --embed-metadata -o "%(title)s.%(ext)s" $url
+    ^yt-dlp --merge-output-format mkv --embed-thumbnail --embed-metadata -o "%(title)s.%(ext)s" $url
 }
 
 # yt-aud: descargar audio en Opus con metadatos completos

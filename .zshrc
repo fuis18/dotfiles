@@ -92,7 +92,6 @@ alias lla='lsd -lha --group-dirs=first'
 alias cat='bat'
 # alias for searching and installing packages
 alias pacs="pacman -Slq | fzf -m --preview 'pacman -Si {} ; pacman -Fl {} | awk \"{print \\$2}\"' | xargs -ro sudo pacman -S"
-alias mp3="musikcube"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
