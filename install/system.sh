@@ -76,7 +76,8 @@ pacman -S --needed --noconfirm libva-intel-driver intel-media-driver
 # AMD
 pacman -S --needed --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils
 # NVidia
-pacman -S --noconfirm nvidia-utils libva-vdpau-driver
+pacman -S --noconfirm nvidia-utils libva-nvidia-driver
+# libva-vdpau-driver
 
 echo ""
 echo -e "${BLUE} ================================="
