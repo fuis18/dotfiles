@@ -20,8 +20,7 @@
 # (greetd reads its config only at startup; with vt = 1 a restart steals VT1
 #  from a running session, so rebooting is the cleaner way).
 
-export CAGE_FORCE_MODE=1920x1080@60
+# export CAGE_FORCE_MODE=1920x1080@60
+# exec dbus-run-session /usr/local/bin/cage -- /usr/bin/regreet >> /var/log/greetd-greeter.log 2>&1
 
-# Redirect to the log: otherwise stdout/stderr go straight to the VT and paint
-# xkbcomp/wlroots warnings on top of the greeter UI.
-exec dbus-run-session /usr/local/bin/cage -- /usr/bin/regreet >> /var/log/greetd-greeter.log 2>&1
+exec dbus-run-session /usr/bin/cage -- /usr/bin/regreet >> /var/log/greetd-greeter.log 2>&1
