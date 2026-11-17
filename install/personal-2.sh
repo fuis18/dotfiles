@@ -21,10 +21,15 @@ echo -e "${GREEN} ========== Programaing =========="
 echo -e "${BLUE} ================================="
 echo -e "${RESET}"
 
-pacman -S --noconfirm deno bacon
-
-pacman -S --noconfirm github-cli
+pacman -S --noconfirm deno go bacon
+# pacman -S --noconfirm github-cli
+sudo -u "$USER_NAME" bash -c 'paru -S jujutsu lazyjj'
 pacman -S --noconfirm lazygit
+pacman -S --noconfirm hurl
+sudo -u "$USER_NAME" bash -c 'paru -S xh'
+
+pacman -S podman podman-compose
+# sudo -u "$USER_NAME" bash -c 'paru -S oxker-bin lazydocker'
 
 # editors
 pacman -S --noconfirm zed
@@ -52,20 +57,6 @@ echo -e "${BLUE} ================================"
 echo -e "${RESET}"
 
 pacman -S --noconfirm nmap
-
-echo ""
-echo -e "${BLUE} ================================"
-echo -e "${GREEN} ============ Docker ============"
-echo -e "${BLUE} ================================"
-echo -e "${RESET}"
-
-pacman -S --noconfirm docker docker-compose docker-buildx
-sudo -u "$USER_NAME" bash -c 'paru -S oxker-bin lazydocker'
-
-systemctl enable docker.socket
-systemctl start docker.socket
-
-sudo usermod -aG docker $USER_NAME
 
 echo ""
 echo -e "${BLUE} =================================="

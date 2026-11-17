@@ -18,40 +18,50 @@ echo -e "${GREEN} ===== Snapper (Btrfs config) ====="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-# Solo aplica si root es Btrfs y @snapshots quedó registrado en fstab
-# (ver SETUP.md). En ext4/GRUB layout esto se salta sin hacer nada.
-if findmnt -no FSTYPE / | grep -q btrfs && grep -qE '[[:space:]]/\.snapshots[[:space:]]' /etc/fstab; then
-  if [[ -f /etc/snapper/configs/root ]]; then
-    echo -e "${GREEN}[!] Config de snapper 'root' ya existe, saltando.${RESET}"
-  else
-    echo "-> Liberando el punto de montaje /.snapshots"
-    umount /.snapshots
-    rm -rf /.snapshots
+# Validación 1: ¿Es Btrfs la raíz?
+if findmnt -no FSTYPE / | grep -q btrfs; then
 
-    echo "-> Creando la config real con snapper"
-    snapper -c root create-config /
-    snapper -c home create-config /home
+  # Validación 2: ¿Existe /.snapshots en fstab?
+  if grep -qE '[[:space:]]/\.snapshots[[:space:]]' /etc/fstab; then
 
-    echo "-> Descartando el subvolumen que snapper acaba de crear"
-    umount /.snapshots
-    btrfs subvolume delete /.snapshots
-    mkdir -p /.snapshots
+    # Validación 3: ¿Ya existe la config de snapper?
+    if [[ -f /etc/snapper/configs/root ]]; then
+      echo -e "${GREEN}[!] Config de snapper 'root' ya existe, saltando.${RESET}"
+    else
+      # --- EJECUCIÓN PRINCIPAL ---
+      echo "-> Liberando el punto de montaje /.snapshots"
+      umount /.snapshots 2>/dev/null || true
+      rm -rf /.snapshots
 
-    echo "-> Montando el @snapshots definitivo (vía fstab)"
-    mount /.snapshots
-    chmod 750 /.snapshots
+      echo "-> Creando la config real con snapper"
+      snapper -c root create-config /
+      snapper -c home create-config /home
 
-    if ! grep -q '^SNAPPER_CONFIGS="root"' /etc/conf.d/snapper 2>/dev/null; then
-      echo 'SNAPPER_CONFIGS="root"' >/etc/conf.d/snapper
+      echo "-> Descartando el subvolumen que snapper acaba de crear"
+      umount /.snapshots 2>/dev/null || true
+      btrfs subvolume delete /.snapshots
+      mkdir -p /.snapshots
+
+      echo "-> Montando el @snapshots definitivo (vía fstab)"
+      mount /.snapshots
+      chmod 750 /.snapshots
+
+      if ! grep -q '^SNAPPER_CONFIGS="root"' /etc/conf.d/snapper 2>/dev/null; then
+        echo 'SNAPPER_CONFIGS="root"' >/etc/conf.d/snapper
+      fi
+
+      systemctl enable --now snapper-timeline.timer
+      systemctl enable --now snapper-cleanup.timer
+
+      echo -e "${GREEN}[✔] Snapper listo, snap-pac capturará desde aquí.${RESET}"
     fi
 
-    systemctl enable --now snapper-timeline.timer
-    systemctl enable --now snapper-cleanup.timer
-
-    echo -e "${GREEN}[✔] Snapper listo, snap-pac capturará desde aquí.${RESET}"
+  else
+    echo -e "${GREEN}[!] No hay /.snapshots en fstab, saltando snapper.${RESET}"
   fi
+
 else
-  echo -e "${GREEN}[!] No es Btrfs o no hay /.snapshots en fstab, saltando snapper.${RESET}"
+  echo -e "${GREEN}[!] El sistema de archivos raíz no es Btrfs, saltando snapper.${RESET}"
 fi
 
 echo ""
@@ -87,15 +97,15 @@ if ! grep -qE '^\[cachyos(-v3|-v4|-znver4)?\]' /etc/pacman.conf; then
 
   CACHY_BLOCK=$'\n[cachyos]\nInclude = /etc/pacman.d/cachyos-mirrorlist\n'
 
-  if /lib/ld-linux-x86-64.so.2 --help 2>&1 | grep -q 'x86-64-v3 (supported, searched)' \
-     && [[ -f /etc/pacman.d/cachyos-v3-mirrorlist ]]; then
+  if /lib/ld-linux-x86-64.so.2 --help 2>&1 | grep -q 'x86-64-v3 (supported, searched)' &&
+    [[ -f /etc/pacman.d/cachyos-v3-mirrorlist ]]; then
     CACHY_BLOCK+=$'\n[cachyos-v3]\nInclude = /etc/pacman.d/cachyos-v3-mirrorlist\n'
   fi
 
   awk -v block="$CACHY_BLOCK" '
     !done && /^\[core\]/ { print block; done=1 }
     { print }
-  ' /etc/pacman.conf > /etc/pacman.conf.new
+  ' /etc/pacman.conf >/etc/pacman.conf.new
   mv /etc/pacman.conf.new /etc/pacman.conf
 
   echo -e "${GREEN}[✔] Sección [cachyos] agregada manualmente.${RESET}"

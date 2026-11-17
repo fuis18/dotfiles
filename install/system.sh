@@ -40,6 +40,31 @@ sudo -u "${USER_NAME}" bash -c 'rustup target list --installed'
 
 echo ""
 echo -e "${BLUE} =================================="
+echo -e "${GREEN} =========== AUR Helper ==========="
+echo -e "${BLUE} =================================="
+echo -e "${RESET}"
+echo ""
+
+PARU_DIR="${USER_HOME}/paru"
+if [[ -d "$PARU_DIR" ]]; then
+  echo -e "${GREEN}[!] Directorio '$PARU_DIR' ya existe.${RESET}"
+else
+  git clone https://aur.archlinux.org/paru.git "$PARU_DIR"
+  chown -R "${USER_NAME}:${USER_NAME}" "$PARU_DIR"
+  sudo -u "${USER_NAME}" bash -c "cd '$PARU_DIR' && makepkg -si --noconfirm"
+fi
+
+echo ""
+echo -e "${BLUE} ================================="
+echo -e "${GREEN} ===== Configuration Mirrors ====="
+echo -e "${BLUE} ================================="
+echo -e "${RESET}"
+
+sudo -u "${USER_NAME}" bash -c 'paru -S rate-mirrors-bin'
+sudo -u "${USER_NAME}" bash -c 'rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist'
+
+echo ""
+echo -e "${BLUE} =================================="
 echo -e "${GREEN} ========= Hyprland Shell ========="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
@@ -49,6 +74,8 @@ pacman -S --needed --noconfirm hyprland \
   hypridle \
   hyprpolkitagent \
   xdg-desktop-portal-hyprland
+
+sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown'
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -93,35 +120,8 @@ systemctl start bluetooth
 pacman -S --needed --noconfirm impala bluetui
 
 # Segurity
-
-pacman -S --needed --noconfirm ufw bind
-
-echo ""
-echo -e "${BLUE} =================================="
-echo -e "${GREEN} =========== AUR Helper ==========="
-echo -e "${BLUE} =================================="
-echo -e "${RESET}"
-echo ""
-
-PARU_DIR="${USER_HOME}/paru"
-if [[ -d "$PARU_DIR" ]]; then
-  echo -e "${GREEN}[!] Directorio '$PARU_DIR' ya existe.${RESET}"
-else
-  git clone https://aur.archlinux.org/paru.git "$PARU_DIR"
-  chown -R "${USER_NAME}:${USER_NAME}" "$PARU_DIR"
-  sudo -u "${USER_NAME}" bash -c "cd '$PARU_DIR' && makepkg -si --noconfirm"
-fi
-
-echo ""
-echo -e "${BLUE} ================================="
-echo -e "${GREEN} ===== Configuration Mirrors ====="
-echo -e "${BLUE} ================================="
-echo -e "${RESET}"
-
-sudo -u "${USER_NAME}" bash -c 'paru -S rate-mirrors-bin'
-sudo -u "${USER_NAME}" bash -c 'rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist'
-
-sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown'
+pacman -S --needed --noconfirm ufw
+# PowerDNS
 
 echo ""
 echo -e "${BLUE} ================================="
