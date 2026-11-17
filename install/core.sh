@@ -143,7 +143,7 @@ fi
 
 # Kernel linux-cachyos (EEVDF, estándar) + headers para que
 # los módulos DKMS (v4l2loopback, etc.) también compilen para él.
-pacman -S --needed --noconfirm linux-cachyos linux-cachyos-headers
+pacman -S --needed --noconfirm linux-cachyos-bore linux-cachyos-bore-headers
 
 ARCH_ENTRY="/boot/loader/entries/arch.conf"
 CACHY_ENTRY="/boot/loader/entries/cachyos.conf"
