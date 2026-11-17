@@ -141,8 +141,7 @@ else
   echo -e "${GREEN}[!] No se encontró intel-ucode.img ni amd-ucode.img en /boot.${RESET}"
 fi
 
-# Kernel linux-cachyos (EEVDF, estándar) + headers para que
-# los módulos DKMS (v4l2loopback, etc.) también compilen para él.
+# Instalación del kernel BORE y sus cabeceras
 pacman -S --needed --noconfirm linux-cachyos-bore linux-cachyos-bore-headers
 
 ARCH_ENTRY="/boot/loader/entries/arch.conf"
@@ -154,15 +153,14 @@ if [[ ! -f "$ARCH_ENTRY" ]]; then
 elif [[ -f "$CACHY_ENTRY" ]] && grep -q '^options' "$CACHY_ENTRY" && grep -q '^initrd' "$CACHY_ENTRY"; then
   echo -e "${GREEN}[!] $CACHY_ENTRY ya existe y está completa, saltando.${RESET}"
 else
-  # Reutilizamos la misma línea "options" (UUID + rootflags) que ya
-  # quedó bien armada en arch.conf, así nunca se desincroniza.
+  # Reutilizamos la misma línea "options" (UUID + rootflags)
   ROOT_OPTIONS=$(grep '^options' "$ARCH_ENTRY")
 
   {
     echo "title   CachyOS Kernel"
-    echo "linux   /vmlinuz-linux-cachyos"
+    echo "linux    /vmlinuz-linux-cachyos-bore"
     [[ -n "$UCODE_IMG" ]] && echo "initrd  /${UCODE_IMG}"
-    echo "initrd  /initramfs-linux-cachyos.img"
+    echo "initrd   /initramfs-linux-cachyos-bore.img"
     echo "$ROOT_OPTIONS"
   } >"$CACHY_ENTRY"
 
