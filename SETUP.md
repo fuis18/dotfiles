@@ -2,7 +2,7 @@
 
 In Virtual Machine active UEFI
 
-## Instalation
+## Installation
 
 ```sh
 # localectl list-keymaps
@@ -60,15 +60,15 @@ mkfs.ext4 /dev/sda4
 ```
 
 ```sh
-# Montar root
+# root
 mkdir -p /mnt
 mount /dev/sda2 /mnt
 
-# Montar UEFI
+# UEFI
 mkdir -p /mnt/boot
 mount /dev/sda1 /mnt/boot
 
-# Montar home
+# home
 mkdir -p /mnt/home
 mount /dev/sda4 /mnt/home
 # swap
@@ -96,7 +96,7 @@ mkswap /dev/sda2
 mkfs.btrfs -L root /dev/sda3
 ```
 
-#### Crear subvolúmenes
+#### Create subvolumes
 
 ```sh
 mount /dev/sda3 /mnt
@@ -106,16 +106,15 @@ btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@snapshots
 btrfs subvolume create /mnt/@log
 btrfs subvolume create /mnt/@cache
+btrfs subvolume create /mnt/@tmp
 
 umount /mnt
 ```
 
-#### Montar subvolúmenes
+#### Mount subvolumes
 
 ```sh
 OPTS="noatime,compress=zstd,space_cache=v2,commit=120"
-
-mount -o ${OPTS},subvol=@ /dev/sda3 /mnt
 
 mkdir -p /mnt/home
 mkdir -p /mnt/.snapshots
@@ -123,13 +122,15 @@ mkdir -p /mnt/var/log
 mkdir -p /mnt/var/cache
 mkdir -p /mnt/boot
 
+mount -o ${OPTS},subvol=@ /dev/sda3 /mnt
 mount -o ${OPTS},subvol=@home /dev/sda3 /mnt/home
 mount -o ${OPTS},subvol=@snapshots /dev/sda3 /mnt/.snapshots
 mount -o ${OPTS},subvol=@log /dev/sda3 /mnt/var/log
 mount -o ${OPTS},subvol=@cache /dev/sda3 /mnt/var/cache
+mount -o ${OPTS},subvol=@tmp /dev/sda3 /mnt/var/tmp
 ```
 
-#### Montar particiones restantes
+#### Mount remaining partitions
 
 ```sh
 # EFI
@@ -137,14 +138,9 @@ mount /dev/sda1 /mnt/boot
 
 # Swap
 swapon /dev/sda2
-```
 
-#### Verificar montaje
-
-```sh
-mount | grep /mnt
+# Check
 findmnt -t btrfs
-lsblk -f
 ```
 
 ---
@@ -182,9 +178,11 @@ mount /dev/sda4 /mnt/home
 
 ## Pacstrap
 
+#### Check assembly Mount
+
 ```sh
+mount | grep /mnt
 lsblk -f
-mount | grep mnt
 ```
 
 ```sh
@@ -211,7 +209,7 @@ lscpu | less
 | --------------------------- | ------------------------- |
 | `pacstrap /mnt intel-ucode` | `pacstrap /mnt amd-ucode` |
 
-> Para Btrfs, instalar también: `pacstrap /mnt btrfs-progs`
+> For Btrfs, also install: `pacstrap /mnt btrfs-progs`
 
 #### Genfstab
 
@@ -219,6 +217,15 @@ lscpu | less
 rm /mnt/etc/fstab
 
 genfstab -U /mnt >> /mnt/etc/fstab
+```
+
+### Helper: Disable and Unmount
+
+```sh
+swapoff /mnt/swapfile
+umount -R /mnt
+umount -l /mnt
+umount /mnt/home
 ```
 
 ### arch-chroot
@@ -233,15 +240,6 @@ mount | grep boot
 
 ```sh
 pacman -S snapper snap-pac
-```
-
-### Helper: Desactivar y desmontar
-
-```sh
-swapoff /mnt/swapfile
-umount -R /mnt
-umount -l /mnt
-umount /mnt/home
 ```
 
 ### Swap (zram)
@@ -268,7 +266,7 @@ nvim /etc/systemd/zram-generator.conf
 
 ```conf
 [zram0]
-zram-size = ram * 0.75
+zram-size = ram * 0.5
 compression-algorithm = zstd
 swap-priority = 150
 ```
@@ -363,7 +361,7 @@ EOF
 bootctl list
 ```
 
-> Para Btrfs, agregar al final de `options`:
+> For Btrfs, add to the end of `options`:
 >
 > ```
 > options root=UUID=TU_UUID rootflags=subvol=@ rw
@@ -395,13 +393,14 @@ usermod -aG wheel fuis18
 groups fuis18
 getent group fuis18
 
-# ~/.cache como subvolumen independiente
+# ~/.cache as a separate subvolume
 btrfs subvolume create /home/fuis18/.cache
 chown -R fuis18:fuis18 /home/fuis18/.cache
 
 echo hacker > /etc/hostname
 
-EDITOR=nvim visudo       # habilitar sudo para grupo wheel
+# enable sudo for wheel group
+EDITOR=nvim visudo
 
 # %wheel ALL=(ALL:ALL) ALL
 
@@ -418,6 +417,11 @@ date
 
 timedatectl set-ntp true
 # systemctl status systemd-timesyncd
+
+# or: localectl set-locale LANG=en_US.UTF-8
+nvim /etc/locale.conf
+# LANG=en_US.UTF-8
+locale
 ```
 
 ```sh

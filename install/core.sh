@@ -18,17 +18,17 @@ echo -e "${GREEN} ===== Snapper (Btrfs config) ====="
 echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
-# Validación 1: ¿Es Btrfs la raíz?
+# Validation 1: Is Btrfs the root?
 if findmnt -no FSTYPE / | grep -q btrfs; then
 
-  # Validación 2: ¿Existe /.snapshots en fstab?
+  # Validation 2: Does /.snapshots exist in fstab?
   if grep -qE '[[:space:]]/\.snapshots[[:space:]]' /etc/fstab; then
 
-    # Validación 3: ¿Ya existe la config de snapper?
+    # Validation 3: Does the snapper config already exist?
     if [[ -f /etc/snapper/configs/root ]]; then
       echo -e "${GREEN}[!] Config de snapper 'root' ya existe, saltando.${RESET}"
     else
-      # --- EJECUCIÓN PRINCIPAL ---
+      # --- MAIN EXECUTION ---
       echo "-> Liberando el punto de montaje /.snapshots"
       umount /.snapshots 2>/dev/null || true
       rm -rf /.snapshots

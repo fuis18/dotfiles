@@ -193,6 +193,12 @@ done
 
 locale-gen
 
+if grep -q '^LANG=' /etc/locale.conf 2>/dev/null; then
+  sed -i 's/^LANG=.*/LANG=en_US.UTF-8/' /etc/locale.conf
+else
+  echo 'LANG=en_US.UTF-8' >/etc/locale.conf
+fi
+
 echo ""
 echo -e "${BLUE} =================================="
 echo -e "${GREEN} ==== Instalando Login Manager ===="
