@@ -11,7 +11,7 @@ function dsp_window.fullscreen(opts) end
 ---@return string
 function dsp_window.float(opts) end
 
----@param opts? { workspace: integer|string } @ e.g. { workspace = 2 } or { workspace = "special" }
+---@param opts? { workspace: integer|string } | { direction: string, group_aware?: boolean } @ e.g. { workspace = 2 } or { direction = "left" }
 ---@return string
 function dsp_window.move(opts) end
 
