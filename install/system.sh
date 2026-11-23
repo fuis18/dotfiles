@@ -352,8 +352,7 @@ pacman -S --noconfirm \
 
 # sudo -u "$USER_NAME" bash -c 'paru -S musikcube-bin'
 
-sudo -u "$USER_NAME" bash -c 'systemctl --user enable --now mpd'
-sudo -u "$USER_NAME" bash -c 'systemctl --user enable --now mpd-mpris'
+sudo -u "$USER_NAME" bash -c 'systemctl --user enable mpd mpd-mpris'
 
 echo ""
 echo -e "${BLUE} =================================="
