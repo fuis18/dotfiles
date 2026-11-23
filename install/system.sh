@@ -164,6 +164,8 @@ chmod 440 /etc/sudoers.d/wheel
 # Node
 sudo -u "$USER_NAME" bash -c 'paru -S --needed fnm-bin'
 sudo -u "$USER_NAME" bash -c 'export PATH="$HOME/.local/share/fnm:$PATH"; fnm install --latest'
+# Deno
+pacman -S --noconfirm deno
 
 echo ""
 echo -e "${BLUE} ================================="
