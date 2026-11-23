@@ -75,7 +75,7 @@ pacman -S --needed --noconfirm hyprland \
   hyprpolkitagent \
   xdg-desktop-portal-hyprland
 
-sudo -u "${USER_NAME}" bash -c 'paru -S hyprshutdown'
+sudo -u "${USER_NAME}" bash -c 'paru -S --needed hyprshutdown'
 
 echo ""
 echo -e "${BLUE} =================================="
@@ -103,7 +103,7 @@ pacman -S --needed --noconfirm libva-intel-driver intel-media-driver
 # AMD
 pacman -S --needed --noconfirm mesa libva-mesa-driver libvdpau-va-gl mesa-utils
 # NVidia
-pacman -S --noconfirm nvidia-utils libva-nvidia-driver
+pacman -S --needed --noconfirm nvidia-utils libva-nvidia-driver
 # libva-vdpau-driver
 
 echo ""
@@ -294,16 +294,16 @@ pacman -S --noconfirm cliphist
 pacman -S --noconfirm snapshot gnome-text-editor aspell-es aspell-en nuspell
 # wallpaper
 pacman -S --noconfirm awww
-sudo -u "$USER_NAME" bash -c 'paru -S wallust'
+sudo -u "$USER_NAME" bash -c 'paru -S --needed wallust'
 # screenshot
 pacman -S --noconfirm hyprpicker
 pacman -S --noconfirm grim slurp swappy
-sudo -u "${USER_NAME}" bash -c 'paru -S grimblast'
+sudo -u "${USER_NAME}" bash -c 'paru -S --needed grimblast-git'
 # images
 pacman -S eog
-sudo -u "$USER_NAME" bash -c 'paru -S satty drawing'
+sudo -u "$USER_NAME" bash -c 'paru -S --needed satty drawing'
 # tools media
-pacman -S --noconfirm handbrake
+pacman -S --noconfirm --needed handbrake
 # other
 sudo pacman -S gnome-clocks
 
@@ -360,7 +360,7 @@ echo -e "${BLUE} =================================="
 echo -e "${RESET}"
 
 pacman -S --noconfirm papirus-icon-theme
-sudo -u "${USER_NAME}" bash -c 'paru -S papirus-folders-catppuccin-git catppuccin-gtk-theme-mocha'
+sudo -u "${USER_NAME}" bash -c 'paru -S --needed papirus-folders-catppuccin-git catppuccin-gtk-theme-mocha'
 
 echo ""
 echo -e "${BLUE} ================================="
@@ -378,8 +378,8 @@ echo -e "       /_.-'         '-._\\"
 echo -e "${RESET}"
 
 pacman -S --noconfirm fastfetch
-sudo -u "$USER_NAME" bash -c 'paru -S cbonsai'
-sudo -u "$USER_NAME" bash -c 'paru -S cmatrix-git'
+sudo -u "$USER_NAME" bash -c 'paru -S --needed cbonsai'
+sudo -u "$USER_NAME" bash -c 'paru -S --needed cmatrix-git'
 
 echo ""
 echo -e "${BLUE} =================================="
