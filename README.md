@@ -81,6 +81,9 @@ git clone https://github.com/fuis18/dotfiles.git
 
 sudo cp -r dotfiles/etc/. /etc/
 sudo chmod +x /etc/greetd/start-greeter
+
+sudo mkdir -p /var/log/greetd
+sudo chown -R greeter:greeter /var/log/greetd
 ```
 
 Edit /etc/knot-resolver/config.yaml for your dns
@@ -133,3 +136,4 @@ tail -f /var/log/greetd-greeter.log   # e.g. "Modo forzado 1920x1080@60 aplicado
 - Ironbar to AGS
 - Arch to Boruin (s6 & 66)
 - config niri
+
