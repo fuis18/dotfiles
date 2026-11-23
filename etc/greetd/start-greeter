@@ -23,4 +23,4 @@
 # export CAGE_FORCE_MODE=1920x1080@60
 # exec dbus-run-session /usr/local/bin/cage -- /usr/bin/regreet >> /var/log/greetd-greeter.log 2>&1
 
-exec dbus-run-session /usr/bin/cage -- /usr/bin/regreet >> /var/log/greetd-greeter.log 2>&1
+exec dbus-run-session /usr/bin/cage -- /usr/bin/regreet >> /var/log/greetd/greeter.log 2>&1
